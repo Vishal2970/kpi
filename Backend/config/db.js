@@ -1,21 +1,20 @@
 const sql = require("mssql");
 
 const dbConfig = {
-  user: 'erpbo'||process.env.DB_USER,
-  password: 'erpbo'||process.env.DB_PASSWORD,
-  server: '195.159.227.100'||process.env.DB_SERVER,
-  database: 'YH_Optimize'||process.env.DB_DATABASE,
-  port: 5555||parseInt(process.env.DB_PORT, 10),
+  user: process.env.DB_USER || 'erpbo',  // Default value to 'erpbo' if env variable is not set
+  password: process.env.DB_PASSWORD || 'erpbo',
+  server: process.env.DB_SERVER || '195.159.227.100',
+  database: process.env.DB_DATABASE || 'YH_Optimize',
+  port: parseInt(process.env.DB_PORT, 10) || 5555,
   options: {
     encrypt: false,
     enableArithAbort: true,
     trustServerCertificate: true,
   },
-  connectionString: `Server=${process.env.DB_SERVER},${process.env.DB_PORT};Database=${process.env.DB_DATABASE};User Id=${process.env.DB_USER};Password=${process.env.DB_PASSWORD};`,
 };
 
 const connectToDatabase = async () => {
-  try {    
+  try {
     await sql.connect(dbConfig);
     console.log("Connected to the SQL Server database");
   } catch (err) {

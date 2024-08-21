@@ -1,26 +1,21 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const { connectToDatabase } = require("./config/db");
+const { connectToDatabase, sql } = require("./config/db"); // Import sql here
+const table = require("./Routes/table");
+const authRoute = require("./Routes/authRoutes")
 
 // Load environment variables from .env file
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-
+// vishal
 // Connect to the database
-connectToDatabase()
+connectToDatabase();
 
 // API route to check the database connection
-app.get("/api/check-db", async (req, res) => {
-  try {
-    const request = new sql.Request();
-    await request.query("SELECT 1 AS isConnected");
-    res.status(200).send({ message: "Database connection is successful" });
-  } catch (err) {
-    res.status(500).send({ message: "Failed to connect to the database", error: err.message });
-  }
-});
+app.use("/api", table);
+app.use("/api", authRoute);
 
 // Start the server
 app.listen(port, () => {
