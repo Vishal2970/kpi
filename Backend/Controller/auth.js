@@ -1,8 +1,6 @@
 const {sql}=require("../config/db")
 const table0 = async (req, res) => {
   try {
-    console.log("Hitted");
-    
     const request = new sql.Request(); // Ensure sql is imported
     const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.2'");
     // console.log(response);
@@ -19,8 +17,6 @@ const table0 = async (req, res) => {
 };
 const table1 = async (req, res) => {
   try {
-    console.log("Hitted");
-    
     const request = new sql.Request(); // Ensure sql is imported
     const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.3'");
     // console.log(response);
@@ -37,8 +33,6 @@ const table1 = async (req, res) => {
 };
 const table2 = async (req, res) => {
   try {
-    console.log("Hitted");
-    
     const request = new sql.Request(); // Ensure sql is imported
     const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.4'");
     // console.log(response);

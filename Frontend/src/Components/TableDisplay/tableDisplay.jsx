@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BasicTable from "../tables/test";
 import { Grid, Container } from "@mui/material";
-import axios from "axios"; // Ensure axios is imported
+import axios from "axios";
 
 export default function TableDisplay() {
   const [dataList, setDataList] = useState([]);
@@ -12,7 +12,7 @@ export default function TableDisplay() {
     { url: "http://localhost:5000/api/check-table2" },
     { url: "http://localhost:5000/api/check-table" },
     { url: "http://localhost:5000/api/check-table1" },
-    { url: "http://localhost:5000/api/check-table2" },   
+    { url: "http://localhost:5000/api/check-table2" },
   ];
 
   useEffect(() => {
@@ -26,19 +26,22 @@ export default function TableDisplay() {
             if (
               data &&
               data.data &&
-              data.data.recordset &&
-              data.data.recordset.length > 0
+              data.data.recordsets &&
+              data.data.recordsets.length > 0 &&
+              data.data.recordsets[0].length > 0
             ) {
               // Extract columns and rows for each URL response
-              const columns = Object.keys(data.data.recordset[0]).map((key) => ({
+              const columns = Object.keys(data.data.recordsets[0][0]).map((key) => ({
                 id: key,
                 label: key,
               }));
-              const rows = data.data.recordset.map((item) => ({
+              const rows = data.data.recordsets[0].map((item) => ({
                 ...item,
               }));
 
               return { columns, rows };
+            } else {
+              return { columns: [], rows: [] };
             }
           } catch (error) {
             console.error(`Error fetching data from ${urlObj.url}:`, error);
@@ -56,7 +59,7 @@ export default function TableDisplay() {
 
   return (
     <Container>
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={2}>
         {dataList.map((data, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <BasicTable columns={data.columns} rows={data.rows} />
