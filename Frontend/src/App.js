@@ -1,10 +1,13 @@
 import React from "react";
-import TableDisplay from "./Components/TableDisplay/tableDisplay"
+import TableDisplay from "./Components/TableDisplay/tableDisplay";
+import NavBar from "./Components/Navbar";
+
 
 function App() {
   return (
     <>
-      <TableDisplay numberOfBoxes={9}/>
+      <NavBar />
+      <TableDisplay numberOfBoxes={9} />
     </>
   );
 }
