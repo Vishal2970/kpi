@@ -12,14 +12,7 @@ const NavBar = () => {
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="logo">
-          <Box
-            component="img"
-            sx={{
-              maxHeight: 40, // Adjust the size of the logo as needed
-            }}
-            alt="Logo"
-            src={logo}
-          />
+          <Box component="img" sx={{maxHeight: 40,}} alt="Logo" src={logo}/>
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
       </Toolbar>
