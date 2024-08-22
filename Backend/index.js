@@ -1,13 +1,19 @@
+require("dotenv").config();
 const express = require("express");
-const dotenv = require("dotenv");
 const { connectToDatabase, sql } = require("./config/db"); // Import sql here
 const table = require("./Routes/table");
-const authRoute = require("./Routes/authRoutes")
-
-// Load environment variables from .env file
-dotenv.config();
+const authRoute = require("./Routes/authRoutes");
+const cors = require("cors");
 
 const app = express();
+
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+  method: "GET,POST,PUT,DELETE,PATCH,HEAD",
+  credentials: true,
+};
+app.use(cors(corsOptions));
 const port = process.env.PORT || 5000;
 // vishal
 // Connect to the database

@@ -1,10 +1,12 @@
 const {sql}=require("../config/db")
 const auth = async (req, res) => {
   try {
-    console.log("Hiit");
+    console.log("Hitted");
     
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query("select top 10 * from tadnreportchild");
+    const response = await request.query("select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.2'");
+    console.log(response);
+    
     res
       .status(200)
       .send({ message: "Database connection is successful", data: response });
