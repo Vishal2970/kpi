@@ -51,6 +51,7 @@ export default function TableDisplay() {
     };
 
     fetchAllData();
+    // eslint-disable-next-line
   }, []);
 
   return (
