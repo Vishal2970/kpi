@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const { connectToDatabase, sql } = require("./config/db"); // Import sql here
+const { connectToDatabase, sql } = require("./config/db");
 const table = require("./Routes/table");
 const authRoute = require("./Routes/authRoutes");
 const cors = require("cors");
@@ -14,7 +14,7 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 // vishal
 // Connect to the database
 connectToDatabase();

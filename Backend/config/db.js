@@ -1,11 +1,11 @@
 const sql = require("mssql");
 
 const dbConfig = {
-  user: process.env.DB_USER || 'erpbo',  // Default value to 'erpbo' if env variable is not set
-  password: process.env.DB_PASSWORD || 'erpbo',
-  server: process.env.DB_SERVER || '195.159.227.100',
-  database: process.env.DB_DATABASE || 'YH_Optimize',
-  port: parseInt(process.env.DB_PORT, 10) || 5555,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD ,
+  server: process.env.DB_SERVER,
+  database: process.env.DB_DATABASE,
+  port: parseInt(process.env.DB_PORT, 10) ,
   options: {
     encrypt: false,
     enableArithAbort: true,

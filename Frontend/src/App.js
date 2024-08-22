@@ -4,11 +4,11 @@ import NavBar from "./Components/Navbar";
 
 
 function App() {
-  
+
   return (
     <>
       <NavBar />
-      <TableDisplay numberOfBoxes={9} />
+      <TableDisplay numberOfBoxes={9} URL="http://localhost:5000/api/check-table"/>
     </>
   );
 }

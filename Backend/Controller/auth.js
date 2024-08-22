@@ -1,11 +1,11 @@
 const {sql}=require("../config/db")
-const auth = async (req, res) => {
+const table0 = async (req, res) => {
   try {
     console.log("Hitted");
     
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query("select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.2'");
-    console.log(response);
+    const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.2'");
+    // console.log(response);
     
     res
       .status(200)
@@ -17,4 +17,40 @@ const auth = async (req, res) => {
     });
   }
 };
-module.exports = auth;
+const table1 = async (req, res) => {
+  try {
+    console.log("Hitted");
+    
+    const request = new sql.Request(); // Ensure sql is imported
+    const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.3'");
+    // console.log(response);
+    
+    res
+      .status(200)
+      .send({ message: "Database connection is successful", data: response });
+  } catch (err) {
+    res.status(500).send({
+      message: "Failed to connect to the database",
+      error: err.message,
+    });
+  }
+};
+const table2 = async (req, res) => {
+  try {
+    console.log("Hitted");
+    
+    const request = new sql.Request(); // Ensure sql is imported
+    const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.4'");
+    // console.log(response);
+    
+    res
+      .status(200)
+      .send({ message: "Database connection is successful", data: response });
+  } catch (err) {
+    res.status(500).send({
+      message: "Failed to connect to the database",
+      error: err.message,
+    });
+  }
+};
+module.exports = {table0,table1,table2};
