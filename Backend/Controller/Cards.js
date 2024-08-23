@@ -1,11 +1,11 @@
 const { sql } = require("../config/db");
+const getQueryFromXML = require("../XMLParser");
 
 const card1 = async (req, res) => {
   try {
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query(
-      "select top 1 CopkchildId from tadnreportchild where copkchildid='11.5'"
-    );
+    const root=await getQueryFromXML()
+    const response = await request.query(root.query[3]);
     res.status(200).send({ data: response });
   } catch (err) {
     res.status(500).send({
@@ -16,9 +16,8 @@ const card1 = async (req, res) => {
 const card2 = async (req, res) => {
   try {
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query(
-      "select top 1 CopkchildId from tadnreportchild where copkchildid='11.3'"
-    );
+    const root=await getQueryFromXML()
+    const response = await request.query(root.query[4]);
     res.status(200).send({ data: response });
   } catch (err) {
     res.status(500).send({
@@ -29,9 +28,8 @@ const card2 = async (req, res) => {
 const card3 = async (req, res) => {
   try {
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query(
-      "select top 1 CopkchildId from tadnreportchild where copkchildid='11.2'"
-    );
+    const root=await getQueryFromXML()
+    const response = await request.query(root.query[5]);
     res.status(200).send({ data: response });
   } catch (err) {
     res.status(500).send({
