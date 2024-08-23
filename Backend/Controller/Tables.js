@@ -4,7 +4,9 @@ const getQueryFromXML = require("../XMLParser");
 const table1 = async (req, res) => {
   try {
     const root = await getQueryFromXML();
-    console.log("Table 1 " + root.query[0]);
+    // console.log("Table 1 " + root.query[0]);
+    console.log("Hello");
+    
 
     const request = new sql.Request();
     const response = await request.query(root.query[0]);
