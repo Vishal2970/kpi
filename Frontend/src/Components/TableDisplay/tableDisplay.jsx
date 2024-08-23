@@ -7,12 +7,21 @@ export default function TableDisplay() {
   const [dataList, setDataList] = useState([]);
 
   const URLS = [
-    { url: "http://localhost:5000/api/check-table" },
     { url: "http://localhost:5000/api/check-table1" },
     { url: "http://localhost:5000/api/check-table2" },
-    { url: "http://localhost:5000/api/check-table" },
+    { url: "http://localhost:5000/api/check-table3" },
     { url: "http://localhost:5000/api/check-table1" },
     { url: "http://localhost:5000/api/check-table2" },
+    { url: "http://localhost:5000/api/check-table3" },
+    { url: "http://localhost:5000/api/check-table1" },
+    { url: "http://localhost:5000/api/check-table2" },
+    { url: "http://localhost:5000/api/check-table3" },
+    { url: "http://localhost:5000/api/check-table1" },
+    { url: "http://localhost:5000/api/check-table2" },
+    { url: "http://localhost:5000/api/check-table3" },
+    { url: "http://localhost:5000/api/check-table1" },
+    { url: "http://localhost:5000/api/check-table2" },
+    { url: "http://localhost:5000/api/check-table3" },
   ];
 
   useEffect(() => {

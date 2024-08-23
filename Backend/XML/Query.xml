@@ -1,0 +1,5 @@
+<root>
+    <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.2'</query>
+    <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.3'</query>
+    <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.5'</query>
+</root>

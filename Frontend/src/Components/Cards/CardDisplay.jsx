@@ -73,18 +73,9 @@ export default function CardDisplay() {
   const [dataList, setDataList] = useState([]);
 
   const URLS = [
-    { url: "http://localhost:5000/api/check-table3" },
-    { url: "http://localhost:5000/api/check-table4" },
-    { url: "http://localhost:5000/api/check-table5" },
-    { url: "http://localhost:5000/api/check-table3" },
-    // { url: "http://localhost:5000/api/check-table4" },
-    // { url: "http://localhost:5000/api/check-table5" },
-    // { url: "http://localhost:5000/api/check-table3" },
-    // { url: "http://localhost:5000/api/check-table4" },
-    // { url: "http://localhost:5000/api/check-table5" },
-    // { url: "http://localhost:5000/api/check-table3" },
-    // { url: "http://localhost:5000/api/check-table4" },
-    // { url: "http://localhost:5000/api/check-table5" },
+    { url: "http://localhost:5000/api/check-card1" },
+    { url: "http://localhost:5000/api/check-card2" },
+    { url: "http://localhost:5000/api/check-card3" },
   ];
 
   useEffect(() => {

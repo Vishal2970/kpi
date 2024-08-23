@@ -1,8 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const { connectToDatabase, sql } = require("./config/db");
-const table = require("./Routes/table");
-const authRoute = require("./Routes/authRoutes");
+const tablesRoutes = require("./Routes/tablesRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -20,8 +19,7 @@ const port = process.env.PORT;
 connectToDatabase();
 
 // API route to check the database connection
-app.use("/api", table);
-app.use("/api", authRoute);
+app.use("/api", tablesRoutes);
 
 // Start the server
 app.listen(port, () => {
