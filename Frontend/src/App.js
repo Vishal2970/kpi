@@ -7,13 +7,11 @@ import { Box } from "@mui/material";
 function App() {
   return (
     <>
-      <NavBar  />
-      <Box mt={3}  mb={3}>
+      <NavBar />
+      <Box mt={3} mb={3}>
         <CardDisplay />
       </Box>
-      {/* <Box mt={3} mb={3}> {/ Margin at the top and bottom /} */}
-        <TableDisplay />
-      {/* </Box> */}
+      <TableDisplay />
     </>
   );
 }
