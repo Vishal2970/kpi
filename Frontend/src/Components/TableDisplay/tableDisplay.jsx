@@ -24,43 +24,85 @@ export default function TableDisplay() {
     { url: "http://localhost:5000/api/check-table3" },
   ];
 
+  // useEffect(() => {
+  //   const fetchAllData = async () => {
+  //     try {
+  //       const results = await Promise.all(
+  //         URLS.map(async (urlObj) => {
+  //           const response = await axios.get(urlObj.url);
+  //           const data = response.data;
+
+  //           if (
+  //             data &&
+  //             data.data &&
+  //             data.data.recordsets &&
+  //             data.data.recordsets.length > 0 &&
+  //             data.data.recordsets[0].length > 0
+  //           ) {
+  //             const columns = Object.keys(data.data.recordsets[0][0]).map(
+  //               (key) => ({
+  //                 id: key,
+  //                 label: key,
+  //               })
+  //             );
+  //             const rows = data.data.recordsets[0];
+
+  //             return { columns, rows };
+  //           }
+  //           return { columns: [], rows: [] };
+  //         })
+  //       );
+
+  //       setDataList(results);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchAllData();
+  // }, []);
   useEffect(() => {
     const fetchAllData = async () => {
       try {
         const results = await Promise.all(
           URLS.map(async (urlObj) => {
-            const response = await axios.get(urlObj.url);
-            const data = response.data;
-
-            if (
-              data &&
-              data.data &&
-              data.data.recordsets &&
-              data.data.recordsets.length > 0 &&
-              data.data.recordsets[0].length > 0
-            ) {
-              const columns = Object.keys(data.data.recordsets[0][0]).map(
-                (key) => ({
-                  id: key,
-                  label: key,
-                })
-              );
-              const rows = data.data.recordsets[0];
-
-              return { columns, rows };
+            try {
+              const response = await axios.get(urlObj.url);
+              const data = response.data;
+  
+              if (
+                data &&
+                data.data &&
+                data.data.recordsets &&
+                data.data.recordsets.length > 0 &&
+                data.data.recordsets[0].length > 0
+              ) {
+                const columns = Object.keys(data.data.recordsets[0][0]).map(
+                  (key) => ({
+                    id: key,
+                    label: key,
+                  })
+                );
+                const rows = data.data.recordsets[0];
+  
+                return { columns, rows };
+              }
+              return { columns: [], rows: [] };
+            } catch (error) {
+              console.error(`Error fetching data from ${urlObj.url}:`, error);
+              return { columns: [], rows: [] }; // return empty object if error occurs
             }
-            return { columns: [], rows: [] };
           })
         );
-
+  
         setDataList(results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+  
     fetchAllData();
-  }, []);
+  });
 
   return (
     <Container>

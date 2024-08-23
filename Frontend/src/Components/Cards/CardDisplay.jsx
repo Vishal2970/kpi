@@ -76,6 +76,9 @@ export default function CardDisplay() {
     { url: "http://localhost:5000/api/check-card1" },
     { url: "http://localhost:5000/api/check-card2" },
     { url: "http://localhost:5000/api/check-card3" },
+    { url: "http://localhost:5000/api/check-card1" },
+    { url: "http://localhost:5000/api/check-card2" },
+    { url: "http://localhost:5000/api/check-card3" },
   ];
 
   useEffect(() => {
@@ -136,7 +139,7 @@ export default function CardDisplay() {
 
   return (
     <Container>
-      {dataList.length > 3 ? (
+      {dataList.length > 4 ? (
         <Slider {...settings}>
           {dataList.map((data, index) => (
             <div key={index}>

@@ -2,7 +2,7 @@
     <!-- tables -->
     <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.2'</query>
     <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.3'</query>
-    <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.5'</query>
+    <query>exec [usp_repSerialNo] @IsTrue=false,@custcategory='0',@customerno='20400400100002',@custtype='' '</query>
     <!-- cards -->
     <query>select top 1 CopkchildId from tadnreportchild where copkchildid='11.5'</query>
     <query>select top 1 CopkchildId from tadnreportchild where copkchildid='11.3'</query>
