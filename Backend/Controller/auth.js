@@ -2,7 +2,7 @@ const {sql}=require("../config/db")
 const table0 = async (req, res) => {
   try {
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.2'");
+    const response = await request.query("select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.2'");
     // console.log(response);
     
     res
@@ -18,7 +18,7 @@ const table0 = async (req, res) => {
 const table1 = async (req, res) => {
   try {
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.3'");
+    const response = await request.query("select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.3'");
     // console.log(response);
     
     res
@@ -34,7 +34,7 @@ const table1 = async (req, res) => {
 const table2 = async (req, res) => {
   try {
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query("select CopkchildId,CopkChildName,CoViewName,CopkChildDisplayText from tadnreportchild where copkchildid='11.4'");
+    const response = await request.query("select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.5'");
     // console.log(response);
     
     res
@@ -50,7 +50,7 @@ const table2 = async (req, res) => {
 const table3 = async (req, res) => {
   try {
     const request = new sql.Request(); // Ensure sql is imported
-    const response = await request.query("select top 1 CopkchildId from tadnreportchild where copkchildid='11.4'");
+    const response = await request.query("select top 1 CopkchildId from tadnreportchild where copkchildid='11.5'");
     // console.log(response);
     
     res

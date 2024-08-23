@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <Box mt={3} mb={3}>
+      <Box mt={3} mb={4}>
         <CardDisplay />
       </Box>
       <TableDisplay />
