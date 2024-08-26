@@ -10,7 +10,7 @@ const NavBar = () => {
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="logo">
-          <Box component="img" sx={{ maxHeight: 40 }} alt="Logo" src={logo} />
+          <Box component="img" sx={{ maxHeight: 40 }} alt="Logo"  srcSet={logo} />
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
       </Toolbar>
@@ -18,4 +18,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBar;//src={logo}
