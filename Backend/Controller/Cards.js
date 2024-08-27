@@ -3,6 +3,7 @@ const getQueryFromXML = require("../XMLParser");
 
 const card1 = async (req, res) => {
   try {
+    console.log("Hello card 1");
     const request = new sql.Request(); // Ensure sql is imported
     const root=await getQueryFromXML()
     const response = await request.query(root.query[3]);
@@ -15,6 +16,7 @@ const card1 = async (req, res) => {
 };
 const card2 = async (req, res) => {
   try {
+    console.log("Hello card 2");
     const request = new sql.Request(); // Ensure sql is imported
     const root=await getQueryFromXML()
     const response = await request.query(root.query[4]);
@@ -27,6 +29,7 @@ const card2 = async (req, res) => {
 };
 const card3 = async (req, res) => {
   try {
+    console.log("Hello card 3");
     const request = new sql.Request(); // Ensure sql is imported
     const root=await getQueryFromXML()
     const response = await request.query(root.query[5]);

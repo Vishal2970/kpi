@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useMemo } from "react";
 import BasicTable from "../tables/test";
 import { Grid, Container } from "@mui/material";
 import axios from "axios";
@@ -6,7 +6,7 @@ import axios from "axios";
 export default function TableDisplay() {
   const [dataList, setDataList] = useState([]);
 
-  const URLS = [
+  const URLS = useMemo(() => [
     { url: "http://localhost:5000/api/check-table1" },
     { url: "http://localhost:5000/api/check-table2" },
     { url: "http://localhost:5000/api/check-table3" },
@@ -22,45 +22,9 @@ export default function TableDisplay() {
     { url: "http://localhost:5000/api/check-table1" },
     { url: "http://localhost:5000/api/check-table2" },
     { url: "http://localhost:5000/api/check-table3" },
-  ];
+  ], []);
 
-  // useEffect(() => {
-  //   const fetchAllData = async () => {
-  //     try {
-  //       const results = await Promise.all(
-  //         URLS.map(async (urlObj) => {
-  //           const response = await axios.get(urlObj.url);
-  //           const data = response.data;
-
-  //           if (
-  //             data &&
-  //             data.data &&
-  //             data.data.recordsets &&
-  //             data.data.recordsets.length > 0 &&
-  //             data.data.recordsets[0].length > 0
-  //           ) {
-  //             const columns = Object.keys(data.data.recordsets[0][0]).map(
-  //               (key) => ({
-  //                 id: key,
-  //                 label: key,
-  //               })
-  //             );
-  //             const rows = data.data.recordsets[0];
-
-  //             return { columns, rows };
-  //           }
-  //           return { columns: [], rows: [] };
-  //         })
-  //       );
-
-  //       setDataList(results);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchAllData();
-  // }, []);
+ 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -102,7 +66,7 @@ export default function TableDisplay() {
     };
   
     fetchAllData();
-  });
+  },[URLS]);
 
   return (
     <Container>
@@ -116,3 +80,42 @@ export default function TableDisplay() {
     </Container>
   );
 }
+
+
+ // useEffect(() => {
+  //   const fetchAllData = async () => {
+  //     try {
+  //       const results = await Promise.all(
+  //         URLS.map(async (urlObj) => {
+  //           const response = await axios.get(urlObj.url);
+  //           const data = response.data;
+
+  //           if (
+  //             data &&
+  //             data.data &&
+  //             data.data.recordsets &&
+  //             data.data.recordsets.length > 0 &&
+  //             data.data.recordsets[0].length > 0
+  //           ) {
+  //             const columns = Object.keys(data.data.recordsets[0][0]).map(
+  //               (key) => ({
+  //                 id: key,
+  //                 label: key,
+  //               })
+  //             );
+  //             const rows = data.data.recordsets[0];
+
+  //             return { columns, rows };
+  //           }
+  //           return { columns: [], rows: [] };
+  //         })
+  //       );
+
+  //       setDataList(results);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchAllData();
+  // }, []);

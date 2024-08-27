@@ -5,7 +5,7 @@ const table1 = async (req, res) => {
   try {
     const root = await getQueryFromXML();
     // console.log("Table 1 " + root.query[0]);
-    console.log("Hello");
+    console.log("Hello table 1");
     
 
     const request = new sql.Request();
@@ -19,6 +19,7 @@ const table1 = async (req, res) => {
 };
 const table2 = async (req, res) => {
   try {
+    console.log("Hello table 2");
     const root = await getQueryFromXML();
     const request = new sql.Request(); // Ensure sql is imported
     const response = await request.query(root.query[1]);
@@ -31,6 +32,7 @@ const table2 = async (req, res) => {
 };
 const table3 = async (req, res) => {
   try {
+    console.log("Hello table 3");
     const root = await getQueryFromXML();
     const request = new sql.Request(); // Ensure sql is imported
     const response = await request.query(root.query[2]);
