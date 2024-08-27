@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Bargraph() {
+export default function Bargraph({header,data}) {
   return (
     <div>
       <BarChart
