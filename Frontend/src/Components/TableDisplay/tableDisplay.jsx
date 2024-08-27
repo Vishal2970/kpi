@@ -5,6 +5,7 @@ import axios from "axios";
 
 export default function TableDisplay() {
   const [dataList, setDataList] = useState([]);
+  const [filter,setFilter]=useState(null);
 
   const URLS = useMemo(() => [
     { url: "http://localhost:5000/api/check-table1" },
@@ -31,7 +32,11 @@ export default function TableDisplay() {
         const results = await Promise.all(
           URLS.map(async (urlObj) => {
             try {
-              const response = await axios.get(urlObj.url);
+              const params={};
+              if(filter!==null){
+                params.filter=filter;
+              }
+              const response = await axios.get(urlObj.url,{params});
               const data = response.data;
   
               if (
@@ -66,7 +71,7 @@ export default function TableDisplay() {
     };
   
     fetchAllData();
-  },[URLS]);
+  },[URLS,filter]);
 
   return (
     <Container>

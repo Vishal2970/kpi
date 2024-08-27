@@ -81,7 +81,7 @@
 // //   );
 // // }
 
-import React from "react";
+import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -92,12 +92,31 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Box from "@mui/material/Box";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function BasicTable({ columns, rows }) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [filter, setFilter] = useState(null);
+
   if (!Array.isArray(columns) || !Array.isArray(rows)) {
     console.error("Invalid prop types for columns or rows");
     return null;
   }
+
+  const handleFilterClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleFilterClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleFilterSelect = (filter) => {
+    setFilter(filter);
+    setAnchorEl(null);
+    console.log(filter);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -109,9 +128,28 @@ export default function BasicTable({ columns, rows }) {
             right: 8,
           }}
           size="small"
+          onClick={handleFilterClick}
         >
           <FilterListIcon />
         </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleFilterClose}
+        >
+          <MenuItem onClick={() => handleFilterSelect("option1")}>
+{/* high hai to low aur low hai to high
+table hai to graph aur graph hai to table */}
+
+            Option 1
+          </MenuItem>
+          <MenuItem onClick={() => handleFilterSelect("option2")}>
+            Option 2
+          </MenuItem>
+          <MenuItem onClick={() => handleFilterSelect("option3")}>
+            Option 3
+          </MenuItem>
+        </Menu>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>

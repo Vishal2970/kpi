@@ -1,13 +1,13 @@
 const express = require("express");
-const { table1, table2, table3 } = require("../Controller/Tables");
+const { table1} = require("../Controller/Tables");
 const { card1, card2, card3 } = require("../Controller/Cards");
 
 const router = express.Router();
 
 //for table add here
 router.route("/check-table1").get(table1);
-router.route("/check-table2").get(table2);
-router.route("/check-table3").get(table3);
+// router.route("/check-table2").get(table2);
+// router.route("/check-table3").get(table3);, table2, table3
 
 
 //for card add here
