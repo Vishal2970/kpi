@@ -146,15 +146,15 @@ const FilterButton = React.memo(({ onClick }) => {
   );
 });
 
-export default function BasicTable({ rows, widgetName }) {
+export default function BasicTable({ rows, widgetName,filterProps }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [filter, setFilter] = React.useState(null);
 
-  const filteredRows = React.useMemo(() => {
-    if (!filter) return rows;
-    // Example filtering logic
-    return rows.filter((row) => row.CopkChildName === filter);
-  }, [filter, rows]);
+  // const filteredRows = React.useMemo(() => {
+  //   if (!filter) return rows;
+  //   // Example filtering logic
+  //   return rows.filter((row) => row.CopkChildName === filter);
+  // }, [rows]);
 
   // Validate rows: it should be an array of objects
   if (
@@ -177,10 +177,11 @@ export default function BasicTable({ rows, widgetName }) {
   };
 
   const handleFilterSelect = (selectedFilter) => {
-    setFilter(selectedFilter);
+    // console.log(`Widget Name: ${widgetName}, Filter: ${selectedFilter}`);
+    // setFilter(selectedFilter);
+    filterProps([widgetName,selectedFilter])
     setAnchorEl(null);
   };
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <TableContainer component={Paper}>
@@ -189,7 +190,7 @@ export default function BasicTable({ rows, widgetName }) {
             sx={{ inlineSize: 650 }}
             size="small"
             aria-label="a dense table"
-            key={filteredRows.length}
+            key={rows.length}
           >
             <TableHead>
               <TableRow>
@@ -214,7 +215,7 @@ export default function BasicTable({ rows, widgetName }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredRows.map((row, rowIndex) => (
+              {rows.map((row, rowIndex) => (
                 <TableRow
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
@@ -244,15 +245,10 @@ export default function BasicTable({ rows, widgetName }) {
         open={Boolean(anchorEl)}
         onClose={handleFilterClose}
       >
-        <MenuItem onClick={() => handleFilterSelect("Option1")}>
-          Option 1
-        </MenuItem>
-        <MenuItem onClick={() => handleFilterSelect("Option2")}>
-          Option 2
-        </MenuItem>
-        <MenuItem onClick={() => handleFilterSelect("Option3")}>
-          Option 3
-        </MenuItem>
+        <MenuItem onClick={() => handleFilterSelect("ASC")}>ASC</MenuItem>
+        <MenuItem onClick={() => handleFilterSelect("DSC")}>DSC</MenuItem>
+        <MenuItem onClick={() => handleFilterSelect("GRAPH")}>GRAPH</MenuItem>
+        <MenuItem onClick={() => handleFilterSelect("TABLE")}>TABLE</MenuItem>
       </Menu>
     </Box>
   );

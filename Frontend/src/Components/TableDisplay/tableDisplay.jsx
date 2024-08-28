@@ -13,10 +13,14 @@ export default function TableDisplay() {
     () => [{ url: "http://localhost:5000/api/check-table" }],
     []
   );
+  const handleFilter=(filterProps)=>{
+    console.log(`Widget Name: ${filterProps}, Filter: ${filterProps.selectedFilter}`);
+  }
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
+        
         let rows = [];
         let widgetNames = [];
 
@@ -64,7 +68,7 @@ export default function TableDisplay() {
       <Grid container spacing={2}>
         {Rows.map((data, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <BasicTable rows={data} widgetName={WidgetNames[index]} />
+            <BasicTable rows={data} widgetName={WidgetNames[index]} filterProps={handleFilter}/>
           </Grid>
         ))}
       </Grid>
