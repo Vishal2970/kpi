@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,14 +12,21 @@ import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-export default function BasicTable({ columns, rows }) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [filter, setFilter] = useState(null);
+export default function BasicTable({ rows }) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [filter, setFilter] = React.useState(null);
 
-  if (!Array.isArray(columns) || !Array.isArray(rows)) {
-    console.error("Invalid prop types for columns or rows");
+  // Log rows for debugging
+  console.log("rows", rows);
+
+  // Validate rows: it should be an array of objects
+  if (!Array.isArray(rows) || rows.some(row => typeof row !== 'object' || row === null)) {
+    console.error("Invalid prop type for rows");
     return null;
   }
+
+  // Determine column names based on the first row
+  const columnNames = rows.length > 0 ? Object.keys(rows[0]) : [];
 
   const handleFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,78 +39,68 @@ export default function BasicTable({ columns, rows }) {
   const handleFilterSelect = (filter) => {
     setFilter(filter);
     setAnchorEl(null);
-    console.log(filter);
+    // Implement filter logic here if needed
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Box sx={{ position: "relative" }}>
-        <IconButton
-          sx={{
-            position: "absolute",
-            insetBlockStart: 8,
-            insetInlineEnd: 8,
-          }}
-          size="small"
-          onClick={handleFilterClick}
-        >
-          <FilterListIcon />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleFilterClose}
-        >
-          <MenuItem onClick={() => handleFilterSelect("option1")}>
-{/* high hai to low aur low hai to high
-table hai to graph aur graph hai to table */}
-
-            Option 1
-          </MenuItem>
-          <MenuItem onClick={() => handleFilterSelect("option2")}>
-            Option 2
-          </MenuItem>
-          <MenuItem onClick={() => handleFilterSelect("option3")}>
-            Option 3
-          </MenuItem>
-        </Menu>
-        <Table sx={{ inlineSize: 650 }} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align || "left"}
-                  sx={{ padding: "4px 16px" }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, rowIndex) => (
-              <TableRow
-                key={rowIndex}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  insetBlockEnd: "-4px",
-                }}
-              >
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align || "left"}
-                    sx={{ padding: "4px 16px" }}
-                  >
-                    {row[column.id]}
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <TableContainer component={Paper}>
+        <Box sx={{ position: "relative" }}>
+          <IconButton
+            sx={{
+              position: "absolute",
+              insetBlockStart: 8,
+              insetInlineEnd: 8,
+            }}
+            size="small"
+            onClick={handleFilterClick}
+          >
+            <FilterListIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleFilterClose}
+          >
+            <MenuItem onClick={() => handleFilterSelect("option1")}>
+              Option 1
+            </MenuItem>
+            <MenuItem onClick={() => handleFilterSelect("option2")}>
+              Option 2
+            </MenuItem>
+            <MenuItem onClick={() => handleFilterSelect("option3")}>
+              Option 3
+            </MenuItem>
+          </Menu>
+          <Table sx={{ inlineSize: 650 }} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                {columnNames.map((columnName, index) => (
+                  <TableCell key={index} align="left" sx={{ padding: "4px 16px" }}>
+                    {columnName}
                   </TableCell>
                 ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Box>
-    </TableContainer>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, rowIndex) => (
+                <TableRow
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
+                  key={rowIndex}
+                >
+                  {columnNames.map((columnName, cellIndex) => (
+                    <TableCell key={cellIndex} align="left" sx={{ padding: "4px 16px" }}>
+                      {row[columnName]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </TableContainer>
+    </Box>
   );
 }

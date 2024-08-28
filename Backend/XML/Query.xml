@@ -2,7 +2,7 @@
 <KPIs>
   <KPI did="dSales" id="KpiSales" Name="Sales">
     <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
-      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select top 3 CoSaleswVAT from dbo.TaAccItemdailySales WITH (NOLOCK)  "
+      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select CopkchildId,CopkChildName from tadnreportchild where copkchildid='11.2'"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="dSales1">
         <parameter>          
           <Shopno>CoShopNo</Shopno>
@@ -11,7 +11,7 @@
     </widget>
    
     <widget name="GuestUserSaleswvat" displayname="GuestUserSaleswvat">
-      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select top 2 CoSaleswVAT from dbo.TaAccItemdailySales WITH (NOLOCK)  "
+      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.3'"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
         <parameter>
           <Shopno>CoShopNo</Shopno>

@@ -3,6 +3,7 @@ import TableDisplay from "./Components/TableDisplay/tableDisplay";
 import NavBar from "./Components/Navbar";
 import CardDisplay from "./Components/Cards/CardDisplay";
 import { Box } from "@mui/material";
+// import Bargraph from "./Components/Graph/Bargraph";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <CardDisplay />
       </Box>
       <TableDisplay />
+      {/* <Bargraph/> */}
     </>
   );
 }

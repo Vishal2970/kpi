@@ -1,6 +1,7 @@
+import { BarChart } from "@mui/icons-material";
 import React from "react";
 
-export default function Bargraph({header,data}) {
+export default function Bargraph() {
   return (
     <div>
       <BarChart
