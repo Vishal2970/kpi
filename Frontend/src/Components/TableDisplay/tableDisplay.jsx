@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState, useMemo } from "react";
-import BasicTable from "../tables/test";
+import BasicTable from "../tables/BasicTable";
 import { Grid, Container } from "@mui/material";
 import axios from "axios";
 
@@ -46,8 +46,8 @@ export default function TableDisplay() {
           })
         );
 
-        console.log("rows", rows);
-        console.log("widgetNames", widgetNames);
+        // console.log("rows", rows);
+        // console.log("widgetNames", widgetNames);
 
         setRows(rows);
         setWidgetNames(widgetNames);

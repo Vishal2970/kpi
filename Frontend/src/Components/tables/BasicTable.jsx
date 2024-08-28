@@ -12,7 +12,9 @@ import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-export default function BasicTable({ rows }) {
+export default function BasicTable({ rows, widgetName }) {
+  console.log(widgetName);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [filter, setFilter] = React.useState(null);
 
@@ -20,7 +22,10 @@ export default function BasicTable({ rows }) {
   console.log("rows", rows);
 
   // Validate rows: it should be an array of objects
-  if (!Array.isArray(rows) || rows.some(row => typeof row !== 'object' || row === null)) {
+  if (
+    !Array.isArray(rows) ||
+    rows.some((row) => typeof row !== "object" || row === null)
+  ) {
     console.error("Invalid prop type for rows");
     return null;
   }
@@ -74,6 +79,11 @@ export default function BasicTable({ rows }) {
           </Menu>
           <Table sx={{ inlineSize: 650 }} size="small" aria-label="a dense table">
             <TableHead>
+              <TableRow>
+                <TableCell colSpan={columnNames} align="center" sx={{ padding: "4px 16px" }}>
+                  {widgetName}
+                </TableCell>
+              </TableRow>
               <TableRow>
                 {columnNames.map((columnName, index) => (
                   <TableCell key={index} align="left" sx={{ padding: "4px 16px" }}>
