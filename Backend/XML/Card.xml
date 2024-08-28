@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<KPIs>
+  <KPI did="dSales" id="KpiSales" Name="Sales">
+    <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
+      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select CopkchildId,CopkChildName from tadnreportchild where copkchildid='11.2'"
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="dSales1">
+        <parameter>          
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
+<!--    
+    <widget name="GuestUserSaleswvat" displayname="GuestUserSaleswvat">
+      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.3'"
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
+    <widget name="RegUserSaleswvat" displayname="RegUserSaleswvat">
+      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.4'"
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget> -->
+  </KPI>    
+</KPIs>
+<!-- <root>
+ table
+    <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.2'</query>
+    <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.3'</query>
+    <query>select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.4'</query>
+    card
+    <query>select top 1 CopkchildId from tadnreportchild where copkchildid='11.5'</query>
+    <query>select top 1 CopkchildId from tadnreportchild where copkchildid='11.3'</query>
+    <query>select top 1 CopkchildId from tadnreportchild where copkchildid='11.2'</query>
+</root>  -->

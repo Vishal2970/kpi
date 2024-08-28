@@ -112,7 +112,7 @@ const xml2js = require('xml2js');
 
 const getQueryFromXML = async () => {
   try {
-    const xmlString = fs.readFileSync("./XML/Query.xml", "utf8");
+    const xmlString = fs.readFileSync("./XML/Table.xml", "utf8");
     const parser = new xml2js.Parser({ compact: true, ignoreComment: true });
 
     const result = await parser.parseStringPromise(xmlString);

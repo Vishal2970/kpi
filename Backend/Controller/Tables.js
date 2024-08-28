@@ -1,5 +1,5 @@
 const { sql } = require("../config/db");
-const getQueryFromXML = require("../XMLParser");
+const getQueryFromXML = require("../XML/parser/XMLTableParser");
 const fs = require("fs");
 
 const table = async (req, res) => {

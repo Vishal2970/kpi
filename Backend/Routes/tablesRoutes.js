@@ -1,6 +1,6 @@
 const express = require("express");
 const { table} = require("../Controller/Tables");
-// const { card1, card2, card3 } = require("../Controller/Cards");
+const { Card } = require("../Controller/Cards");
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.route("/check-table").get(table);
 
 
 // //for card add here
-// router.route("/check-card1").get(card1);
+router.route("/check-card").get(Card);
 // router.route("/check-card2").get(card2);
 // router.route("/check-card3").get(card3);
 
