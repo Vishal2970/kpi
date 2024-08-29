@@ -8,7 +8,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function CardDisplay() {
   const [WidgetNames, setWidgetNames] = useState([]);
-  const [Rows, setRows] = useState([]);
+  const [Rows, setRows] = useState({
+    row,
+    widgetName
+  });
 
   const URLS = [{ url: "http://localhost:5000/api/check-card" }];
 
@@ -66,13 +69,16 @@ export default function CardDisplay() {
 
   const renderCards = () => {
     const cards = [];
-    for (let i = 0; i < Rows.length; i++) {
+    // for (let i = 0; i < Rows.length; i++) {
+    Rows.map(()=>{
+      
+    })
       cards.push(
         <div key={i}>
-          <Card Data={Rows[i]} Columns={WidgetNames} />
+          <Card Data={Rows} Columns={WidgetNames} />
         </div>
       );
-    }
+    // }
     return cards;
   };
 

@@ -67,10 +67,12 @@ const table = async (req, res) => {
               query += {sharedCondition};
             }
           }
+          console.log(sharedOrder);
+          
           if (sharedOrder) {
-            // append the shared condition to the query
             if (query.toUpperCase().includes("ORDER BY")) {
-              query += ` ${sharedOrder}`;
+              query = query.toUpperCase().includes("ASC")?query.toUpperCase().replace("ASC",sharedOrder):query.toUpperCase().replace("DESC",sharedOrder)
+
             }
           }
           console.log("final query " + query);
