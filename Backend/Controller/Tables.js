@@ -32,55 +32,6 @@ const fs = require("fs");
 //   }
 // };
 
-// const table = async (req, res) => {
-//   try {
-//     const widgetItems = await getQueryFromXML();
-//     const widgetName = req.query.widgetName; // assuming the widgetName is passed as a query parameter
-//     const sharedCondition = req.query.sharedCondition; // assuming the sharedCondition is passed as a query parameter
-
-//     const responses = await Promise.all(widgetItems.map(async (widgetItem) => {
-//       try {
-//         let query = widgetItem.query;
-//         let parameters = widgetItem.parameters;
-
-//         if (widgetName) {
-//           // add the WHERE clause to filter by widgetName
-//           query += ` WHERE widgetName = @widgetName`;
-//           parameters.widgetName = widgetName;
-//         }
-
-//         if (sharedCondition) {
-//           // append the shared condition to the query
-//           if (query.includes('WHERE')) {
-//             query += ` AND ${sharedCondition}`;
-//           } else {
-//             query += ` WHERE ${sharedCondition}`;
-//           }
-//         }
-
-//         const queryResponse = await sql.query(query, parameters);
-//         return {
-//           widgetName: widgetItem.widgetName,
-//           parameters: widgetItem.parameters,
-//           response: queryResponse.recordset,
-//         };
-//       } catch (err) {
-//         console.error(err);
-//         return {
-//           widgetName: widgetItem.widgetName,
-//           parameters: widgetItem.parameters,
-//           error: err.message,
-//         };
-//       }
-//     }));
-
-//     res.send(responses);
-//   } catch (err) {
-//     res.status(500).send({
-//       error: err.message,
-//     });
-//   }
-// };
 
 const table = async (req, res) => {
   try {
