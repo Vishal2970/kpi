@@ -2,7 +2,7 @@
 <KPIs>
   <KPI did="dSales" id="KpiSales" Name="Sales">
     <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
-      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select sum(CoTotSaleswoVAT)CoSaleswoVAT from viKpiTotalsalesRevenue WITH (NOLOCK)"
+      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.2' order by CopkchildId "
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="dSales1">
         <parameter>          
           <Shopno>CoShopNo</Shopno>
@@ -11,7 +11,7 @@
     </widget>
    
     <widget name="GuestUserSaleswvat" displayname="GuestUserSaleswvat">
-      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select top 10 cast(CoDate as date)codate,sum(SalesQty) as CoQtysold,sum(CoSaleswoVAT) as CoSaleswoVAT3 from viWidShopDailySales where CoDate &gt;= cast(GETDATE()-6 as date) AND CoDate &lt;=  cast(GETDATE() as date) group by CoDate order by codate asc"
+      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.3'"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
         <parameter>
           <Shopno>CoShopNo</Shopno>
@@ -19,7 +19,7 @@
       </widgetitem>
     </widget>
     <widget name="RegUserSaleswvat" displayname="RegUserSaleswvat">
-      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select sum(CoSaleswoVAT)CoSaleswoVAT3 from viKPICampaignSales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select CopkchildId,CopkChildName,CoViewName from tadnreportchild where copkchildid='11.4'"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
         <parameter>
           <Shopno>CoShopNo</Shopno>

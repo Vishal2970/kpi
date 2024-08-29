@@ -38,6 +38,8 @@ const table = async (req, res) => {
     const widgetItems = await getQueryFromXML();
     const widgetName = req.query.widgetName; // assuming the widgetName is passed as a query parameter
     const sharedCondition = req.query.sharedCondition; // assuming the sharedCondition is passed as a query parameter
+    const sharedOrder = req.query.sharedOrder;
+
     console.log(sharedCondition);
 
     console.log(widgetName);
@@ -62,7 +64,13 @@ const table = async (req, res) => {
             if (query.includes("WHERE")||query.includes("Where")||query.includes("where")) {
               query += ` AND ${sharedCondition}`;
             } else {
-              query += ` WHERE ${sharedCondition}`;
+              query += {sharedCondition};
+            }
+          }
+          if (sharedOrder) {
+            // append the shared condition to the query
+            if (query.toUpperCase().includes("ORDER BY")) {
+              query += ` ${sharedOrder}`;
             }
           }
           console.log("final query " + query);

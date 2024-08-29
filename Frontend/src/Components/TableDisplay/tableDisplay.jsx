@@ -1,37 +1,39 @@
-
 import React, { useEffect, useState, useMemo } from "react";
 import BasicTable from "../tables/BasicTable";
 import { Grid, Container } from "@mui/material";
 import axios from "axios";
 
 export default function TableDisplay() {
-  const [filter, setFilter] = useState(null);
   const [WidgetNames, setWidgetNames] = useState([]);
   const [Rows, setRows] = useState([]);
+  const [widgetFilter, setWidgetFilter] = useState(null);
+  const [filterCondition, setFilterCondition] = useState(null);
 
   const URLS = useMemo(
     () => [{ url: "http://localhost:5000/api/check-table" }],
     []
   );
-  const handleFilter=(filterProps)=>{
-    console.log(`Widget Name: ${filterProps}, Filter: ${filterProps.selectedFilter}`);
-  }
+
+  const handleFilter = (filterProps) => {
+    if (Array.isArray(filterProps)) {
+      setWidgetFilter(filterProps[0]);
+      setFilterCondition(filterProps[1]);
+      console.log(`Widget Name: ${filterProps[0]}`);
+      console.log(`Filter Type: ${filterProps[1]}`);
+    }
+  };
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        
         let rows = [];
         let widgetNames = [];
 
-        const results = await Promise.all(
+        await Promise.all(
           URLS.map(async (urlObj) => {
             try {
-              const params = {};
-              if (filter !== null) {
-                params.filter = filter;
-              }
-              const response = await axios.get(urlObj.url, { params });
+              
+              const response = await axios.get(urlObj.url);
               const data = response.data;
 
               if (data) {
@@ -50,9 +52,6 @@ export default function TableDisplay() {
           })
         );
 
-        // console.log("rows", rows);
-        // console.log("widgetNames", widgetNames);
-
         setRows(rows);
         setWidgetNames(widgetNames);
       } catch (error) {
@@ -61,19 +60,42 @@ export default function TableDisplay() {
     };
 
     fetchAllData();
-  }, [URLS, filter]);
+  }, []);
+
+  const handleFilterUpdate = async (widgetName, filterCondition) => {
+    try {
+      const params = {
+        widgetName,
+        sharedOrder: filterCondition,
+      };
+      const response = await axios.get(URLS[0].url, { params });
+      const data = response.data;
+      const index = WidgetNames.indexOf(widgetName);
+      if (index !== -1) {
+        const newRows = [...Rows];
+        newRows[index] = data[0].response;
+        setRows(newRows);
+      }
+    } catch (error) {
+      console.error("Error updating table:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (widgetFilter !== null && filterCondition !== null) {
+      handleFilterUpdate(widgetFilter, filterCondition);
+    }
+  }, [widgetFilter, filterCondition]);
 
   return (
     <Container>
       <Grid container spacing={2}>
         {Rows.map((data, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <BasicTable rows={data} widgetName={WidgetNames[index]} filterProps={handleFilter}/>
+            <BasicTable rows={data} widgetName={WidgetNames[index]} filterProps={handleFilter} />
           </Grid>
         ))}
       </Grid>
     </Container>
   );
 }
-
-
