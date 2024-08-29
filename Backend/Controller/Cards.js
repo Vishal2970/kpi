@@ -9,10 +9,17 @@ const Card = async (req, res) => {
     const responses = await Promise.all(widgetItems.map(async (widgetItem) => {
       try {
         const queryResponse = await sql.query(widgetItem.query, widgetItem.parameters);
+        const values = [];
+        queryResponse.recordset.forEach(obj => {
+          const value = Object.values(obj)[0];
+          values.push(value);
+        });
+        // console.log(values); 
+        
         return {
           widgetName: widgetItem.widgetName,
           parameters: widgetItem.parameters,
-          response: queryResponse.recordset,
+          response: values,
         };
       } catch (err) {
         console.error(err);
