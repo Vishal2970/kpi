@@ -4,8 +4,6 @@ import { Container, Grid } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Swipe } from "@mui/icons-material";
-
 const Card = ({ data, widgetName }) => {
   return (
     <div>
@@ -33,11 +31,10 @@ const CardDisplay = () => {
   }, []);
 
   const settings = {
-    dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToShow: 4,
+    slidesToScroll: 2,
     arrows: true,
     dots: false,
     Swipe: false,
