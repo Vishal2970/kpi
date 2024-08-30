@@ -1,48 +1,34 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import { Container, Grid } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Container, Grid } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function CardDisplay() {
-  const [WidgetNames, setWidgetNames] = useState([]);
-  const [Rows, setRows] = useState({
-    row,
-    widgetName
-  });
+const Card = ({ data, widgetName }) => {
+  return (
+    <div>
+      <h2>{widgetName}</h2>
+      <p>{data.response[0]}</p>
+    </div>
+  );
+};
 
-  const URLS = [{ url: "http://localhost:5000/api/check-card" }];
+const CardDisplay = () => {
+  const [dataSets, setDataSets] = useState([]);
+  const [widgetNames, setWidgetNames] = useState([]);
 
   useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        let rows = [];
-        let widgetNames = [];
-
-        await Promise.all(
-          URLS.map(async (urlObj) => {
-            const response = await axios.get(urlObj.url);
-            const data = response.data;
-
-            if (data) {
-              data.forEach((item) => {
-                rows.push(item.response[0]);
-                widgetNames.push(item.widgetName);
-              });
-            }
-            return null;
-          })
-        );
-
-        setRows(rows);
-        setWidgetNames(widgetNames);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchAllData();
+    axios
+      .get("http://localhost:5000/api/check-card")
+      .then((response) => {
+        const data = response.data;
+        setDataSets(data);
+        setWidgetNames(data.map((item) => item.widgetName));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   const settings = {
@@ -67,55 +53,26 @@ export default function CardDisplay() {
     ],
   };
 
-  const renderCards = () => {
-    const cards = [];
-    // for (let i = 0; i < Rows.length; i++) {
-    Rows.map(()=>{
-      
-    })
-      cards.push(
-        <div key={i}>
-          <Card Data={Rows} Columns={WidgetNames} />
-        </div>
-      );
-    // }
-    return cards;
-  };
-
   return (
-    <>
-      <Container>
-        {Rows.length > 4 ? (
-          <Slider {...settings}>{renderCards()}</Slider>
-        ) : (
-          <Grid container direction="row" wrap="nowrap" spacing={2}>
-            {renderCards()}
-          </Grid>
-        )}
-      </Container>
-    </>
-    // <>
-    //   <Container>
-    //     {Rows.length > 4 ? (
-    //       <Slider {...settings}>
-    //         <div style={{ width: "100%", overflowX: "auto" }}>
-    //           <Grid container direction="row" wrap="wrap" spacing={2}>
-    //             <Grid item>
-    //               <Card Data={Rows} Columns={WidgetNames} />
-    //             </Grid>
-    //           </Grid>
-    //         </div>
-    //       </Slider>
-    //     ) : (
-    //       <div style={{ width: "100%", overflowX: "auto" }}>
-    //         <Grid container direction="row" wrap="nowrap" spacing={2}>
-    //           <Grid item>
-    //             <Card Data={Rows} Columns={WidgetNames} />
-    //           </Grid>
-    //         </Grid>
-    //       </div>
-    //     )}
-    //   </Container>
-    // </>
+    <Container>
+      {dataSets.length < 4 ? (
+        <Grid container direction="row" wrap="wrap" spacing={2}>
+          {dataSets.map((data, index) => (
+            <Grid item xs={3} key={index}>
+              <Card data={data} widgetName={widgetNames[index]} />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Slider {...settings}>
+          {dataSets.map((data, index) => (
+            <Grid item xs={3} key={index}>
+              <Card data={data} widgetName={widgetNames[index]} />
+            </Grid>
+          ))}
+        </Slider>
+      )}
+    </Container>
   );
-}
+};
+export default CardDisplay;

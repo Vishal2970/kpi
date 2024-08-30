@@ -51,7 +51,7 @@
         </parameter>
       </widgetitem>
     </widget>
-    <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
+     <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
       <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select top 1 CopkchildId from tadnreportchild where copkchildid='11.5'"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="dSales1">
         <parameter>          
@@ -75,7 +75,7 @@
           <Shopno>CoShopNo</Shopno>
         </parameter>
       </widgetitem>
-    </widget>
+    </widget> 
   </KPI>    
 </KPIs>
 <!-- <root>
