@@ -31,7 +31,6 @@ const FilterButton = React.memo(({ onClick }) => {
 
 export default function BasicTable({ rows, widgetName,filterProps }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [filter, setFilter] = React.useState(null);
   if (
     !Array.isArray(rows) ||
     rows.some((row) => typeof row !== "object" || row === null)
