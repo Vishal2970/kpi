@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { parse } from 'date-fns';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -15,21 +16,30 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
+import { FilterContext } from "../Context/filterProvider";
 
 const NavBar = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  //const [selectedDate, setSelectedDate] = useState(new Date());
+  const { selectedFilter, setSelectedFilter } = useContext(FilterContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [openModal, setOpenModal] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
 
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  //   setOpenCalendar(false);
+  //   console.log(selectedDate);
+  // };
+  // const handleDateChange = (date) => {
+  //   setSelectedFilter({ ...selectedFilter, date: date.toLocaleDateString() });
+  //   setOpenCalendar(false);
+  // };
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    setSelectedFilter({ ...selectedFilter, date: date.toISOString().split('T')[0] });
     setOpenCalendar(false);
-    console.log(selectedDate);
-    
   };
-
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -46,11 +56,17 @@ const NavBar = () => {
     setOpenModal(false);
   };
 
-
   const handleDateClick = () => {
     setOpenCalendar(true);
   };
 
+  let parsedDate;
+  if (selectedFilter.date) {
+    parsedDate = parse(selectedFilter.date, 'yyyy-MM-dd', new Date());
+  } else {
+    parsedDate = new Date();
+  }
+  const isValidDate = !isNaN(parsedDate.getTime());
   return (
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar>
@@ -107,11 +123,13 @@ const NavBar = () => {
                     fullWidth
                     onClick={handleDateClick}
                   >
-                    {selectedDate.toLocaleDateString()}
+                    {/* {selectedDate.toLocaleDateString()} */}
+                    {selectedFilter.date||"select date"}
                   </Button>
                   {openCalendar && (
                     <DatePicker
-                      selected={selectedDate}
+                      // selected={selectedDate}
+                      selected={isValidDate ? parsedDate : new Date()}
                       onChange={handleDateChange}
                       dateFormat="dd/MM/yyyy"
                       inline

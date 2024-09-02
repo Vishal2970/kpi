@@ -57,17 +57,17 @@ const table = async (req, res) => {
         try {
           let query = widgetItem.query;
           let parameters = widgetItem.parameters;
-          console.log(query);
+          // console.log(query);
 
           if (sharedCondition) {
             // append the shared condition to the query
             if (query.includes("WHERE")||query.includes("Where")||query.includes("where")) {
               query += ` AND ${sharedCondition}`;
             } else {
-              query += {sharedCondition};
+              // query += {sharedCondition};
             }
           }
-          console.log(sharedOrder);
+          // console.log(sharedOrder);
           
           if (sharedOrder) {
             if (query.toUpperCase().includes("ORDER BY")) {
@@ -75,7 +75,7 @@ const table = async (req, res) => {
 
             }
           }
-          console.log("final query " + query);
+          // console.log("final query " + query);
 
           const queryResponse = await sql.query(query, parameters);
           return {

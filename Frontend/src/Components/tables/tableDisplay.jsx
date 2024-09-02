@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import Table from "./Table";
 import { Grid, Container } from "@mui/material";
 import axios from "axios";
+import { FilterContext } from "../../Context/filterProvider";
 
 export default function TableDisplay() {
+  const { selectedFilter, setSelectedFilter } = useContext(FilterContext);
   const [WidgetNames, setWidgetNames] = useState([]);
   const [Rows, setRows] = useState([]);
   const [widgetFilter, setWidgetFilter] = useState(null);
@@ -32,7 +34,6 @@ export default function TableDisplay() {
         await Promise.all(
           URLS.map(async (urlObj) => {
             try {
-              
               const response = await axios.get(urlObj.url);
               const data = response.data;
 
@@ -62,7 +63,7 @@ export default function TableDisplay() {
     fetchAllData();
   }, []);
 
-  const handleFilterUpdate = async (widgetName, filterCondition) => {
+  const handleWidgetFilterUpdate = async (widgetName, filterCondition) => {
     try {
       const params = {
         widgetName,
@@ -81,18 +82,62 @@ export default function TableDisplay() {
     }
   };
 
+  const handleFilterUpdate = async (filterCondition) => {
+    try {
+      let rows = [];
+      let widgetNames = [];
+
+      await Promise.all(
+        URLS.map(async (urlObj) => {
+          try {
+            const params = {
+              sharedCondition: filterCondition,
+            };
+            const response = await axios.get(urlObj.url,{params});
+            const data = response.data;
+
+            if (data) {
+              data.forEach((item) => {
+                if (Array.isArray(item.response)) {
+                  rows.push(item.response); // Assuming item.response is an array of arrays
+                } else {
+                  console.error("Invalid data format for rows");
+                }
+              });
+              data.forEach((item) => widgetNames.push(item.widgetName));
+            }
+          } catch (error) {
+            console.error(`Error fetching data from ${urlObj.url}:`, error);
+          }
+        })
+      );
+
+      setRows(rows);
+      setWidgetNames(widgetNames);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     if (widgetFilter !== null && filterCondition !== null) {
-      handleFilterUpdate(widgetFilter, filterCondition);
+      handleWidgetFilterUpdate(widgetFilter, filterCondition);
     }
-  }, [widgetFilter, filterCondition]);
+    if (selectedFilter) {
+      handleFilterUpdate(selectedFilter);
+    }
+  }, [widgetFilter, filterCondition, selectedFilter]);
 
   return (
     <Container>
       <Grid container spacing={2}>
         {Rows.map((data, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <Table rows={data} widgetName={WidgetNames[index]} filterProps={handleFilter} />
+            <Table
+              rows={data}
+              widgetName={WidgetNames[index]}
+              filterProps={handleFilter}
+            />
           </Grid>
         ))}
       </Grid>
