@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -29,8 +29,10 @@ const FilterButton = React.memo(({ onClick }) => {
   );
 });
 
-export default function BasicTable({ rows, widgetName,filterProps }) {
+export default function BasicTable({ rows, widgetName, filterProps }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [tableDisplay, setTableDisplay] = useState(false);
+  const [orderDisplay, setOrderDisplay] = useState(false);
   if (
     !Array.isArray(rows) ||
     rows.some((row) => typeof row !== "object" || row === null)
@@ -51,7 +53,10 @@ export default function BasicTable({ rows, widgetName,filterProps }) {
   };
 
   const handleFilterSelect = (selectedFilter) => {
-    filterProps([widgetName,selectedFilter])
+    selectedFilter === "DESC" ? setOrderDisplay(true) : setOrderDisplay(false);
+    // selectedFilter === "GRAPH" ? setTableDisplay(true) : setTableDisplay(false);
+
+    filterProps([widgetName, selectedFilter]);
     setAnchorEl(null);
   };
   return (
@@ -117,10 +122,16 @@ export default function BasicTable({ rows, widgetName,filterProps }) {
         open={Boolean(anchorEl)}
         onClose={handleFilterClose}
       >
-        <MenuItem onClick={() => handleFilterSelect("ASC")}>ASC</MenuItem>
-        <MenuItem onClick={() => handleFilterSelect("DESC")}>DSC</MenuItem>
-        <MenuItem onClick={() => handleFilterSelect("GRAPH")}>GRAPH</MenuItem>
-        <MenuItem onClick={() => handleFilterSelect("TABLE")}>TABLE</MenuItem>
+        {orderDisplay ? (
+          <MenuItem onClick={() => handleFilterSelect("ASC")}>ASC</MenuItem>
+        ) : (
+          <MenuItem onClick={() => handleFilterSelect("DESC")}>DSC</MenuItem>
+        )}
+        {/* {tableDisplay ? (
+          <MenuItem onClick={() => handleFilterSelect("GRAPH")}>GRAPH</MenuItem>
+        ) : (
+          <MenuItem onClick={() => handleFilterSelect("TABLE")}>TABLE</MenuItem>
+        )} */}
       </Menu>
     </Box>
   );
