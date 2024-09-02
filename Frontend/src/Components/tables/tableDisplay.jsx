@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import BasicTable from "../tables/BasicTable";
+import Table from "./Table";
 import { Grid, Container } from "@mui/material";
 import axios from "axios";
 
@@ -92,7 +92,7 @@ export default function TableDisplay() {
       <Grid container spacing={2}>
         {Rows.map((data, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <BasicTable rows={data} widgetName={WidgetNames[index]} filterProps={handleFilter} />
+            <Table rows={data} widgetName={WidgetNames[index]} filterProps={handleFilter} />
           </Grid>
         ))}
       </Grid>

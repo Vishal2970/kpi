@@ -1,8 +1,8 @@
 import React from "react";
-import TableDisplay from "./Components/TableDisplay/tableDisplay";
 import NavBar from "./Components/Navbar";
 import CardDisplay from "./Components/Cards/CardDisplay";
 import { Box } from "@mui/material";
+import TableDisplay from "./Components/tables/tableDisplay";
 // import Bargraph from "./Components/Graph/Bargraph";
 
 function App() {
