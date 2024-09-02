@@ -26,6 +26,8 @@ const NavBar = () => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setOpenCalendar(false);
+    console.log(selectedDate);
+    
   };
 
   const handleClick = (event) => {
@@ -43,6 +45,7 @@ const NavBar = () => {
   const handleModalClose = () => {
     setOpenModal(false);
   };
+
 
   const handleDateClick = () => {
     setOpenCalendar(true);
@@ -75,7 +78,7 @@ const NavBar = () => {
             }}
           >
             <MenuItem onClick={handleModalOpen}>Filter</MenuItem>
-            <MenuItem>LogOut</MenuItem>
+            <MenuItem onClick={handleClose}>LogOut</MenuItem>
           </Menu>
           <Dialog
             open={openModal}
