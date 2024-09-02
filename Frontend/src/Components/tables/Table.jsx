@@ -18,8 +18,8 @@ const FilterButton = React.memo(({ onClick }) => {
     <IconButton
       sx={{
         position: "absolute",
-        top: 8,
-        right: 8,
+        insetBlockStart: 8,
+        insetInlineEnd: 8,
       }}
       size="small"
       onClick={onClick}
@@ -112,7 +112,7 @@ export default function BasicTable({ rows, widgetName, filterProps }) {
               ))}
             </TableBody>
           </Table>
-          <Box sx={{ position: "stickey", top: 0, right: 0, zIndex: 1 }}>
+          <Box sx={{ position: "stickey", insetBlockStart: 0, insetInlineEnd: 0, zIndex: 1 }}>
             <FilterButton onClick={handleFilterClick} />
           </Box>
         </Box>
