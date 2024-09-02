@@ -62,7 +62,7 @@ const NavBar = () => {
 
   let parsedDate;
   if (selectedFilter.date) {
-    parsedDate = parse(selectedFilter.date, 'yyyy-MM-dd', new Date());
+    parsedDate = parse(selectedFilter.date, 'dd-MM-yyyy', new Date());
   } else {
     parsedDate = new Date();
   }

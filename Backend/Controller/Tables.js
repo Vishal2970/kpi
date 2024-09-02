@@ -37,12 +37,12 @@ const table = async (req, res) => {
   try {
     const widgetItems = await getQueryFromXML();
     const widgetName = req.query.widgetName; // assuming the widgetName is passed as a query parameter
-    const sharedCondition = req.query.sharedCondition; // assuming the sharedCondition is passed as a query parameter
+    const sharedCondition = req.query.sharedCondition[0]; // assuming the sharedCondition is passed as a query parameter
     const sharedOrder = req.query.sharedOrder;
 
     console.log(sharedCondition);
 
-    console.log(widgetName);
+    // console.log(widgetName);
 
     // Filter the widgetItems array based on the widgetName parameter
     const filteredWidgetItems = widgetItems.filter((widgetItem) => {

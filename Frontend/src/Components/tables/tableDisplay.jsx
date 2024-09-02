@@ -90,9 +90,13 @@ export default function TableDisplay() {
       await Promise.all(
         URLS.map(async (urlObj) => {
           try {
+            console.log("Table display 1 ");
+            
             const params = {
               sharedCondition: filterCondition,
             };
+            console.log(filterCondition);
+            
             const response = await axios.get(urlObj.url,{params});
             const data = response.data;
 
