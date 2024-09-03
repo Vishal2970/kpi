@@ -33,7 +33,7 @@ export default function Login() {
         token: data.token,
       });
       Navigate("/Home");
-      alert(response.data.message);
+      //alert(response.data.message);
     } catch (error) {
       alert(error.response.data.message);
     }
