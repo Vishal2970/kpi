@@ -24,9 +24,9 @@ const Login = async (req, res) => {
     console.log(coshopno);
     if (expiryDate.includes("1900") || expiryDate > new Date()) {
       const token = jwt.sign(
-        { coshopno, expiryDate },
-        process.env.SECRET_KEY, // Replace with your secret key
-        { expiresIn: "1D" } // Token expires in 1 Day
+        { CopkUserId,copassword, expiryDate },
+        process.env.SECRET_KEY,
+        { expiresIn: "1D" }
       );
       res.status(200).json({ message: "Login Success", coshopno ,token});
     } else {
