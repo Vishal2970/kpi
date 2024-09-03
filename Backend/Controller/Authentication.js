@@ -25,7 +25,7 @@ const Login = async (req, res) => {
     if (expiryDate.includes("1900") || expiryDate > new Date()) {
       const token = jwt.sign(
         { coshopno, expiryDate },
-        "process.env.SECRET_KEY", // Replace with your secret key
+        process.env.SECRET_KEY, // Replace with your secret key
         { expiresIn: "1D" } // Token expires in 1 Day
       );
       res.status(200).json({ message: "Login Success", coshopno ,token});
