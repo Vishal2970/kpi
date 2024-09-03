@@ -2,9 +2,13 @@ const { sql } = require("../config/db");
 const jwt = require("jsonwebtoken")
 
 const Login = async (req, res) => {
+  console.log("Hits");
+  // console.log(req);
+  
+  
   const { CopkUserId, copassword } = req.body;
-  //   console.log(CopkUserId);
-  //   console.log(copassword);
+    console.log(CopkUserId);
+    console.log(copassword);
 
   const query =
     "SELECT * FROM tauser WHERE CopkUserId = @CopkUserId AND copassword = @copassword";
@@ -16,7 +20,7 @@ const Login = async (req, res) => {
     .input("CopkUserId", sql.Int, CopkUserId)
     .input("copassword", sql.Int, copassword)
     .query(query);
-  //   console.log(result);
+    console.log(result);
 
   if (result.recordset.length > 0) {
     const expiryDate = result.recordset[0].coExpdate.toLocaleDateString();
@@ -33,7 +37,7 @@ const Login = async (req, res) => {
       res.status(410).json({ message: "Your account has expired" });
     }
   } else {
-    res.status(401).json({ message: "Invalid username or password" });
+    res.status(400).json({ message: "Invalid username or password" });
   }
 };
 

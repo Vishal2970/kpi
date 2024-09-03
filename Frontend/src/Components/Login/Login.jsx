@@ -2,15 +2,25 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 export default function Login() {
   const [login, setLogin] = useState({
     CopkUserId: "",
     copassword: "",
   });
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(login);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/Auth",
+        login
+      );
+      alert(response.data.message);
+    } catch (error) {
+      console.log(error.response.data);
+      alert(error.response.data.message);
+    }
   };
   const handleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
