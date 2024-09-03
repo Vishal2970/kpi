@@ -20,8 +20,8 @@ export default function TableDisplay() {
     if (Array.isArray(filterProps)) {
       setWidgetFilter(filterProps[0]);
       setFilterCondition(filterProps[1]);
-      console.log(`Widget Name: ${filterProps[0]}`);
-      console.log(`Filter Type: ${filterProps[1]}`);
+      // console.log(`Widget Name: ${filterProps[0]}`);
+      // console.log(`Filter Type: ${filterProps[1]}`);
     }
   };
 
@@ -40,7 +40,7 @@ export default function TableDisplay() {
               if (data) {
                 data.forEach((item) => {
                   if (Array.isArray(item.response)) {
-                    rows.push(item.response); // Assuming item.response is an array of arrays
+                    rows.push(item.response);
                   } else {
                     console.error("Invalid data format for rows");
                   }
@@ -84,26 +84,26 @@ export default function TableDisplay() {
 
   const handleFilterUpdate = async (filterCondition) => {
     try {
+      console.log(filterCondition);
+      
       let rows = [];
       let widgetNames = [];
 
       await Promise.all(
         URLS.map(async (urlObj) => {
           try {
-            console.log("Table display 1 ");
-            
             const params = {
-              sharedCondition: filterCondition,
+              sharedCondition: `codate='${filterCondition.date}' and coshop='${filterCondition.shop}'`,
             };
-            console.log(filterCondition);
+
+            console.log(params);
             
             const response = await axios.get(urlObj.url,{params});
             const data = response.data;
-
             if (data) {
               data.forEach((item) => {
                 if (Array.isArray(item.response)) {
-                  rows.push(item.response); // Assuming item.response is an array of arrays
+                  rows.push(item.response); 
                 } else {
                   console.error("Invalid data format for rows");
                 }
