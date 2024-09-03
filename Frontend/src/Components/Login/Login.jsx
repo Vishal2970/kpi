@@ -3,12 +3,17 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import logo from "../../Images/loginUser.png";
+import { useAuthContext } from "../../Context/authContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [login, setLogin] = useState({
     CopkUserId: "",
     copassword: "",
   });
+  const Navigate = useNavigate();
+  const { setAuth } = useAuthContext();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -16,9 +21,20 @@ export default function Login() {
         "http://localhost:5000/api/Auth",
         login
       );
+      const data = response.data;
+      console.log(data);
+
+      sessionStorage.setItem(
+        "auth",
+        JSON.stringify({ coshopno: data.coshopno, token: data.token })
+      );
+      setAuth({
+        coshopno: data.coshopno,
+        token: data.token,
+      });
+      Navigate("/Home");
       alert(response.data.message);
     } catch (error) {
-      console.log(error.response.data);
       alert(error.response.data.message);
     }
   };
@@ -32,14 +48,14 @@ export default function Login() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        blockSize: "100vh",
       }}
     >
       <Box
         component="form"
         onSubmit={handleSubmit}
         sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
+          "& > :not(style)": { m: 1, inlineSize: "25ch" },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -52,15 +68,15 @@ export default function Login() {
         autoComplete="off"
       >
         <img
-          src="loginUser.png"
+          src={logo}
           alt="login"
           style={{
-            width: 150,
-            height: 140,
+            inlineSize: 150,
+            blockSize: 140,
             // borderRadius: "50%",
             objectFit: "cover",
             position: "relative",
-            top: -15,
+            insetBlockStart: -15,
           }}
         />
         <TextField
