@@ -2,7 +2,7 @@
 <KPIs>
   <KPI did="dSales" id="KpiSales" Name="Sales">
     <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
-      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select top 10 CopkchildId,CopkChildName,CoViewName from tadnreportchild where CopkChildLangId like '%DAN%' order by CopkchildId ASC"
+      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select top 10 * from viVatReportwithGST where  codate='2017-07-06' and coshopno='3032' order by codate ASC"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="dSales1">
         <parameter>          
           <Shopno>CoShopNo</Shopno>
@@ -11,7 +11,7 @@
     </widget>
    
     <widget name="GuestUserSaleswvat" displayname="GuestUserSaleswvat">
-      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select top 10 CopkchildId,CopkChildName,CoViewName from tadnreportchild where CopkChildLangId like '%ENG%' order by CopkchildId ASC"
+      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select top 10 * from viVatReportwithGST where  codate='2017-07-06' and coshopno='3032' order by codate ASC"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
         <parameter>
           <Shopno>CoShopNo</Shopno>
@@ -19,7 +19,7 @@
       </widgetitem>
     </widget>
     <widget name="RegUserSaleswvat" displayname="RegUserSaleswvat">
-      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select top 10 CopkchildId,CopkChildName,CoViewName from tadnreportchild where CopkChildLangId like '%NOR%' order by CopkchildId ASC"
+      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select top 10 * from viVatReportwithGST where  codate='2017-07-06' and coshopno='3032' order by codate ASC"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
         <parameter>
           <Shopno>CoShopNo</Shopno>
@@ -27,7 +27,7 @@
       </widgetitem>
     </widget>
     <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
-      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select top 10 CopkchildId,CopkChildName,CoViewName from tadnreportchild where CopkChildLangId like '%DAN%' order by CopkchildId ASC"
+      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select top 10 * from viVatReportwithGST where  codate='2017-07-06' and coshopno='3032' order by codate ASC"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="dSales1">
         <parameter>          
           <Shopno>CoShopNo</Shopno>
@@ -36,7 +36,7 @@
     </widget>
    
     <widget name="GuestUserSaleswvat" displayname="GuestUserSaleswvat">
-      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select top 10 CopkchildId,CopkChildName,CoViewName from tadnreportchild where CopkChildLangId like '%ENG%' order by CopkchildId ASC"
+      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select top 10 * from viVatReportwithGST where  codate='2017-07-06' and coshopno='3032' order by codate ASC"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
         <parameter>
           <Shopno>CoShopNo</Shopno>
@@ -44,7 +44,7 @@
       </widgetitem>
     </widget>
     <widget name="RegUserSaleswvat" displayname="RegUserSaleswvat">
-      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select top 10 CopkchildId,CopkChildName,CoViewName from tadnreportchild where CopkChildLangId like '%NOR%' order by CopkchildId ASC"
+      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select top 10 * from viVatReportwithGST where  codate='2017-07-06' and coshopno='3032' order by codate ASC"
                   queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
         <parameter>
           <Shopno>CoShopNo</Shopno>

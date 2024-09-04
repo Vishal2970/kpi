@@ -93,7 +93,7 @@ export default function TableDisplay() {
         URLS.map(async (urlObj) => {
           try {
             const params = {
-              sharedCondition: `codate='${filterCondition.date}' and coshop='${filterCondition.shop}'`,
+              sharedCondition: `codate='${filterCondition.date}' and coshopno='${filterCondition.shop}'`,
             };
 
             console.log(params);

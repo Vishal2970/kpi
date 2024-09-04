@@ -38,6 +38,7 @@ const NavBar = () => {
       token: null,
       coshopno: null,
     });
+    handleClose();
   };
   const handleDateChange = (date) => {
     setSelectedFilter({
