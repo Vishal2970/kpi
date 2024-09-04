@@ -19,9 +19,9 @@ import Divider from "@mui/material/Divider";
 import { FilterContext } from "../Context/filterProvider";
 import { useAuthContext } from "../Context/authContext";
 import { useNavigate } from "react-router-dom";
+import loginpic from "../Images/login.jpg";
 
 const NavBar = () => {
-  //const [selectedDate, setSelectedDate] = useState(new Date());
   const { selectedFilter, setSelectedFilter } = useContext(FilterContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -40,6 +40,7 @@ const NavBar = () => {
     });
     handleClose();
   };
+
   const handleDateChange = (date) => {
     setSelectedFilter({
       ...selectedFilter,
@@ -62,6 +63,7 @@ const NavBar = () => {
 
   const handleModalClose = () => {
     setOpenModal(false);
+    handleClose();
   };
 
   const handleDateClick = () => {
@@ -74,7 +76,9 @@ const NavBar = () => {
   } else {
     parsedDate = new Date();
   }
+
   const isValidDate = !isNaN(parsedDate.getTime());
+
   return (
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar>
@@ -91,7 +95,15 @@ const NavBar = () => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              User
+              <img src={loginpic} alt="user"
+              style={{
+                inlineSize: 50,
+                blockSize: 30,
+                // borderRadius: "50%",
+                objectFit: "cover",
+                position: "relative",
+                insetBlockStart: 25,
+              }} />
             </Button>
             <Menu
               id="basic-menu"
@@ -132,12 +144,10 @@ const NavBar = () => {
                       fullWidth
                       onClick={handleDateClick}
                     >
-                      {/* {selectedDate.toLocaleDateString()} */}
                       {selectedFilter.date || "select date"}
                     </Button>
                     {openCalendar && (
                       <DatePicker
-                        // selected={selectedDate}
                         selected={isValidDate ? parsedDate : new Date()}
                         onChange={handleDateChange}
                         dateFormat="dd/MM/yyyy"
@@ -153,11 +163,10 @@ const NavBar = () => {
               </DialogActions>
             </Dialog>
           </Box>
-        ) : (
-          ""
-        )}
+        ) : null}
       </Toolbar>
     </AppBar>
   );
 };
+
 export default NavBar;
