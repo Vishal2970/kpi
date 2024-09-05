@@ -3,7 +3,7 @@ import { parse } from "date-fns";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import logo from "../Images/dataNova.png";
 import Button from "@mui/material/Button";
@@ -32,9 +32,11 @@ const NavBar = () => {
   const [openCalendar, setOpenCalendar] = useState(false);
   const { auth, setAuth } = useAuthContext();
   const isAuthenticated = Boolean(auth.token);
-  const havingShopNumber=Boolean(auth.coshopno);
+  const havingShopNumber = Boolean(auth.coshopno);
   const [openShopPopup, setOpenShopPopup] = useState(false);
   const navigate = useNavigate();
+
+  // let Shopstr;
 
   const handleLogOut = () => {
     navigate("/");
@@ -53,6 +55,14 @@ const NavBar = () => {
     });
     setOpenCalendar(false);
   };
+  const handleShopchange = (e) => {
+    setSelectedFilter({
+      ...selectedFilter,
+      shop: e.target.value,
+    });
+    // Shopstr
+    console.log(e.target.value);
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,8 +74,7 @@ const NavBar = () => {
 
   const handleModalOpen = () => {
     setOpenModal(true);
-    console.log(auth);
-    
+    // console.log(auth);
   };
 
   const handleModalClose = () => {
@@ -172,19 +181,23 @@ const NavBar = () => {
                       >
                         <DialogContent>
                           <Grid container spacing={2}>
-                           {havingShopNumber? (auth.coshopno.split(',').map((shop, index) => (
-                             <Grid item key={index}>
-                             <FormControlLabel
-                               control={
-                                 <Checkbox
-                                   value={shop}
-                                   onChange={(e) => console.log(e.target.value)}
-                                 />
-                               }
-                               label={shop}
-                             />
-                           </Grid>
-                            ))):(<Grid>No Shop Assigned</Grid>)}
+                            {havingShopNumber ? (
+                              auth.coshopno.split(",").map((shop, index) => (
+                                <Grid item key={index}>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        value={shop}
+                                        onChange={handleShopchange}
+                                      />
+                                    }
+                                    label={shop}
+                                  />
+                                </Grid>
+                              ))
+                            ) : (
+                              <Grid>No Shop Assigned</Grid>
+                            )}
                           </Grid>
                         </DialogContent>
                       </Dialog>

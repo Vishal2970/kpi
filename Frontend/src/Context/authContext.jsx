@@ -5,7 +5,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     token: null,
-    coshopno:[3032,3033],
+    coshopno:[],
   });
   useEffect(() => {
     const data = sessionStorage.getItem("auth");

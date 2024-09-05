@@ -1,6 +1,21 @@
 const { sql } = require("../config/db");
 const jwt = require("jsonwebtoken");
 
+const getAllShop = async () => {
+  try {
+    const response = await sql.query("select CopkShopNo from tashop");
+    let dt='';
+    response.recordset.forEach((data) => {
+      dt += data.CopkShopNo + ",";
+    });
+    // console.log(dt.substring(0, dt.length-1));
+    
+    return dt.substring(0, dt.length-1).toString();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const Login = async (req, res) => {
   const { CopkUserId, copassword } = req.body;
 
@@ -18,11 +33,8 @@ const Login = async (req, res) => {
 
   if (result.recordset.length > 0) {
     const expiryDate = result.recordset[0].coExpdate.toLocaleDateString();
-    const coshopno = result.recordset[0].CofkshopNo.replace(/#/g, ",").slice(
-      1,
-      -1
-    );
-    // console.log(coshopno);
+    const coshopno =result.recordset[0].CofkshopNo.replace(/#/g, ",").slice(1, -1) || await getAllShop();
+    console.log(coshopno);
     if (expiryDate.includes("1900") || expiryDate > new Date()) {
       const token = jwt.sign(
         { CopkUserId, copassword, expiryDate },
@@ -37,6 +49,5 @@ const Login = async (req, res) => {
     res.status(400).json({ message: "Invalid username or password" });
   }
 };
-
 
 module.exports = Login;
