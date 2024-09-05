@@ -172,7 +172,12 @@ const NavBar = () => {
                       fullWidth
                       onClick={() => setOpenShopPopup(true)}
                     >
-                      Shop Number
+                      {selectedFilter.shop.split(",").length > 2
+                        ? `${selectedFilter.shop
+                            .split(",")
+                            .slice(0, 2)
+                            .join(", ")}...`
+                        : selectedFilter.shop || "Shop Number"}
                     </Button>
                     {openShopPopup && (
                       <Dialog
