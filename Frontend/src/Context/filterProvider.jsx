@@ -3,10 +3,10 @@ import { createContext, useState } from "react";
 const FilterContext = createContext();
 
 const FilterProvider = ({ children }) => {
-  const today = new Date();
-  const todayString = today.toISOString().split("T")[0];
+  // const today = new Date();
+  // const todayString = today.toISOString().split("T")[0];
   const [selectedFilter, setSelectedFilter] = useState({
-    date: todayString,
+    date: "",
     shop: "",
   });
 

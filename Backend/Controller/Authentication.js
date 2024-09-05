@@ -34,7 +34,7 @@ const Login = async (req, res) => {
   if (result.recordset.length > 0) {
     const expiryDate = result.recordset[0].coExpdate.toLocaleDateString();
     const coshopno =result.recordset[0].CofkshopNo.replace(/#/g, ",").slice(1, -1) || await getAllShop();
-    console.log(coshopno);
+    // console.log(coshopno);
     if (expiryDate.includes("1900") || expiryDate > new Date()) {
       const token = jwt.sign(
         { CopkUserId, copassword, expiryDate },

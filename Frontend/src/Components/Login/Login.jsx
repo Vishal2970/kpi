@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import logo from "../../Images/login.jpg";
 import { useAuthContext } from "../../Context/authContext";
+import { FilterContext } from "../../Context/filterProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const { selectedFilter, setSelectedFilter } = useContext(FilterContext);
   const [login, setLogin] = useState({
     CopkUserId: "",
     copassword: "",
   });
   const Navigate = useNavigate();
-  const { setAuth } = useAuthContext();
+  const { auth, setAuth } = useAuthContext();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -32,6 +34,16 @@ export default function Login() {
         coshopno: data.coshopno,
         token: data.token,
       });
+      const today = new Date();
+      const todayString = today.toISOString().split("T")[0];
+      setSelectedFilter({
+        date:todayString,
+        shop: data.coshopno,
+      })
+      // setSelectedFilter((prevFilter) => ({
+      //   ...prevFilter,
+      //   shop: data.coshopno,
+      // }));
       Navigate("/Home");
       //alert(response.data.message);
     } catch (error) {

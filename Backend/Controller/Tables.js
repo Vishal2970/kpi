@@ -25,6 +25,8 @@ const conditionModification = (query, condition) => {
     if (key === "coshopno" && value === "") {
       // console.log(`Appending condition: ${key} IS NULL`);
       conditionModified += ` ${key} IS NULL and `;
+    } else if (key === "coshopno") {
+      conditionModified += ` ${key} in (${value}) and `;
     } else {
       // console.log(`Appending condition: ${key} = ?`);
       conditionModified += ` ${key} = '${value}' and `;
@@ -64,6 +66,10 @@ const table = async (req, res) => {
     const sharedCondition = req.query.sharedCondition || null;
     const sharedOrder = req.query.sharedOrder || null;
 
+    // console.log(widgetName);
+    console.log(sharedCondition);
+    // console.log(sharedOrder);
+
     const filteredWidgetItems = widgetItems.filter((widgetItem) => {
       return widgetName ? widgetItem.widgetName === widgetName : true;
     });
@@ -76,6 +82,8 @@ const table = async (req, res) => {
 
           if (sharedCondition) {
             const modifiedQuery = conditionModification(query, sharedCondition);
+            console.log(modifiedQuery);
+
             query = modifiedQuery; // Use modified query
           }
 
@@ -118,4 +126,3 @@ const table = async (req, res) => {
 };
 
 module.exports = { table };
-
