@@ -34,6 +34,7 @@ const NavBar = () => {
   const isAuthenticated = Boolean(auth.token);
   const havingShopNumber = Boolean(auth.coshopno);
   const [openShopPopup, setOpenShopPopup] = useState(false);
+  const [strShopSelected, setStrShopSelected] = useState([]);
   const navigate = useNavigate();
 
   // let Shopstr;
@@ -55,12 +56,19 @@ const NavBar = () => {
     });
     setOpenCalendar(false);
   };
+
+  const handleLoadShop = () => {
+    handleModalClose();
+    // console.log(strShopSelected.join(","));
+    console.log(strShopSelected);
+  };
   const handleShopchange = (e) => {
-    setSelectedFilter({
-      ...selectedFilter,
-      shop: e.target.value,
-    });
+    // setSelectedFilter({
+    //   ...selectedFilter,
+    //   shop: e.target.value,
+    // });
     // Shopstr
+    setStrShopSelected((prevItems) => [...prevItems, e.target.value]);
     console.log(e.target.value);
   };
 
@@ -193,7 +201,22 @@ const NavBar = () => {
                                     control={
                                       <Checkbox
                                         value={shop}
-                                        onChange={handleShopchange}
+                                        checked={strShopSelected.includes(shop)} // check if shop is in selectedShops array
+                                        onChange={(e) => {
+                                          if (e.target.checked) {
+                                            setStrShopSelected((prevShops) => [
+                                              ...prevShops,
+                                              shop,
+                                            ]);
+                                          } else {
+                                            setStrShopSelected((prevShops) =>
+                                              prevShops.filter(
+                                                (s) => s !== shop
+                                              )
+                                            );
+                                          }
+                                          handleShopchange(e);
+                                        }}
                                       />
                                     }
                                     label={shop}
@@ -232,7 +255,7 @@ const NavBar = () => {
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleModalClose}>Cancel</Button>
-                <Button onClick={handleModalClose}>OK</Button>
+                <Button onClick={handleLoadShop}>OK</Button>
               </DialogActions>
             </Dialog>
           </Box>

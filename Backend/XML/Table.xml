@@ -51,6 +51,14 @@
         </parameter>
       </widgetitem>
     </widget>
+    <widget name="RegUserSaleswvat" displayname="RegUserSaleswvat">
+      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select * from ViStockPerDate where coDate='2024-09-04' order by codate desc"
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
   </KPI>    
 </KPIs>
 <!-- <root>
