@@ -67,7 +67,7 @@ const table = async (req, res) => {
     const sharedOrder = req.query.sharedOrder || null;
 
     // console.log(widgetName);
-    console.log(sharedCondition);
+    // console.log(sharedCondition);
     // console.log(sharedOrder);
 
     const filteredWidgetItems = widgetItems.filter((widgetItem) => {
@@ -99,7 +99,8 @@ const table = async (req, res) => {
           if (!Array.isArray(parameters) || parameters.length === 0) {
             parameters = []; // Default to an empty array if undefined
           }
-
+          console.log(parameters);
+          
           const queryResponse = await sql.query(query, parameters);
 
           return {
