@@ -35,6 +35,7 @@ const NavBar = () => {
   const havingShopNumber = Boolean(auth.coshopno);
   const [openShopPopup, setOpenShopPopup] = useState(false);
   const [strShopSelected, setStrShopSelected] = useState([]);
+  const [isValidDate, setIsValidDate] = useState(false);
   const navigate = useNavigate();
 
   // let Shopstr;
@@ -49,6 +50,10 @@ const NavBar = () => {
     handleClose();
   };
 
+  const parsedDate = isValidDate
+    ? parse(selectedFilter.date, "yyyy-MM-dd", new Date())
+    : null;
+
   const handleDateChange = (date) => {
     setSelectedFilter({
       ...selectedFilter,
@@ -59,17 +64,13 @@ const NavBar = () => {
 
   const handleLoadShop = () => {
     handleModalClose();
-    // console.log(strShopSelected.join(","));
-    console.log(strShopSelected);
-  };
-  const handleShopchange = (e) => {
-    // setSelectedFilter({
-    //   ...selectedFilter,
-    //   shop: e.target.value,
-    // });
-    // Shopstr
-    setStrShopSelected((prevItems) => [...prevItems, e.target.value]);
-    console.log(e.target.value);
+    console.log("Here");
+    
+    console.log(parse(selectedFilter.date, "yyyy-MM-dd", new Date()));
+    setSelectedFilter({
+      ...selectedFilter,
+      shop: strShopSelected.join(","),
+    });
   };
 
   const handleClick = (event) => {
@@ -82,7 +83,6 @@ const NavBar = () => {
 
   const handleModalOpen = () => {
     setOpenModal(true);
-    // console.log(auth);
   };
 
   const handleModalClose = () => {
@@ -94,14 +94,14 @@ const NavBar = () => {
     setOpenCalendar(true);
   };
 
-  let parsedDate;
-  if (selectedFilter.date) {
-    parsedDate = parse(selectedFilter.date, "dd-MM-yyyy", new Date());
-  } else {
-    parsedDate = new Date();
-  }
+  // let parsedDate;
+  // if (selectedFilter.date) {
+  //   parsedDate = parse(selectedFilter.date, "dd-MM-yyyy", new Date());
+  // } else {
+  //   parsedDate = new Date();
+  // }
 
-  const isValidDate = !isNaN(parsedDate.getTime());
+  // const isValidDate = !isNaN(parsedDate.getTime());
 
   return (
     <AppBar position="static" color="transparent" elevation={0}>
@@ -215,7 +215,6 @@ const NavBar = () => {
                                               )
                                             );
                                           }
-                                          handleShopchange(e);
                                         }}
                                       />
                                     }
@@ -227,6 +226,9 @@ const NavBar = () => {
                               <Grid>No Shop Assigned</Grid>
                             )}
                           </Grid>
+                          <Button onClick={() => setOpenShopPopup(false)}>
+                            ok
+                          </Button>
                         </DialogContent>
                       </Dialog>
                     )}
@@ -243,8 +245,14 @@ const NavBar = () => {
                       {selectedFilter.date || "select date"}
                     </Button>
                     {openCalendar && (
+                      // <DatePicker
+                      //   selected={isValidDate ? parsedDate : new Date()}
+                      //   onChange={handleDateChange}
+                      //   dateFormat="dd/MM/yyyy"
+                      //   inline
+                      // />
                       <DatePicker
-                        selected={isValidDate ? parsedDate : new Date()}
+                        selected={parsedDate}
                         onChange={handleDateChange}
                         dateFormat="dd/MM/yyyy"
                         inline

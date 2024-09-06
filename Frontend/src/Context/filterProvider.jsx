@@ -6,10 +6,10 @@ const FilterProvider = ({ children }) => {
   const today = new Date();
   const todayString = today.toISOString().split("T")[0];
   const authData = JSON.parse(sessionStorage.getItem("auth"));
-  const coshopno = authData.coshopno;
+  const coshopno = authData?.coshopno?authData.coshopno:"3032";
   const [selectedFilter, setSelectedFilter] = useState({
     date: todayString,
-    shop: coshopno||"",
+    shop: coshopno||"3032",
   });
 
   return (
