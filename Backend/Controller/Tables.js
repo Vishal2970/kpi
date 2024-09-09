@@ -38,25 +38,49 @@ const conditionModification = (query, condition) => {
   conditionModified = conditionModified.slice(0, -5);
 
   // Split the query into parts
-  const queryParts = query.split("order by");
-  const queryBeforeOrderBy = queryParts[0];
-  const orderByClause = queryParts[1];
+  let queryParts = query.split("order by");
+  let queryBeforeOrderBy = queryParts[0];
+  let orderByClause = queryParts[1] ? queryParts[1] : "";
+
+  // Check for other clauses
+  let groupByClause = "";
+  let havingClause = "";
+  if (queryBeforeOrderBy.includes("group by")) {
+    queryParts = queryBeforeOrderBy.split("group by");
+    queryBeforeOrderBy = queryParts[0];
+    groupByClause = queryParts[1];
+  }
+
+  if (groupByClause.includes("having")) {
+    queryParts = groupByClause.split("having");
+    groupByClause = queryParts[0];
+    havingClause = queryParts[1];
+  }
 
   // Find the index of "from" in the query
   const fromIndex = queryBeforeOrderBy.indexOf("from");
 
   // Replace the original where condition with the modified one
-  query =
-    queryBeforeOrderBy.substring(0, fromIndex) +
+  let modifiedQuery = queryBeforeOrderBy.substring(0, fromIndex) +
     queryBeforeOrderBy.substring(fromIndex).split("where")[0] +
-    conditionModified +
-    " order by " +
-    orderByClause;
+    conditionModified;
 
-  // console.log(query);
+  // Append other clauses
+  if (groupByClause) {
+    modifiedQuery += " group by " + groupByClause;
+  }
+
+  if (havingClause) {
+    modifiedQuery += " having " + havingClause;
+  }
+
+  // Append order by clause
+  modifiedQuery += " order by " + orderByClause;
+
+  // console.log(modifiedQuery);
   // console.log("END");
 
-  return query; // Return the modified query
+  return modifiedQuery; // Return the modified query
 };
 
 const table = async (req, res) => {
