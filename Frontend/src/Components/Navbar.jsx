@@ -1,4 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
+import { format } from "date-fns";
 import { parse } from "date-fns";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -59,7 +60,7 @@ const NavBar = () => {
   const handleLoadShop = () => {
     setSelectedFilter({
       ...selectedFilter,
-      date: tempDate.toISOString().split("T")[0],
+      date:  format(tempDate, "yyyy-MM-dd"),
       shop: strShopSelected.join(","),
     });
     setOpenCalendar(false);

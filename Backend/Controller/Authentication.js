@@ -19,16 +19,11 @@ const getAllShop = async () => {
 const Login = async (req, res) => {
   const { CopkUserId, copassword } = req.body;
 
-  const query =
-    "SELECT * FROM tauser WHERE CopkUserId = @CopkUserId AND copassword = @copassword";
+  const query ="SELECT * FROM tauser WHERE CopkUserId = @CopkUserId AND copassword = @copassword";
   //   console.log(query);
 
   const pool = await sql.connect();
-  const result = await pool
-    .request()
-    .input("CopkUserId", sql.Int, CopkUserId)
-    .input("copassword", sql.Int, copassword)
-    .query(query);
+  const result = await pool.request().input("CopkUserId", sql.Int, CopkUserId).input("copassword", sql.Int, copassword).query(query);
   // console.log(result);
 
   if (result.recordset.length > 0) {

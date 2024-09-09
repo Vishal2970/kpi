@@ -9,7 +9,7 @@ const FilterProvider = ({ children }) => {
   const coshopno = authData?.coshopno?authData.coshopno:"3032";
   const [selectedFilter, setSelectedFilter] = useState({
     date: todayString,
-    shop: coshopno||"3032",
+    shop: coshopno||"",
   });
 
   return (
