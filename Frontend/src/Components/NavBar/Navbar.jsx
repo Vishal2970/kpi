@@ -98,10 +98,10 @@ const NavBar = () => {
         {isAuthenticated && (
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Button id="filter-button" aria-controls={open ? "filter-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} onClick={handleModalOpen}>
-              <img src={filterpic} alt="user" style={{ inlineSize: 50, blockSize: 30, objectFit: "cover", position: "relative", insetBlockStart: 25 }} />
+              <img src={filterpic} alt="user" style={{ inlineSize: 30, blockSize: 30, objectFit: "cover", position: "relative", insetBlockStart: 5 }} />
             </Button>
             <Button id="logout-button" aria-controls={open ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} onClick={handleClick}>
-              <img src={loginpic} alt="user" style={{ inlineSize: 50, blockSize: 30, objectFit: "cover", position: "relative", insetBlockStart: 25 }} />
+              <img src={loginpic} alt="user" style={{ inlineSize: 50, blockSize: 30, objectFit: "cover", position: "relative", insetBlockStart: 5 }} />
             </Button>
             <Menu id="basic-menu" anchorEl={anchorEl} open={open} onClose={handleClose} MenuListProps={{ "aria-labelledby": "basic-button" }}>
               <MenuItem onClick={handleLogOut}>LogOut</MenuItem>

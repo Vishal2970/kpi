@@ -16,15 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/Home" element={<PrivateRoute />}>
-            <Route
-              path=""
-              element={
-                <>
-                  <CardDisplay />
-                  <TableDisplay />
-                </>
-              }
-            />
+            <Route path="" element={<><CardDisplay /><TableDisplay /></>}/>
           </Route>
         </Routes>
       </BrowserRouter>
