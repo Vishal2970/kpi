@@ -6,7 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
-import logo from "../Images/dataNova.png";
+import logo from "../../Images/dataNova.png";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -18,11 +18,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-import { FilterContext } from "../Context/filterProvider";
-import { useAuthContext } from "../Context/authContext";
+import { FilterContext } from "../../Context/filterProvider";
+import { useAuthContext } from "../../Context/authContext";
 import { useNavigate } from "react-router-dom";
-import loginpic from "../Images/login.jpg";
-import filterpic from "../Images/filter.png";
+import loginpic from "../../Images/login.jpg";
+import filterpic from "../../Images/filter.png";
 import Checkbox from "@mui/material/Checkbox";
 
 const NavBar = () => {
@@ -84,7 +84,6 @@ const NavBar = () => {
         setOpenCalendar(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -113,7 +112,7 @@ const NavBar = () => {
                 <Grid container spacing={-10}>
                   <Grid item xs={4}>
                     <Button variant="outlined" fullWidth onClick={() => setOpenShopPopup(true)}>
-                      {selectedFilter.shop.split(",").length > 2
+                      {selectedFilter.shop?.split(",").length > 2
                         ? `${selectedFilter.shop.split(",").slice(0, 2).join(", ")}...`
                         : selectedFilter.shop || "Shop Number"}
                     </Button>
@@ -142,9 +141,7 @@ const NavBar = () => {
                                   />
                                 </Grid>
                               ))
-                            ) : (
-                              <Grid>No Shop Assigned</Grid>
-                            )}
+                            ) : (<Grid>No Shop Assigned</Grid>)}
                           </Grid>
                           <Button onClick={() => setOpenShopPopup(false)}>ok</Button>
                         </DialogContent>
@@ -156,7 +153,7 @@ const NavBar = () => {
                   </Grid>
                   <Grid item xs={4}>
                     <Button variant="outlined" fullWidth onClick={handleDateClick}>
-                      {selectedFilter.date || "select date"}
+                      {selectedFilter?.date||"select date"}
                     </Button>
                     {openCalendar && (
                       <div ref={calendarRef}>

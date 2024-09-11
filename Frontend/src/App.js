@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Components/Login/Login";
-import NavBar from "./Components/Navbar";
+import NavBar from "./Components/NavBar/Navbar";
 import CardDisplay from "./Components/Cards/CardDisplay";
 import TableDisplay from "./Components/tables/tableDisplay";
 import PrivateRoute from "./Components/PrivateRoutes/PrivateRoute";
