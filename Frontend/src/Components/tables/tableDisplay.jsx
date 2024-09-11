@@ -11,10 +11,7 @@ export default function TableDisplay() {
   const [widgetFilter, setWidgetFilter] = useState(null);
   const [filterCondition, setFilterCondition] = useState(null);
 
-  const URLS = useMemo(
-    () => [{ url: "http://localhost:5000/api/check-table" }],
-    []
-  );
+  const URL = "http://localhost:5000/api/check-table";
 
   const handleFilter = (filterProps) => {
     if (Array.isArray(filterProps)) {
@@ -27,37 +24,29 @@ export default function TableDisplay() {
 
   useEffect(() => {
     const fetchAllData = async () => {
+      let rows = [];
+      let widgetNames = [];
+
       try {
-        let rows = [];
-        let widgetNames = [];
+        const response = await axios.get(URL);
+        const data = response.data;
 
-        await Promise.all(
-          URLS.map(async (urlObj) => {
-            try {
-              const response = await axios.get(urlObj.url);
-              const data = response.data;
-
-              if (data) {
-                data.forEach((item) => {
-                  if (Array.isArray(item.response)) {
-                    rows.push(item.response);
-                  } else {
-                    console.error("Invalid data format for rows");
-                  }
-                });
-                data.forEach((item) => widgetNames.push(item.widgetName));
-              }
-            } catch (error) {
-              console.error(`Error fetching data from ${urlObj.url}:`, error);
+        if (data) {
+          data.forEach((item) => {
+            if (Array.isArray(item.response)) {
+              rows.push(item.response);
+            } else {
+              console.error("Invalid data format for rows");
             }
-          })
-        );
-
-        setRows(rows);
-        setWidgetNames(widgetNames);
+          });
+          data.forEach((item) => widgetNames.push(item.widgetName));
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error(`Error fetching data from ${URL}:`, error);
       }
+
+      setRows(rows);
+      setWidgetNames(widgetNames);
     };
 
     fetchAllData();
@@ -69,7 +58,7 @@ export default function TableDisplay() {
         widgetName,
         sharedOrder: filterCondition,
       };
-      const response = await axios.get(URLS[0].url, { params });
+      const response = await axios.get(URL, { params });
       const data = response.data;
       const index = WidgetNames.indexOf(widgetName);
       if (index !== -1) {
@@ -83,27 +72,24 @@ export default function TableDisplay() {
   };
 
   const handleFilterUpdate = async (filterCondition) => {
-    try {
       console.log(filterCondition);
-      
+
       let rows = [];
       let widgetNames = [];
 
-      await Promise.all(
-        URLS.map(async (urlObj) => {
           try {
             const params = {
               sharedCondition: `codate='${filterCondition.date}' and coshopno='${filterCondition.shop}'`,
             };
 
             console.log(params);
-            
-            const response = await axios.get(urlObj.url,{params});
+
+            const response = await axios.get(URL, { params });
             const data = response.data;
             if (data) {
               data.forEach((item) => {
                 if (Array.isArray(item.response)) {
-                  rows.push(item.response); 
+                  rows.push(item.response);
                 } else {
                   console.error("Invalid data format for rows");
                 }
@@ -111,16 +97,12 @@ export default function TableDisplay() {
               data.forEach((item) => widgetNames.push(item.widgetName));
             }
           } catch (error) {
-            console.error(`Error fetching data from ${urlObj.url}:`, error);
+            console.error(`Error fetching data from ${URL}:`, error);
           }
-        })
-      );
-
+       
       setRows(rows);
       setWidgetNames(widgetNames);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+   
   };
 
   useEffect(() => {

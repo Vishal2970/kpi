@@ -112,9 +112,7 @@ const NavBar = () => {
                 <Grid container spacing={-10}>
                   <Grid item xs={4}>
                     <Button variant="outlined" fullWidth onClick={() => setOpenShopPopup(true)}>
-                      {selectedFilter.shop?.split(",").length > 2
-                        ? `${selectedFilter.shop.split(",").slice(0, 2).join(", ")}...`
-                        : selectedFilter.shop || "Shop Number"}
+                      {selectedFilter.shop?.split(",").length > 2? `${selectedFilter.shop.split(",").slice(0, 2).join(", ")}...`: selectedFilter?.shop || "Shop Number"}
                     </Button>
                     {openShopPopup && (
                       <Dialog open={openShopPopup} onClose={() => setOpenShopPopup(false)}>
