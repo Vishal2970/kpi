@@ -1,17 +1,17 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import { parse } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
-import logo from "../../Images/dataNova.png";
+import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -23,7 +23,8 @@ import { useAuthContext } from "../../Context/authContext";
 import { useNavigate } from "react-router-dom";
 import loginpic from "../../Images/login.jpg";
 import filterpic from "../../Images/filter.png";
-import Checkbox from "@mui/material/Checkbox";
+import logo from "../../Images/dataNova.png";
+
 
 const NavBar = () => {
   const { selectedFilter, setSelectedFilter } = useContext(FilterContext);
@@ -92,7 +93,7 @@ const NavBar = () => {
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="logo">
-          <Box component="img" sx={{ blockSize: 40 }} alt="Logo" src={logo} />
+          <Box component="img" sx={{ blockSize: 40 }} navigate="/Home" alt="Logo" src={logo} />
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
         {isAuthenticated && (

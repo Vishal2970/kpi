@@ -106,24 +106,34 @@ const table = async (req, res) => {
 
           if (sharedCondition) {
             const modifiedQuery = conditionModification(query, sharedCondition);
-            console.log(modifiedQuery);
+            // console.log(modifiedQuery);
 
             query = modifiedQuery; // Use modified query
           }
 
           if (sharedOrder) {
             if (query.toUpperCase().includes("ORDER BY")) {
-              query = query.toUpperCase().includes("ASC")
-                ? query.replace(/ASC/i, sharedOrder)
-                : query.replace(/DESC/i, sharedOrder);
+              if (query.toUpperCase().includes("ASC")) {
+                query = query.replace(/ASC/i, sharedOrder[0]);
+              } else if (query.toUpperCase().includes("DESC")) {
+                query = query.replace(/DESC/i, sharedOrder[0]);
+              }
+              if (query.toUpperCase().includes("CODATE")) {
+                const newCodateValue = `'2024-08-02'`; // specify the new codate value
+                query = query.replace(/codate='[^']+'/i, `codate=${newCodateValue}`); // replace the entire codateValue with the new date value
+              }
             }
           }
+          // console.log(query);
+          
 
           // Safeguard against undefined parameters before SQL execution
           if (!Array.isArray(parameters) || parameters.length === 0) {
             parameters = []; // Default to an empty array if undefined
           }
           console.log(parameters);
+          console.log(query);
+          
           
           const queryResponse = await sql.query(query, parameters);
 

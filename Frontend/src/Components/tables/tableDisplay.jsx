@@ -57,7 +57,7 @@ export default function TableDisplay() {
     try {
       const params = {
         widgetName,
-        sharedOrder: filterCondition,
+        sharedOrder: [filterCondition,selectedFilter.date],
       };
       const response = await axios.get(URL, { params });
       const data = response.data;
@@ -73,7 +73,7 @@ export default function TableDisplay() {
   };
 
   const handleFilterUpdate = async (filterCondition) => {
-    console.log(filterCondition);
+    // console.log(filterCondition);
 
     let rows = [];
     let widgetNames = [];
