@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useMemo, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Table from "./Table";
 import { Grid, Container } from "@mui/material";
 import axios from "axios";
 import { FilterContext } from "../../Context/filterProvider";
 
 export default function TableDisplay() {
-  const { selectedFilter, setSelectedFilter } = useContext(FilterContext);
+  const { selectedFilter } = useContext(FilterContext);
   const [WidgetNames, setWidgetNames] = useState([]);
   const [Rows, setRows] = useState([]);
   const [widgetFilter, setWidgetFilter] = useState(null);
@@ -50,6 +50,7 @@ export default function TableDisplay() {
     };
 
     fetchAllData();
+    // eslint-disable-next-line
   }, []);
 
   const handleWidgetFilterUpdate = async (widgetName, filterCondition) => {
@@ -72,37 +73,36 @@ export default function TableDisplay() {
   };
 
   const handleFilterUpdate = async (filterCondition) => {
-      console.log(filterCondition);
+    console.log(filterCondition);
 
-      let rows = [];
-      let widgetNames = [];
+    let rows = [];
+    let widgetNames = [];
 
-          try {
-            const params = {
-              sharedCondition: `codate='${filterCondition.date}' and coshopno='${filterCondition.shop}'`,
-            };
+    try {
+      const params = {
+        sharedCondition: `codate='${filterCondition.date}' and coshopno='${filterCondition.shop}'`,
+      };
 
-            console.log(params);
+      console.log(params);
 
-            const response = await axios.get(URL, { params });
-            const data = response.data;
-            if (data) {
-              data.forEach((item) => {
-                if (Array.isArray(item.response)) {
-                  rows.push(item.response);
-                } else {
-                  console.error("Invalid data format for rows");
-                }
-              });
-              data.forEach((item) => widgetNames.push(item.widgetName));
-            }
-          } catch (error) {
-            console.error(`Error fetching data from ${URL}:`, error);
+      const response = await axios.get(URL, { params });
+      const data = response.data;
+      if (data) {
+        data.forEach((item) => {
+          if (Array.isArray(item.response)) {
+            rows.push(item.response);
+          } else {
+            console.error("Invalid data format for rows");
           }
-       
-      setRows(rows);
-      setWidgetNames(widgetNames);
-   
+        });
+        data.forEach((item) => widgetNames.push(item.widgetName));
+      }
+    } catch (error) {
+      console.error(`Error fetching data from ${URL}:`, error);
+    }
+
+    setRows(rows);
+    setWidgetNames(widgetNames);
   };
 
   useEffect(() => {
