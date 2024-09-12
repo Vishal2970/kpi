@@ -60,8 +60,6 @@ export default function TableDisplay() {
       if (index !== -1) {
         console.log("Response");
         console.log( data[0].response);
-        
-        
         const newRows = [...Rows];
         newRows[index] = data[0].response; // Update only the specific widget's data
         setRows(newRows);

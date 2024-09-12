@@ -225,27 +225,18 @@ const getAllData = async (req, res) => {
   try {
     const sharedCondition = req.query.sharedCondition || null;
     const widgetItems = await getQueryFromXML();
-
     const responses = await Promise.all(
       widgetItems.map(async (widgetItem) => {
         try {
           let query = widgetItem.query || "";
           let parameters = widgetItem.parameters || [];
-          
-          
           query=conditionModification(query,sharedCondition);
-          
-          
-          
           console.log(query);
-
-          
           const queryResponse = await sql.query(query, parameters);
-
           return {
-            widgetName: widgetItem.widgetName,
-            parameters: widgetItem.parameters,
-            response: queryResponse.recordset,
+            widgetName: widgetItem?.widgetName||null,
+            parameters: widgetItem?.parameters||null,
+            response: queryResponse?.recordset||null,
           };
         } catch (err) {
           return {
