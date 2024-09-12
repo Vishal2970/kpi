@@ -42,17 +42,26 @@ export default function TableDisplay() {
   };
 
   // Function to fetch filtered data based on widget name and filter condition
+  console.log("Selected filtere");
+  
+  console.log(selectedFilter);
+  
   const handleWidgetFilterUpdate = async (widgetName, filterCondition) => {
     try {
       const date='codate='+selectedFilter.date;
+      const shop=selectedFilter.shop?`coshopno='${selectedFilter.shop}'`:null;
       const params = {
         widgetName,
-        sharedOrder: [filterCondition,date]
+        sharedOrder: [filterCondition,date,shop]
       };
       const response = await axios.get(URL_Filter, { params });
       const data = response.data;
       const index = WidgetNames.indexOf(widgetName);
       if (index !== -1) {
+        console.log("Response");
+        console.log( data[0].response);
+        
+        
         const newRows = [...Rows];
         newRows[index] = data[0].response; // Update only the specific widget's data
         setRows(newRows);

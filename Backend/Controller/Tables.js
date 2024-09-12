@@ -273,6 +273,8 @@ const getFilteredData = async (req, res) => {
     const sharedCondition = req.query.sharedCondition || null;
     const sharedOrder = req.query.sharedOrder || null;
     // Filter items based on widgetName if provided
+    console.log(sharedOrder[2]);
+    
     const filteredWidgetItems = widgetItems.filter((widgetItem) => {
       if (widgetName && widgetItem.widgetName === widgetName) {
         return true;
@@ -303,7 +305,9 @@ const getFilteredData = async (req, res) => {
           if (!Array.isArray(parameters) || parameters.length === 0) {
             parameters = [];
           }
-          query=conditionModification(query,sharedOrder[1])
+          const condi=sharedOrder[1]+" and "+sharedOrder[2];
+          query=conditionModification(query,condi)
+          // query=conditionModification(query,sharedOrder[2])
           console.log(query);
           // console.log(parameters);
           const queryResponse = await sql.query(query, parameters);
