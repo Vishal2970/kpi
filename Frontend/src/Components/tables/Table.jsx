@@ -30,7 +30,7 @@ const FilterButton = React.memo(({ onClick }) => {
   );
 });
 
-export default function BasicTable({ rows, widgetName, filterProps }) {
+export default function BasicTable({ rows, widgetName, filterProps,filterGraph }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [orderDisplay, setOrderDisplay] = useState(false);
 
@@ -56,6 +56,10 @@ export default function BasicTable({ rows, widgetName, filterProps }) {
   const handleFilterSelect = (selectedFilter) => {
     selectedFilter === "DESC" ? setOrderDisplay(true) : setOrderDisplay(false);
     filterProps([widgetName, selectedFilter]);
+    setAnchorEl(null);
+  };
+  const handleGraph = (selectedFilter) => {
+    filterGraph([widgetName, selectedFilter]);
     setAnchorEl(null);
   };
   return (
@@ -145,6 +149,7 @@ export default function BasicTable({ rows, widgetName, filterProps }) {
         ) : (
           <MenuItem onClick={() => handleFilterSelect("DESC")}>DSC</MenuItem>
         )}
+        <MenuItem onClick={() => handleGraph("GRAPH")}>GRAPH</MenuItem>
       </Menu>
     </Box>
   );
