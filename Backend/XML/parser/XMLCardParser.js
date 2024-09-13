@@ -5,8 +5,10 @@ const getQueryFromXML = async () => {
   try {
     const xmlString = fs.readFileSync("./XML/Card.xml", "utf8");
     const parser = new xml2js.Parser({ compact: true, ignoreComment: true });
-
+    
+    console.log(xmlString);
     const result = await parser.parseStringPromise(xmlString);
+    console.log(result);
 
     const root = result;
     if (!root || !root.KPIs || !root.KPIs.KPI) {
@@ -49,5 +51,8 @@ const getQueryFromXML = async () => {
   }
 };
 
+const getCardDetails = async () => {
+  return true;
+};
 
-module.exports = getQueryFromXML;
+module.exports = { getQueryFromXML, getCardDetails };

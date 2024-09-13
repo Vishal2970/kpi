@@ -1,10 +1,11 @@
 const { sql } = require("../config/db");
-const getQueryFromXML = require("../XML/parser/XMLCardParser");
+const { getQueryFromXML, getCardDetails } = require("../XML/parser/XMLCardParser");
 const fs = require("fs");
 
 const Card = async (req, res) => {
   try {
     const widgetItems = await getQueryFromXML();
+    // console.log(widgetItems);
 
     const responses = await Promise.all(widgetItems.map(async (widgetItem) => {
       try {
@@ -38,30 +39,21 @@ const Card = async (req, res) => {
     });
   }
 };
-// const card2 = async (req, res) => {
-//   try {
-//     console.log("Hello card 2");
-//     const request = new sql.Request(); // Ensure sql is imported
-//     const root=await getQueryFromXML()
-//     const response = await request.query(root.query[4]);
-//     res.status(200).send({ data: response });
-//   } catch (err) {
-//     res.status(500).send({
-//       error: err.message,
-//     });
-//   }
-// };
-// const card3 = async (req, res) => {
-//   try {
-//     console.log("Hello card 3");
-//     const request = new sql.Request(); // Ensure sql is imported
-//     const root=await getQueryFromXML()
-//     const response = await request.query(root.query[5]);
-//     res.status(200).send({ data: response });
-//   } catch (err) {
-//     res.status(500).send({
-//       error: err.message,
-//     });
-//   }
-// };
-module.exports = {Card};
+
+const cardDetails = async (req, res) => {
+  try {
+    // console.log("Hello card 2");
+    const request = new sql.Request();
+    const CardDetails=await getCardDetails();
+    // console.log(CardDetails);
+    
+    const response = await request.query(root.query[4]);
+    return res.status(200).send({ data: response });
+  } catch (err) {
+    res.status(500).send({
+      error: err.message,
+    });
+  }
+};
+
+module.exports = {Card,cardDetails};

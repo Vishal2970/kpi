@@ -88,3 +88,125 @@
     <query>select top 1 CopkchildId from tadnreportchild where copkchildid='11.3'</query>
     <query>select top 1 CopkchildId from tadnreportchild where copkchildid='11.2'</query>
 </root>  -->
+
+
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<KPIs>
+  Sales related kpi details
+  <KPI did="dSales" id="KpiSales" Name="Sales">
+    <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
+      <widgetitem name="TotalsalesRevenue" type="label" isquery="yes" target="0" caption="TotalsalesRevenue" query="select sum(CoTotSaleswoVAT)CoSaleswoVAT from viKpiTotalsalesRevenue WITH (NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="dSales1">
+        <parameter>          
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
+    <widget name="RegSales" displayname="RegSales">
+      <widgetitem name="RegSales" type="label" isquery="yes" target="0" caption="RegSales" query="select sum(CoSaleswVAT)CoSaleswVAT from viKpiRegSales WITH (NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="RegSales1" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
+    <widget name="RetailSales" displayname="RetailSales">
+      <widgetitem name="RetailSales" type="label" isquery="yes" target="0" caption="RetailSales" query="select sum(CoSaleswVAT)CoSaleswVAT from viKpiRegSalesRetail WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
+	  <widget name="WebSales" displayname="WebSales">
+		  <widgetitem name="WebSales" type="label" isquery="yes" target="0" caption="WebSales" query="select sum(CoSaleswVAT)CoSaleswVAT from viKpiRegSalesWeb WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+					  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
+			  <parameter>
+				  <Shopno>CoShopNo</Shopno>
+			  </parameter>
+		  </widgetitem>
+	  </widget>
+    <widget name="GuestUserSaleswvat" displayname="GuestUserSaleswvat">
+      <widgetitem name="GuestUserSaleswvat" type="label" isquery="yes" target="0" caption="GuestUserSaleswvat" query="select sum(CoSaleswVAT)CoSaleswVAT from viKpiGuestSaleswvat WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
+    <widget name="RegUserSaleswvat" displayname="RegUserSaleswvat">
+      <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select sum(CoSaleswVAT)CoSaleswVAT from viKpiRegSaleswvat WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
+    <widget name="AvgQtysoldReceipt" displayname="AvgQtysoldReceipt">
+      <widgetitem name="AvgQtysoldReceipt" type="label" isquery="yes" target="0" caption="AvgQtysoldReceipt" query="select cast(dbo.dvnew(sum(coqtysold),sum(conoofcust)) as numeric(13,2))coavgreceipt from dbo.taAccshopdailysales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)  "
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1 " targetValue ="0" id=""  >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>	  
+    <widget name="Totalticketsales" displayname="Totalticketsales">
+      <widgetitem name="Totalticketsales" type="label" isquery="yes" target="0" datatype="int" caption="Totalticketsales" query="select count(1)totaltickets from ViTotalticketsales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+            queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1 " targetValue ="0" id="ticket" >
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+    </widget>
+    <widget name="TotalVisitor" displayname="TotalVisitor">
+      <widgetitem name="TotalVisitor" type="label" isquery="yes" target="0" datatype="int" caption="TotalVisitor" query="select count(1)totalVisitor from viHighestTicketValidate WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+            queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1 " targetValue ="0" id="scanticket" >
+        <parameter>coshopno</parameter>
+      </widgetitem>
+    </widget>
+    <widget name="QuantitySoldwithDiscountcode" displayname="QuantitySoldwithDiscountcode">
+      <widgetitem name="QuantitySoldwithDiscountcode" type="label" isquery="yes" target="0" datatype="int" caption="QuantitySoldwithDiscountcode" query="select count(1)numberOfQtySoldDisc from ViQuantitySoldwithDiscountcode WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+	          queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1 " targetValue ="0" id="" >
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+    </widget>
+  </KPI>    
+  End sales
+  Inventory related kpi details
+  <KPI did="dInventory" id="KpiInventory" Name="Inventory">
+    <widget name="Openstockqty" displayname="Openstockqty">
+      <widgetitem name="Openstockqty" type="label" isquery="yes" target="0" caption="Openstockqty" query="SELECT SUM(Coopenstock + CoQtyPurchased -Coqtysold -CoQuanWaste) AS Cotheostock FROM dbo.TaAccstockreg WITH (NOLOCK) WHERE Coyear = YEAR(GETDATE()) and 1=1"
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="">
+        <parameter>          
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>    
+    <widget name="Inventoryvalue" displayname="Inventoryvalue">
+      <widgetitem name="Inventoryvalue" type="label" isquery="yes" target="0" caption="Inventoryvalue" query="SELECT SUM(CoAvgThStockinNPP) AS CoAvgThStockinNPP FROM dbo.TaAccstockreg WITH (NOLOCK) WHERE Coyear = YEAR(GETDATE()) and 1=1"
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>
+    <widget name="Outofstockitem" displayname="Outofstockitem">
+      <widgetitem name="Outofstockitem1" type="label" isquery="yes" target="0" caption="Outofstockitem" query="SELECT sum(ItemCount) FROM viKpiOutofstockitemcount WITH (NOLOCK) where 1=1"
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1"  targetValue ="" id="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>     
+    <widget name="Totalturnoverratevalue" displayname="Totalturnoverratevalue">
+      <widgetitem name="Totalturnoverratevalue1" type="label" isquery="yes" target="0" caption="Totalturnoverratevalue" query="select CAST(IIF(SUM(Cotheostock)&lt;=0,0,SUM(CoQtySoldCostPrice)/SUM(Cotheostock )) AS NUMERIC(13,2)) AS omlops FROM viKpiTurnoversale WITH (NOLOCK) where 1=1"
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1 "  targetValue ="" id="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </widget>   
+  </KPI>
+  End Inventory
+</KPIs>
+-->

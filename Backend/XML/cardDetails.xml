@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Widgets>
+  <KPI did="dSales1" id="KpiSales" Name="Sales">
+    <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
+
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalsalesRevenue"
+       query="select sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKpiTotalsalesRevenue WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+       queryTarget="" targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="Receiptcount" 
+       query="select sum(conoofcust) from dbo.taAccshopdailysales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+       queryTarget=""  targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+      
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="Avgtransactionvalue"
+        query="select cast(dbo.dvnew(sum(CoTotSaleswVAT),sum(conoofcust)) as numeric(13,2))coavgreceipt from viKpiAvgtransactionvalue WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+        queryTarget="" targetValue ="" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="AvgQtysoldReceipt"
+        query="select cast(dbo.dvnew(sum(coqtysold),sum(conoofcust)) as numeric(13,2))coavgreceipt from dbo.taAccshopdailysales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+        queryTarget="" targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="GrossProfit"
+        query="select sum(CoGrossProfitAmt)as CoGrossProfitAmt from viKpiGrossProfit WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+        queryTarget="" targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+      
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalSaleQty"
+        query="select isnull(sum(coQtySold),0) as  coQtySold from taAccshopdailysales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+        queryTarget="" targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>   
+    </widget>
+
+    <Viewdetail name="ViewDetail" displayname="View Details" >
+      <widgetitem name="Top10Shopsaleswovat" type="label" isquery="yes" target="0" datatype="int" caption="GridData6"
+       query="select top 10 coshopname, sum(CoTotSaleswoVAT)CoSaleswoVAT3  from viKpiWidShopsaleswovat WITH(NOLOCK)
+       where cast(codate as date)=cast(getdate() as date) 
+       group by coshopname order by sum(CoTotSaleswoVAT) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>      
+      
+      <widgetitem name="Top10ShopGrossprofitamt" type="label" isquery="yes" target="0" caption="GridData7"
+      query="select top 10 coshopname, sum(CoGrossProfitAmt)CoGrossProfitAmt  from viWidShopGrossprofitamt WITH(NOLOCK)
+       where cast(codate as date)=cast(getdate() as date) 
+       group by coshopname order by sum(CoGrossProfitAmt) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="Top10Shopnoofcust" type="label" isquery="yes" target="0" caption="GridData8"
+       query="select top 10 coshopname, sum(CoNoOfCust)CoNoOfCust  from dbo.taAccShopdailysales WITH(NOLOCK)
+       where cast(codate as date)=cast(getdate() as date) 
+       group by coshopname having Sum(CoNoOfCust) &lt;&gt; 0 order by sum(CoNoOfCust) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+      
+      <widgetitem name="Top10quantityforregion" type="label" isquery="yes" target="0" caption="ViewGridData" 
+        query="	select top 10 CoShopName,CoRegionName,Sum(CoSaleswoVAT3) as CoSaleswoVAT3 from viWidRegionsaleswovat WITH(NOLOCK) 
+	              where cast(codate as date)=cast(getdate() as date) Group by CoShopName,CoRegionName having Sum(CoSaleswoVAT3) &lt;&gt; 0  order by CoSaleswoVAT3 desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="Top10quantityfordepartment" type="label" isquery="yes" target="0" caption="StoreGridData" 
+      query="	select top 10 CoShopName,CoDeptName,Sum(CoSaleswoVAT3)CoSaleswoVAT3 from viWidDeptSaleswovat WITH(NOLOCK)
+      where cast(codate as date)=cast(getdate() as date) 
+      Group by CoShopName,CoDeptName having Sum(CoSaleswoVAT3) &lt;&gt; 0  order by CoSaleswoVAT3 desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="Top10quantityforItemgroup" type="label" isquery="yes" target="0" caption="ProductGridData" 
+       query="select top 10 CoShopName,CoItemGroupName,Sum(CoSaleswoVAT3)CoSaleswoVAT3 from viWidtemgroupSaleswovat WITH(NOLOCK)
+	      where cast(codate as date)=cast(getdate() as date)
+	      Group by CoShopName,CoItemGroupName having Sum(CoSaleswoVAT3) &lt;&gt; 0 order by CoSaleswoVAT3 desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="Top10quantityforItem" type="label" isquery="yes" target="0" caption="SaleCategoryGridData" 
+       query="select top 10 CoShopName,CoItemName,Sum(CoSaleswoVAT-CoDiscAmt)CoSaleswoVAT3 from dbo.taAccitemdailysales WITH(NOLOCK)
+      where cast(codate as date)=cast(getdate() as date) 
+      Group by CoShopName,CoItemName having Sum(CoSaleswoVAT-CoDiscAmt) &lt;&gt; 0 order by Sum(CoSaleswoVAT-CoDiscAmt) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="Top10Returnqty" type="label" isquery="yes" target="0" caption="GridData5"
+      query="select top 10 coshopname, coitemname, sum(abs(coqtysold))coqtyreturn  from ViKPIReturnItemQty WITH(NOLOCK)
+       where cast(codate as date)=cast(getdate() as date) 
+       group by coshopname, coitemname having sum(abs(coqtysold)) &gt; 0 order by sum(abs(coqtysold)) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="Salesperoperatorswithvalt" type="label" isquery="yes" target="0" caption="Salesperoperatorswithvalt"
+      query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+      
+    </Viewdetail>
+
+    <GraphDetail name="GraphDetail" displayname="Graph Details">
+    <widgetitem name="YearWiseSaleGraph" type="label" isquery="yes" target="0" datatype="int" caption="YearWiseSaleGraph"     
+      query="select CoYear as Name, sum(CoTotSaleswoVAT)as Value from(
+              select CoYear as CoYear, 
+              (sum(st.CoTotSaleswoVAT - st.CoBottleReturnAmount)- 
+              (isnull((select sum(comm.CoSaleswithoutVat) from dbo.TaAccItemCommission comm with(nolock) 
+              where comm.CoShopNo=st.Coshopno and comm.CoDate=st.CoDate),0))) as CoTotSaleswoVAT
+              from dbo.taAccshopdailysales st WITH(NOLOCK) where coyear >= year(getdate())-1
+              AND CoDate &lt;=GETDATE()-2
+              group by1 CoYear,st.Coshopno,st.CoDate
+              UNION ALL
+              select CoYear as CoYear, 
+              (sum(st.CoTotSaleswoVAT - st.CoBottleReturnAmount)- 
+              (isnull((select sum(comm.CoSaleswithoutVat) from dbo.TaAccItemCommission comm with(nolock) 
+              where comm.CoShopNo=st.Coshopno and comm.CoDate=st.CoDate),0))) as CoTotSaleswoVAT
+              from dbo.taAccshopdailysales st WITH(NOLOCK) where coyear >= year(getdate())-2
+              AND CoDate &lt;=DATEADD(year, -1, GETDATE()-1)
+              group by1 CoYear,st.Coshopno,st.CoDate
+              )aa group by CoYear
+              order by coyear">
+      <parameter>
+        <Shopno>CoShopNo</Shopno>
+      </parameter>
+    </widgetitem>
+  </GraphDetail>
+  </KPI>
+
+  <KPI did="RegSales1" id="KpiReceipt" Name="Sales">
+    <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue">
+
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalRegSales"
+      query="select sum((cotheocash -CoReturnPantAmt) + Cocheqpayamt + cotheobank + cocredpayamt+ CoOfflineBankPayAmt+coothpayamt+coreturnpantamt)coRegsales from dbo.taAccCashDailySales WITH (NOLOCK) where cast(codate as date)=cast(getdate() as date) "
+      queryTarget=""  targetValue ="" >
+      <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>CoCashierno</Cashier>
+      </parameter>
+      </widgetitem>
+      
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="Totalcancelamt"
+      query="select sum(coCancelledAmt)coCancelledAmt from dbo.taAccCashDailySales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      queryTarget=""  targetValue ="" >
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>CoCashierno</Cashier>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalReturnedamt"
+      query="select sum(CoItemRetAmt)CoReturnedAmt from ViKPIReturnAmount WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      queryTarget=""  targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>CoCashierno</Cashier>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalBankpayamt"
+      query="select sum(CoBankPayAmt)CoBankPayAmt from dbo.taAccCashDailySales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      queryTarget=""  targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>CoCashierno</Cashier>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="Totalcashamount"
+      query="select sum(CoTheoCash -CoReturnPantAmt)CoCashCollAmt from dbo.taAccCashDailySales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      queryTarget=""  targetValue ="">
+          <parameter>
+            <Shopno>CoShopNo</Shopno>
+            <Cashier>CoCashierno</Cashier>
+          </parameter>
+        </widgetitem>
+
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalOfflinebankpayamt"
+      query="select sum(CoOfflineBankPayAmt)CoOfflineBankPayAmt from dbo.taAccCashDailySales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      queryTarget=""  targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>CoCashierno</Cashier>
+        </parameter>
+      </widgetitem>
+      
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="Totaldeletedamount"
+      query="select sum(CoDELETEdAmt)CoDELETEdAmt from dbo.taAccCashDailySales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      queryTarget=""  targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>CoCashierno</Cashier>
+        </parameter>
+      </widgetitem>
+
+      <!--<widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="Totalholdreceipts"
+      query="select count(coshopno)coshopno from ViKpiHoldReceipt WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      queryTarget=""  targetValue ="">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>couserno</Cashier>
+        </parameter>
+      </widgetitem>-->
+	<widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalExcludeCredit"
+      query="select sum(isnull(CoTotSalesWVat,0)-isnull(CoCredPayAmt,0))as coExcludeCreditSales from ViKpiKreditKontant WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+      queryTarget=""  targetValue ="">
+			<parameter>
+				<Shopno>CoShopNo</Shopno>				
+			</parameter>
+		</widgetitem>
+    </widget>
+
+    <Viewdetail name="ViewDetail" displayname="View Details" >
+
+      <widgetitem name="Highestsalesoperators" type="label" isquery="yes" target="0" datatype="int" caption="ViewGridData" 
+       query="select top 10 coshopname,CoUserName,sum(CoTotSaleswVAT)CoSaleswVAT3 from viKPIHighestSales WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswVAT) &gt; 0 order by sum(CoTotSaleswVAT) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>couserno</Cashier>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="HighestNocust" type="label" isquery="yes" target="0" datatype="int" caption="StoreGridData" 
+       query="select top 10 coshopname,CoUserName,sum(CoNoOfCust)CoNoOfCust from viKPIHighestnoCust WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoNoOfCust) &lt;&gt; 0 order by sum(CoNoOfCust) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>couserno</Cashier>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="HighestReturnamt" type="label" isquery="yes" target="0" datatype="int" caption="ProductGridData" 
+       query="select top 10 coshopname,CoUserName,sum(CoReturnedAmt)CoReturnedAmt from viKPIHighestReturnamt WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoReturnedAmt) &lt;&gt; 0 order by sum(CoReturnedAmt) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>couserno</Cashier>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="HighestDeletedAmt" type="label" isquery="yes" target="0" datatype="int" caption="SaleCategoryGridData" 
+       query="select top 10 coshopname,CoUserName,sum(CoDeletedAmt)CoDeletedAmt from viKPIHighestDeletedAmt WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoDeletedAmt) &lt;&gt; 0 order by sum(CoDeletedAmt) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>couserno</Cashier>
+        </parameter>
+      </widgetitem>
+      
+      <widgetitem name="HighestCancelAmt" type="label" isquery="yes" target="0" datatype="int" caption="GridData5"
+       query="select top 10 coshopname,CoUserName,sum(CoCancelledAmt)CoCancelledAmt3 from viKPIHighestCancelledAmt WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoCancelledAmt) &lt;&gt; 0 order by sum(CoCancelledAmt) desc" highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+          <Cashier>couserno</Cashier>
+        </parameter>
+      </widgetitem>
+    </Viewdetail>
+
+    <GraphDetail name="GraphDetail" displayname="Graph Details" >
+      <widgetitem name="YearWiseSaleGraph" type="label" isquery="yes" target="0" datatype="int" caption="Paymentmadeby" 
+        query="select Copaymentname,sum(Comeansofpayamt)as Comeansofpayamt from viKpiPaymentdtl with(nolock) where cast(codate as date)=cast(getdate() as date) group by Copaymentname ">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>     
+         <Cashier>couserno</Cashier>
+        </parameter>
+      </widgetitem>
+    </GraphDetail>
+  </KPI> 
+  
+ <KPI did="ticket" id="KpiTicket" Name="Sales">
+   <widget name="KPIstickets" displayname="KPIstickets" >
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="freeTickets" query="select count(1)CoSalesPrice from VifreeTickets WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+       queryTarget="" targetValue ="">
+        <parameter>
+          <Shopno>CofkShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+      <widgetitem name="ChildrenCategory" type="label" isquery="yes" target="0" datatype="int" caption="ChildrenCategory" query="select count(1)CoItemName from ViCategChildren WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+                queryTarget="" targetValue ="0">
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+
+      <widgetitem name="AdultCategory" type="label" isquery="yes" target="0" datatype="int" caption="AdultCategory" query="select count(1)CoItemName from ViCategAdult WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+            queryTarget="" targetValue ="">
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+
+      <widgetitem name="Studentcategory" type="label" isquery="yes" target="0" datatype="int" caption="Studentcategory" query="select count(1)CoItemName from ViCategStudent WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+            queryTarget="" targetValue ="" >
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+
+      <widgetitem name="Seniorcategory" type="label" isquery="yes" target="0" datatype="int" caption="Seniorcategory" query="select count(1)CoItemName from ViCategSenior WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+            queryTarget="" targetValue ="" >
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+    </widget>
+   <GraphDetail name="GraphDetail" displayname="Graph Details">
+     <widgetitem name="YearWiseSaleGraph" type="label" isquery="yes" target="0" caption="YearWiseSaleGraph"
+       query="select CoYear as Name, sum(cosaleswovat)as Value from( 
+            SELECT year(cast(t1.CoPurchaseDate as date))as CoYear, cast(t1.CoPurchaseDate as date)Codate,  
+            t1.Coshopno,  
+            cast((isnull(SUM(abs(t1.cosalesprice)),0)) /  
+            nullif(1+(isnull((select top 1 covatefftax from tavatcode as tv WITH (NOLOCK)  
+            where tv.CopkVatCode in (select CofkVatCode from taitems ti WITH (NOLOCK) where ti.copkitemno =  t1.copfkitemno)),0)/100),0)as numeric(13,2)) as cosaleswovat  
+            FROM dbo.Taserialno t1 WITH (NOLOCK) 
+            where year(t1.CoPurchaseDate) >= year(getdate())-1 AND cast(t1.CoPurchaseDate as date) &lt;= GETDATE()-2
+            group by1 cast(t1.CoPurchaseDate as date),t1.Coshopno,t1.copfkitemno
+            Union all  
+            select CoYear,ta.codate,CoShopNo, 
+            isnull(SUM(abs(CoSaleswoVAT-codiscamt)),0)CoSaleswoVAT 
+            from taAccitemdailysales ta WITH (NOLOCK)  
+            where CopfkItemNo not in(select CopfkItemno from Taserialno WITH (NOLOCK)  
+            where cast(Taserialno.CoPurchaseDate as date) = ta.codate and Taserialno.CoShopNo = ta.CoShopNo) 
+            and coyear >= year(getdate())-2 AND CoDate &lt;=DATEADD(year, -1, GETDATE()-1) 
+            group by1 CoYear,ta.codate,CoShopNo,CopfkItemNo
+            )aa group by CoYear order by coyear">
+       <parameter>
+         <Shopno>CoShopNo</Shopno>
+       </parameter>
+     </widgetitem>
+   </GraphDetail>
+  </KPI>
+
+  <KPI did="scanticket" id="Kpiscanticket" Name="Sales">
+    <widget name="KPIstickets" displayname="KPIstickets" >      
+
+      <widgetitem name="ChildrenCategory" type="label" isquery="yes" target="0" datatype="int" caption="ChildrenCategory" query="select count(1)CoItemName from ViScanCategChildren WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+                queryTarget="" targetValue ="0">
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+
+      <widgetitem name="AdultCategory" type="label" isquery="yes" target="0" datatype="int" caption="AdultCategory" query="select count(1)CoItemName from ViScanCategAdult WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+            queryTarget="" targetValue ="">
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+
+      <widgetitem name="Studentcategory" type="label" isquery="yes" target="0" datatype="int" caption="Studentcategory" query="select count(1)CoItemName from ViScanCategStudent WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+            queryTarget="" targetValue ="" >
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+
+      <widgetitem name="Seniorcategory" type="label" isquery="yes" target="0" datatype="int" caption="Seniorcategory" query="select count(1)CoItemName from ViScanCategSenior WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+            queryTarget="" targetValue ="" >
+        <parameter>CofkShopNo</parameter>
+      </widgetitem>
+    </widget>
+
+    <Viewdetail name="ViewDetail" displayname="View Details" datatype="int" >
+      <widgetitem name="SeatBookingCapacity" type="label" isquery="yes" target="0" datatype="int" caption="SeatBookingCapacity"
+       query="EXEC [usp_SeatBookingCapacityPerEvent_KPI]  @StartDate = '2024-01-03' ,@EndDate = '2024-07-23',@BookingPercent=''
+       where cast(codate as date)=cast(getdate() as date) " highLow="true">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+
+
+    </Viewdetail>
+    
+    <GraphDetail name="GraphDetail" displayname="Graph Details">
+      <widgetitem name="YearWiseSaleGraph" type="label" isquery="yes" target="0" caption="YearWiseScanGraph"
+        query="select CoYear as Name, count(coTicketnumber)as Value from( 
+            SELECT distinct tl.coTicketnumber,year(cast(tl.codate as date))as CoYear,
+            cast(tl.CoDate as date) codate,tl.CoShopNo as CofkShopNo   
+            FROM taaccticketvalidation tl WITH(NOLOCK)
+            WHERE year(tl.codate) >= year(getdate())-2 AND cast(tl.codate as date) &lt;= GETDATE()-1
+            and tl.costatus LIKE '%godkjent%'
+         )aa group by CoYear order by coyear">
+        <parameter>
+          <Shopno>CoShopNo</Shopno>
+        </parameter>
+      </widgetitem>
+    </GraphDetail>
+
+
+  </KPI>
+</Widgets>
