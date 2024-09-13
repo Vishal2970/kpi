@@ -124,7 +124,7 @@
 //             parameters = []; // Default to an empty array if undefined
 //           }
 //           console.log(parameters);
-          
+
 //           const queryResponse = await sql.query(query, parameters);
 
 //           return {
@@ -151,7 +151,6 @@
 // };
 
 // module.exports = { table };
-
 
 const { sql } = require("../config/db");
 const getQueryFromXML = require("../XML/parser/XMLTableParser");
@@ -230,13 +229,13 @@ const getAllData = async (req, res) => {
         try {
           let query = widgetItem.query || "";
           let parameters = widgetItem.parameters || [];
-          query=conditionModification(query,sharedCondition);
+          query = conditionModification(query, sharedCondition);
           console.log(query);
           const queryResponse = await sql.query(query, parameters);
           return {
-            widgetName: widgetItem?.widgetName||null,
-            parameters: widgetItem?.parameters||null,
-            response: queryResponse?.recordset||null,
+            widgetName: widgetItem?.widgetName || null,
+            parameters: widgetItem?.parameters || null,
+            response: queryResponse?.recordset || null,
           };
         } catch (err) {
           return {
@@ -264,8 +263,11 @@ const getFilteredData = async (req, res) => {
     const sharedCondition = req.query.sharedCondition || null;
     const sharedOrder = req.query.sharedOrder || null;
     // Filter items based on widgetName if provided
-    console.log(sharedOrder[2]);
-    
+    console.log("shopfilter");
+
+    console.log(sharedOrder);
+    console.log(sharedOrder[1]);
+
     const filteredWidgetItems = widgetItems.filter((widgetItem) => {
       if (widgetName && widgetItem.widgetName === widgetName) {
         return true;
@@ -296,8 +298,19 @@ const getFilteredData = async (req, res) => {
           if (!Array.isArray(parameters) || parameters.length === 0) {
             parameters = [];
           }
-          const condi=sharedOrder[1]+" and "+sharedOrder[2];
-          query=conditionModification(query,condi)
+          // console.log("Vishal");
+          let condi="";
+          if (sharedOrder.length > 2) {
+            console.log("If me ghusa");
+            condi= sharedOrder[1] + " and " + sharedOrder[2];
+          } else {
+            console.log("else me ghusa");
+            condi = sharedOrder[1];
+          }
+          console.log("else se Bahar");
+          console.log(condi);
+
+          query = conditionModification(query, condi);
           // query=conditionModification(query,sharedOrder[2])
           console.log(query);
           // console.log(parameters);

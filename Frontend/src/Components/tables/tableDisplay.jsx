@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useContext } from "react";
 import Table from "./Table";
 import { Grid, Container } from "@mui/material";
@@ -7,12 +6,12 @@ import { FilterContext } from "../../Context/filterProvider";
 
 export default function TableDisplay() {
   const { selectedFilter } = useContext(FilterContext);
-  const [WidgetNames, setWidgetNames] = useState([]);
-  const [Rows, setRows] = useState([]);
+  const [widgetNames, setWidgetNames] = useState([]);
+  const [rows, setRows] = useState([]);
   const [widgetFilter, setWidgetFilter] = useState(null);
   const [filterCondition, setFilterCondition] = useState(null);
   const [contentDisplay, setContentDisplay] = useState(true);
-  const [filterGraph] = useState([]);
+  const [filterGraph, setFilterGraph] = useState([]); // Initialize filterGraph as an empty array
 
   const URL = "http://localhost:5000/api/check-table";
   const URL_Filter = "http://localhost:5000/api/check-filter";
@@ -22,6 +21,7 @@ export default function TableDisplay() {
     let rows = [];
     let widgetNames = [];
     try {
+      console.log(URL);
       const response = await axios.get(URL);
       const data = response.data;
       if (data) {
@@ -42,29 +42,29 @@ export default function TableDisplay() {
   };
 
   // Function to fetch filtered data based on widget name and filter condition
-  console.log("Selected filtere");
-  
+  console.log("Selected filter:");
   console.log(selectedFilter);
-  
+
   const handleWidgetFilterUpdate = async (widgetName, filterCondition) => {
     try {
-      const date='codate='+selectedFilter.date;
-      const shop=selectedFilter.shop?`coshopno='${selectedFilter.shop}'`:null;
+      const date = `codate=${selectedFilter.date}`;
+      const shop = selectedFilter.shop ? `coshopno='${selectedFilter.shop}'` : null;
       const params = {
         widgetName,
-        sharedOrder: [filterCondition,date,shop]
+        sharedOrder: [filterCondition, date, shop],
       };
+      console.log(URL_Filter);
       const response = await axios.get(URL_Filter, { params });
       const data = response.data;
-      const index = WidgetNames.indexOf(widgetName);
+      const index = widgetNames.indexOf(widgetName);
       if (index !== -1) {
         console.log("Response");
-        console.log( data[0].response);
-        const newRows = [...Rows];
+        console.log(data[0].response);
+        const newRows = [...rows];
         newRows[index] = data[0].response; // Update only the specific widget's data
         setRows(newRows);
         setWidgetNames(
-          WidgetNames.map((name, i) => (i === index ? widgetName : name))
+          widgetNames.map((name, i) => (i === index ? widgetName : name))
         );
       }
     } catch (error) {
@@ -80,6 +80,7 @@ export default function TableDisplay() {
       const params = {
         sharedCondition: `codate='${filterCondition.date}' and coshopno='${filterCondition.shop}'`,
       };
+      console.log(URL);
       const response = await axios.get(URL, { params });
       const data = response.data;
       if (data) {
@@ -105,63 +106,47 @@ export default function TableDisplay() {
   }, [contentDisplay]);
 
   // Apply filters based on widget or shared filter
-  // useEffect(() => {
-  //   if (widgetFilter !== null && filterCondition !== null) {
-  //     handleWidgetFilterUpdate(widgetFilter, filterCondition);
-  //   }
-  //   if (selectedFilter) {
-  //     handleFilterUpdate(selectedFilter);
-  //   }
-  // }, [widgetFilter, filterCondition, selectedFilter]);
-
-  // // Handle the filter click event
-  // const handleFilter = (filterProps) => {
-  //   if (Array.isArray(filterProps)) {
-  //     setWidgetFilter(filterProps[0]);
-  //     setFilterCondition(filterProps[1]);
-  //   }
-  // };
+  useEffect(() => {
+    if (widgetFilter !== null && filterCondition !== null) {
+      handleWidgetFilterUpdate(widgetFilter, filterCondition);
+    } else if (selectedFilter) {
+      handleFilterUpdate(selectedFilter);
+    }
+  }, [widgetFilter, filterCondition, selectedFilter]);
 
   // Handle filter logic only without making an API call
-const handleFilter = (filterProps) => {
-  if (Array.isArray(filterProps)) {
-    setWidgetFilter(filterProps[0]);
-    setFilterCondition(filterProps[1]);
-    // Directly sort or filter the existing data based on filterProps
-    const updatedRows = Rows.map((row, index) => {
-      if (WidgetNames[index] === filterProps[0]) {
-        return [...row].sort((a, b) =>
-          filterProps[1] === "ASC" ? a.coDate - b.coDate : b.coDate - a.coDate
-        );
-      }
-      return row;
-    });
-    setRows(updatedRows);
-  }
-};
-useEffect(() => {
-  if (widgetFilter !== null && filterCondition !== null) {
-    handleWidgetFilterUpdate(widgetFilter, filterCondition);
-  } else if (selectedFilter) {
-    handleFilterUpdate(selectedFilter);
-  }
-}, [widgetFilter, filterCondition, selectedFilter]);
-
+  const handleFilter = (filterProps) => {
+    if (Array.isArray(filterProps)) {
+      setWidgetFilter(filterProps[0]);
+      setFilterCondition(filterProps[1]);
+      // Directly sort or filter the existing data based on filterProps
+      const updatedRows = rows.map((row, index) => {
+        if (widgetNames[index] === filterProps[0] && Array.isArray(row)) {
+          return [...row].sort((a, b) =>
+            filterProps[1] === "ASC" ? a.coDate - b.coDate : b.coDate - a.coDate
+          );
+        }
+        return row;
+      });
+      setRows(updatedRows);
+    }
+  };
 
   const handleGraph = (filterGraph) => {
+    setFilterGraph(filterGraph);
     filterGraph[1] === "GRAPH" ? setContentDisplay(false) : setContentDisplay(true);
   };
 
   return (
     <Container>
       <Grid container spacing={2}>
-        {Rows.map((data, index) => (
+        {rows.map((data, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             {filterGraph[0] ? (
-              WidgetNames[index] === filterGraph[0] && contentDisplay ? (
+              widgetNames[index] === filterGraph[0] && contentDisplay ? (
                 <Table
                   rows={data}
-                  widgetName={WidgetNames[index]}
+                  widgetName={widgetNames[index]}
                   filterProps={handleFilter}
                   filterGraph={handleGraph}
                 />
@@ -171,7 +156,7 @@ useEffect(() => {
             ) : (
               <Table
                 rows={data}
-                widgetName={WidgetNames[index]}
+                widgetName={widgetNames[index]}
                 filterProps={handleFilter}
                 filterGraph={handleGraph}
               />

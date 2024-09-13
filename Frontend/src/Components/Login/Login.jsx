@@ -55,59 +55,13 @@ export default function Login() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        blockSize: "100vh",
-      }}
-    >
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{
-          "& > :not(style)": { m: 1, inlineSize: "25ch" },
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          padding: 2,
-          border: 1,
-          borderColor: "grey.200",
-          borderRadius: 2,
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <img
-          src={logo}
-          alt="login"
-          style={{
-            inlineSize: 150,
-            blockSize: 140,
+    <div style={{display: "flex",justifyContent: "center",alignItems: "center",blockSize: "100vh",}}>
+      <Box component="form" onSubmit={handleSubmit} sx={{"& > :not(style)": { m: 1, inlineSize: "25ch" },display: "flex",flexDirection: "column",alignItems: "center",padding: 2,border: 1,borderColor: "grey.200",borderRadius: 2,}} noValidate autoComplete="off">
+        <img src={logo} alt="login" style={{inlineSize: 150,blockSize: 140,
             // borderRadius: "50%",
-            objectFit: "cover",
-            position: "relative",
-            insetBlockStart: -15,
-          }}
-        />
-        <TextField
-          id="outlined-basic"
-          label="User Name"
-          name="CopkUserId"
-          value={login.CopkUserId}
-          onChange={handleChange}
-          variant="outlined"
-        />
-        <TextField
-          id="outlined-basic"
-          label="Password"
-          name="copassword"
-          value={login.copassword}
-          onChange={handleChange}
-          type="password"
-          variant="outlined"
-        />
+            objectFit: "cover",position: "relative",insetBlockStart: -15,}}/>
+        <TextField id="outlined-basic" label="User Name" name="CopkUserId" value={login.CopkUserId} onChange={handleChange} variant="outlined"/>
+        <TextField id="outlined-basic" label="Password" name="copassword" value={login.copassword} onChange={handleChange} type="password" variant="outlined"/>
         <Button variant="outlined" type="submit">
           Login
         </Button>
