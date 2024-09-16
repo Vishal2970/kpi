@@ -5,7 +5,6 @@ const fs = require("fs");
 const Card = async (req, res) => {
   try {
     const widgetItems = await getQueryFromXML();
-    // console.log(widgetItems);
 
     const responses = await Promise.all(widgetItems.map(async (widgetItem) => {
       try {
@@ -21,6 +20,7 @@ const Card = async (req, res) => {
           widgetName: widgetItem.widgetName,
           parameters: widgetItem.parameters,
           response: values,
+          id:widgetItem.id,
         };
       } catch (err) {
         console.error(err);

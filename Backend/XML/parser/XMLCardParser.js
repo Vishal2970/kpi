@@ -6,9 +6,9 @@ const getQueryFromXML = async () => {
     const xmlString = fs.readFileSync("./XML/Card.xml", "utf8");
     const parser = new xml2js.Parser({ compact: true, ignoreComment: true });
     
-    console.log(xmlString);
+    // console.log(xmlString);
     const result = await parser.parseStringPromise(xmlString);
-    console.log(result);
+    // console.log(result);
 
     const root = result;
     if (!root || !root.KPIs || !root.KPIs.KPI) {
@@ -24,7 +24,8 @@ const getQueryFromXML = async () => {
     }
 
     const widgets = kpi.widget;
-    // console.log("Widgets:", widgets);
+    const did=kpi.$.did;
+    // console.log("DID:", did);
 
     const widgetItems = [];
 
@@ -34,11 +35,15 @@ const getQueryFromXML = async () => {
       const widgetItem = widget.widgetitem[0];
       const query = widgetItem.$.query;
       const parameters = widgetItem.parameter[0];
+      const id= widgetItem.$.id;
+
+      
 
       const widgetItemObject = {
         widgetName,
         query,
         parameters: parameters ? Object.keys(parameters).map(key => ({ [key]: parameters[key] })) : [],
+        id,
       };
 
       widgetItems.push(widgetItemObject);
