@@ -42,13 +42,24 @@ const Card = async (req, res) => {
 
 const cardDetails = async (req, res) => {
   try {
-    // console.log("Hello card 2");
+    const {id}=req.body
     const request = new sql.Request();
-    const CardDetails=await getCardDetails();
-    // console.log(CardDetails);
-    
-    const response = await request.query(root.query[4]);
-    return res.status(200).send({ data: response });
+    const cardDetail=await getCardDetails();
+    // const result=
+    cardDetail.forEach((card)=>{
+      
+      if(card.id===id){
+
+//create logic here for particular card
+
+
+
+      }
+    })
+    return true
+
+    // const response = await request.query(root.query[4]);
+    // return res.status(200).send({ data: response });
   } catch (err) {
     res.status(500).send({
       error: err.message,
