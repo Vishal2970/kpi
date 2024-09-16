@@ -19,7 +19,7 @@ function App() {
           <Route path="/Home" element={<PrivateRoute />}>
             <Route path="" element={<><CardDisplay /><TableDisplay /></>}/>
           </Route>
-          <Route path="/Card/:widgetName" element={<PrivateRoute />}>
+          <Route path="/Card/:widgetName/:id" element={<PrivateRoute />}>
             <Route path="" element={<CardDetails/>}/>
           </Route>
         </Routes>

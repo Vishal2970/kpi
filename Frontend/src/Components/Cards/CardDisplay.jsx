@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Card = ({ data, widgetName }) => {
-
-  const navigate=useNavigate();
+const Card = ({ data, widgetName ,id }) => {
+// eslint-disable-next-line no-unused-vars
+const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`/Card/${widgetName}`);
+    id && navigate(`/Card/${widgetName}/${id}`);
   };
   return (
     <div onClick={onClick}>
@@ -27,6 +27,7 @@ const Card = ({ data, widgetName }) => {
 const CardDisplay = () => {
   const [dataSets, setDataSets] = useState([]);
   const [widgetNames, setWidgetNames] = useState([]);
+  const [id, setId] = useState([]);
 
   useEffect(() => {
     axios
@@ -35,6 +36,7 @@ const CardDisplay = () => {
         const data = response.data;
         setDataSets(data);
         setWidgetNames(data.map((item) => item.widgetName));
+        setId(data.map((item) => item.id));
       })
       .catch((error) => {
         console.error(error);
@@ -77,6 +79,7 @@ const CardDisplay = () => {
               <Card
                 data={data}
                 widgetName={widgetNames[index]}
+                id={id[index]}
                 onclick={handleCardClick}
               />
             </Grid>
@@ -86,7 +89,12 @@ const CardDisplay = () => {
         <Slider {...settings}>
           {dataSets.map((data, index) => (
             <Grid item xs={3} key={index}>
-              <Card data={data} widgetName={widgetNames[index]} />
+               <Card
+                data={data}
+                widgetName={widgetNames[index]}
+                id={id[index]}
+                onclick={handleCardClick}
+              />
             </Grid>
           ))}
         </Slider>
