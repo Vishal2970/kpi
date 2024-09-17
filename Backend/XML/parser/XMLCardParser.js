@@ -135,8 +135,10 @@ const getCardDetails = async () => {
                 const widgetItem = {
                   name: widgetitem.$.name,
                   query: widgetitem.$.query,
-                  parameter: widgetitem.$.parameter,
+                  parameter: widgetitem.parameter,
                 };
+                // console.log(widgetItem.parameter);
+                
                 widgetDetails.widgetItem.push(widgetItem);
               });
             }
@@ -147,10 +149,12 @@ const getCardDetails = async () => {
 
         if (kpi.Viewdetail) {
           kpi.Viewdetail.forEach((view) => {
+           // console.log(view.widgetitem[0].parameter[0]);
+            
             const viewDetails = {
               name: view.widgetitem[0].$.name,
               query: view.widgetitem[0].$.query,
-              parameter: view.widgetitem[0].$.parameter,
+              parameter: view.widgetitem[0].parameter[0],
             };
             cardData.Viewdetail.push(viewDetails);
           });

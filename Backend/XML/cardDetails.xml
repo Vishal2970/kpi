@@ -161,7 +161,7 @@
   </GraphDetail>
   </KPI>
 
-  <!-- <KPI did="RegSales1" id="KpiReceipt" Name="Sales">
+  <KPI did="RegSales1" id="KpiReceipt" Name="Sales">
     <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue">
 
       <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalRegSales"
@@ -225,17 +225,17 @@
           <Shopno>CoShopNo</Shopno>
           <Cashier>CoCashierno</Cashier>
         </parameter>
-      </widgetitem> -->
+      </widgetitem>
 
-      <!--<widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="Totalholdreceipts"
+      <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="Totalholdreceipts"
       query="select count(coshopno)coshopno from ViKpiHoldReceipt WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
       queryTarget=""  targetValue ="">
         <parameter>
           <Shopno>CoShopNo</Shopno>
           <Cashier>couserno</Cashier>
         </parameter>
-      </widgetitem>-->
-	<!-- <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalExcludeCredit"
+      </widgetitem>
+	<widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalExcludeCredit"
       query="select sum(isnull(CoTotSalesWVat,0)-isnull(CoCredPayAmt,0))as coExcludeCreditSales from ViKpiKreditKontant WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
       queryTarget=""  targetValue ="">
 			<parameter>
@@ -411,5 +411,5 @@
     </GraphDetail>
 
 
-  </KPI> -->
+  </KPI>
 </Widgets>
