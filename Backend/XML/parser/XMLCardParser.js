@@ -135,6 +135,7 @@ const getCardDetails = async () => {
               widget.widgetitem.forEach((widgetitem) => {
                 const widgetItem = {
                   name: widgetitem.$.name,
+                  caption:widgetitem.$.caption,
                   query: widgetitem.$.query,
                   parameter: widgetitem.parameter,
                 };

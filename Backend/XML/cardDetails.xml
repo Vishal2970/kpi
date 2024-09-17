@@ -143,7 +143,7 @@
               where comm.CoShopNo=st.Coshopno and comm.CoDate=st.CoDate),0))) as CoTotSaleswoVAT
               from dbo.taAccshopdailysales st WITH(NOLOCK) where coyear >= year(getdate())-1
               AND CoDate &lt;=GETDATE()-2
-              group by1 CoYear,st.Coshopno,st.CoDate
+              group by CoYear,st.Coshopno,st.CoDate
               UNION ALL
               select CoYear as CoYear, 
               (sum(st.CoTotSaleswoVAT - st.CoBottleReturnAmount)- 
@@ -151,7 +151,7 @@
               where comm.CoShopNo=st.Coshopno and comm.CoDate=st.CoDate),0))) as CoTotSaleswoVAT
               from dbo.taAccshopdailysales st WITH(NOLOCK) where coyear >= year(getdate())-2
               AND CoDate &lt;=DATEADD(year, -1, GETDATE()-1)
-              group by1 CoYear,st.Coshopno,st.CoDate
+              group by CoYear,st.Coshopno,st.CoDate
               )aa group by CoYear
               order by coyear">
       <parameter>
@@ -342,7 +342,7 @@
             where tv.CopkVatCode in (select CofkVatCode from taitems ti WITH (NOLOCK) where ti.copkitemno =  t1.copfkitemno)),0)/100),0)as numeric(13,2)) as cosaleswovat  
             FROM dbo.Taserialno t1 WITH (NOLOCK) 
             where year(t1.CoPurchaseDate) >= year(getdate())-1 AND cast(t1.CoPurchaseDate as date) &lt;= GETDATE()-2
-            group by1 cast(t1.CoPurchaseDate as date),t1.Coshopno,t1.copfkitemno
+            group by cast(t1.CoPurchaseDate as date),t1.Coshopno,t1.copfkitemno
             Union all  
             select CoYear,ta.codate,CoShopNo, 
             isnull(SUM(abs(CoSaleswoVAT-codiscamt)),0)CoSaleswoVAT 
@@ -350,7 +350,7 @@
             where CopfkItemNo not in(select CopfkItemno from Taserialno WITH (NOLOCK)  
             where cast(Taserialno.CoPurchaseDate as date) = ta.codate and Taserialno.CoShopNo = ta.CoShopNo) 
             and coyear >= year(getdate())-2 AND CoDate &lt;=DATEADD(year, -1, GETDATE()-1) 
-            group by1 CoYear,ta.codate,CoShopNo,CopfkItemNo
+            group by CoYear,ta.codate,CoShopNo,CopfkItemNo
             )aa group by CoYear order by coyear">
        <parameter>
          <Shopno>CoShopNo</Shopno>
