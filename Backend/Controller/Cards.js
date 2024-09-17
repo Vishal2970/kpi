@@ -108,6 +108,22 @@ const cardDetails = async (req, res) => {
 
 
 
+        //Graph
+        const graph = card.graphData;
+
+        graph.forEach((graphItem) => {
+          const graphName = graphItem.name;
+          const graphDisplayName = graphItem.displayName;
+
+          graphItem.widgetItem.forEach((dt)=>{
+            const query = dt.$.query;
+            const name = dt.$.name;
+            const caption=dt.$.caption
+            console.log(name);
+            console.log(query);
+            console.log(caption);
+          })
+        })
 
 
 

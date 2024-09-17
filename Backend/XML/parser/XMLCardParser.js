@@ -121,6 +121,7 @@ const getCardDetails = async () => {
           id: kpi.$.did,
           widgetDetails: [],
           Viewdetail: [],
+          graphData: [],
         };
 
         if (kpi.widget) {
@@ -138,7 +139,7 @@ const getCardDetails = async () => {
                   parameter: widgetitem.parameter,
                 };
                 // console.log(widgetItem.parameter);
-                
+
                 widgetDetails.widgetItem.push(widgetItem);
               });
             }
@@ -149,8 +150,8 @@ const getCardDetails = async () => {
 
         if (kpi.Viewdetail) {
           kpi.Viewdetail.forEach((view) => {
-           // console.log(view.widgetitem[0].parameter[0]);
-            
+            // console.log(view.widgetitem[0].parameter[0]);
+
             const viewDetails = {
               name: view.widgetitem[0].$.name,
               query: view.widgetitem[0].$.query,
@@ -158,6 +159,22 @@ const getCardDetails = async () => {
             };
             cardData.Viewdetail.push(viewDetails);
           });
+        }
+
+        if (kpi.GraphDetail) {
+          const graphDetails = kpi.GraphDetail[0];
+          const graphDetail = graphDetails;
+          const name = graphDetail.$.name;
+          const displayName = graphDetail.$.displayname;
+          const widgetItem = graphDetail.widgetitem;
+          const parameter = widgetItem[0].parameter;
+          const graph={
+            name: name,
+            displayName:displayName,
+            widgetItem:widgetItem,
+            parameter:parameter
+          }
+          cardData.graphData.push(graph);
         }
 
         cardDetails.push(cardData);
