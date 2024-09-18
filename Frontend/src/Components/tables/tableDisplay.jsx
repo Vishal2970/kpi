@@ -112,6 +112,7 @@ export default function TableDisplay() {
     } else if (selectedFilter) {
       handleFilterUpdate(selectedFilter);
     }
+    // eslint-disable-next-line
   }, [widgetFilter, filterCondition, selectedFilter]);
 
   // Handle filter logic only without making an API call
