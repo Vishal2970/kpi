@@ -48,101 +48,6 @@ const Card = async (req, res) => {
   }
 };
 
-// const cardDetails = async (req, res) => {
-//   try {
-//     const { id } = req.body;
-//     const request = new sql.Request();
-//     const cardDetail = await getCardDetails();
-//     // const result=
-//     cardDetail.forEach((card) => {
-//       // console.log(card);
-
-//       if (card.id === id) {
-//         // console.log(card);
-
-//         const cardDetailResponse = {
-//           widgetItem: [],
-//           viewDetails: [],
-//           graphDetail: [],
-//         };
-//         //widget details
-//         const widgetDetails = card.widgetDetails;
-//         const wigetDetailsName = widgetDetails[0].name;
-
-//         //widget item details
-//         const widgetItemArray = widgetDetails[0].widgetItem;
-//         widgetItemArray.forEach((widgetItem) => {
-//           // console.log(widgetItem);
-//           const name = widgetItem.name;
-//           const caption = widgetItem.caption;
-//           const query = widgetItem.query;
-//           let widgetItemParameter = "";
-
-//           const parameter = widgetItem?.parameter;
-//           if (parameter) {
-//             parameter.forEach((param) => {
-//               for (const propertyName in param) {
-//                 const params = param[propertyName][0];
-//                 widgetItemParameter += params + ",";
-//               }
-//             });
-//           }
-//           const response = request.query(query);
-//           console.log(response);
-
-//           const widgetItemResponse = {
-//             name: name,
-//             caption: caption,
-//             widgetItemParameter: widgetItemParameter.slice(
-//               0,
-//               widgetItemParameter.length - 1
-//             ),
-//             response: response,
-//           };
-//           cardDetailResponse.widgetItem.push(widgetItemResponse);
-//         });
-
-//         //viewDetails
-//         const viewDetails = card.Viewdetail;
-//         viewDetails?.forEach((viewDetail) => {
-//           const viewQuery = viewDetail.query;
-//           const viewName = viewDetail.name;
-
-//           const viewParameter = viewDetail.parameter;
-//           viewParameter &&
-//             Object.keys(viewParameter).forEach((propertyName) => {
-//               const viewParameters = viewParameter[propertyName][0];
-//               // console.log(viewParameters);
-//             });
-//         });
-
-//         //Graph
-//         const graph = card.graphData;
-
-//         graph.forEach((graphItem) => {
-//           const graphName = graphItem.name;
-//           const graphDisplayName = graphItem.displayName;
-
-//           graphItem.widgetItem.forEach((dt) => {
-//             const query = dt.$.query;
-//             const name = dt.$.name;
-//             const caption = dt.$.caption;
-//             // console.log(name);
-//             // console.log(query);
-//             // console.log(caption);
-//           });
-//         });
-//       }
-//     });
-//     return  res.status(200).send({ data: cardDetailResponse });
-
-//   } catch (err) {
-//     res.status(500).send({
-//       error: err.message,
-//     });
-//   }
-// };
-
 const cardDetails = async (req, res) => {
   const id = req.query.id;
   console.log(id)
@@ -189,28 +94,6 @@ const cardDetails = async (req, res) => {
           };
           cardDetailResponse.widgetItem.push(widgetItemResponse);
         }
-
-        // viewDetails
-        // const viewDetails = card.Viewdetail;
-        // viewDetails?.forEach((viewDetail) => {
-        //   const viewQuery = viewDetail.query;
-        //   const viewName = viewDetail.name;
-
-        //   const viewParameter = viewDetail.parameter;
-        //   viewParameter &&
-        //     Object.keys(viewParameter).forEach((propertyName) => {
-        //       const viewParameters = viewParameter[propertyName][0];
-        //       // console.log(viewParameters);
-        //     });
-
-        //   // You might want to add the view details to the response
-        //   const viewResponse = await request.query(viewQuery);
-        //   cardDetailResponse.viewDetails.push({
-        //     name: viewName,
-        //     viewResponse: viewResponse,
-        //     parameter: viewParameter,
-        //   });
-        // });
 
         // viewDetails
         const viewDetails = card.Viewdetail;
@@ -260,7 +143,7 @@ const cardDetails = async (req, res) => {
         }
       }
     }
-    return res.status(200).send({ data: cardDetailResponse });
+    return res.status(200).send({cardDetailResponse });
   } catch (err) {
     res.status(500).send({
       error: err.message,
