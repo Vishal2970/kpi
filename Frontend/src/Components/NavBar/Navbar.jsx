@@ -20,7 +20,7 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { FilterContext } from "../../Context/filterProvider";
 import { useAuthContext } from "../../Context/authContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import loginpic from "../../Images/login.jpg";
 import filterpic from "../../Images/filter.png";
 import logo from "../../Images/dataNova.png";
@@ -93,7 +93,9 @@ const NavBar = () => {
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="logo">
-          <Box component="img" sx={{ blockSize: 40 }} navigate="/Home" alt="Logo" src={logo} />
+          <Link to="/Home">
+          <Box component="img" sx={{ blockSize: 40 }} alt="Logo" src={logo} />
+          </Link>
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
         {isAuthenticated && (
