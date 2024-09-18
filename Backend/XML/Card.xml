@@ -20,7 +20,7 @@
     </widget>
     <widget name="RegUserSaleswvat" displayname="RegUserSaleswvat">
       <widgetitem name="RegUserSaleswvat" type="label" isquery="yes" target="0" caption="RegUserSaleswvat" query="select top 1 CopkchildId from tadnreportchild where copkchildid='11.2'"
-                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="" >
+                  queryTarget="select targetAmount from TaTargetMaster WITH (NOLOCK) where status=1" targetValue ="0" id="RegSales1" >
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>

@@ -144,8 +144,10 @@ const Card = async (req, res) => {
 // };
 
 const cardDetails = async (req, res) => {
+  const id = req.query.id;
+  console.log(id)
+  
   try {
-    const { id } = req.body;
     const request = new sql.Request();
     const cardDetail = await getCardDetails();
     const cardDetailResponse = {

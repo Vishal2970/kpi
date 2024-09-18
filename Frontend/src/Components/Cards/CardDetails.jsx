@@ -1,15 +1,56 @@
-import React from "react";
-// import axios from "axios";, { useEffect, useState }
+import React, { useEffect } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 
 export default function CardDetails() {
+
+  const params  = useParams();
+  const widgetName = params.widgetName;
+  const id = params.id; 
+
+  console.log(id);
+    
+  const URL="http://localhost:5000/api/check-cardDetails";
+
+  const fetchCardDetails=async()=>{
+    try {
+      const response = await axios.get(`${URL}?id=${id}`);
+      console.log('Request URL:', `${URL}?id=${id}`);
+      console.log(response);
+      
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+  useEffect(() => {
+    fetchCardDetails();
+
+    // eslint-disable-next-line
+  }, []);
+
+  return (
+    <div>
+      <h1>Hello {widgetName} and {id}</h1>
+    </div>
+  );
+}
+
+
+
+
+//, { useEffect, useState }
+
+
   // const [Row, setRows] = useState();
   // const [Column, setColumn] = useState();
   // const [CardDetails, setCardDetails] = useState();
   // const [WidgetNames, setWidgetNames] = useState();
-  const params  = useParams();
-  const widgetName = params.widgetName;
-  const id = params.id; 
+
+
+
 
   // const fetchAllData = async () => {
   //   let rows = [];
@@ -34,13 +75,3 @@ export default function CardDetails() {
   //   setRows(rows);
   //   setWidgetNames(widgetNames);
   // };
-  // useEffect(() => {
-  //   fetchAllData();
-  // }, []);
-
-  return (
-    <div>
-      <h1>Hello {widgetName} and {id}</h1>
-    </div>
-  );
-}
