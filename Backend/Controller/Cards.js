@@ -1,8 +1,5 @@
 const { sql } = require("../config/db");
-const {
-  getQueryFromXML,
-  getCardDetails,
-} = require("../XML/parser/XMLCardParser");
+const { getQueryFromXML,getCardDetails,} = require("../XML/parser/XMLCardParser");
 const fs = require("fs");
 
 const Card = async (req, res) => {
