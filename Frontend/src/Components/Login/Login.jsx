@@ -46,8 +46,9 @@ export default function Login() {
       // }));
       Navigate("/Home");
       //alert(response.data.message);
-    } catch (error) {
-      alert(error.response.data.message);
+    } catch (error){
+      alert("Database is Not Started")
+      console.log(error.response.data.message);
     }
   };
   const handleChange = (e) => {

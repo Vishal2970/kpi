@@ -21,7 +21,7 @@ export default function TableDisplay() {
     let rows = [];
     let widgetNames = [];
     try {
-      console.log(URL);
+      // console.log(URL);
       const response = await axios.get(URL);
       const data = response.data;
       if (data) {
@@ -42,8 +42,8 @@ export default function TableDisplay() {
   };
 
   // Function to fetch filtered data based on widget name and filter condition
-  console.log("Selected filter:");
-  console.log(selectedFilter);
+  // console.log("Selected filter:");
+  // console.log(selectedFilter);
 
   const handleWidgetFilterUpdate = async (widgetName, filterCondition) => {
     try {
@@ -53,13 +53,13 @@ export default function TableDisplay() {
         widgetName,
         sharedOrder: [filterCondition, date, shop],
       };
-      console.log(URL_Filter);
+      // console.log(URL_Filter);
       const response = await axios.get(URL_Filter, { params });
       const data = response.data;
       const index = widgetNames.indexOf(widgetName);
       if (index !== -1) {
-        console.log("Response");
-        console.log(data[0].response);
+        // console.log("Response");
+        // console.log(data[0].response);
         const newRows = [...rows];
         newRows[index] = data[0].response; // Update only the specific widget's data
         setRows(newRows);
@@ -80,7 +80,7 @@ export default function TableDisplay() {
       const params = {
         sharedCondition: `codate='${filterCondition.date}' and coshopno='${filterCondition.shop}'`,
       };
-      console.log(URL);
+      // console.log(URL);
       const response = await axios.get(URL, { params });
       const data = response.data;
       if (data) {
