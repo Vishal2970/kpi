@@ -36,10 +36,8 @@ export default function CardDetails() {
     // eslint-disable-next-line
   }, []);
 
-  //2124
-  const graph=detail.graph;
-  console.log("All Graph Data",graph.graphResponse[0][0].Name);
-  
+console.log(detail.graph.graphResponse);
+
   const cards = [
     { id: 1, title: "Card 1", content: "This is card 1" },
     { id: 2, title: "Card 2", content: "This is card 2" },
@@ -48,14 +46,20 @@ export default function CardDetails() {
     { id: 5, title: "Card 5", content: "This is card 5" },
     { id: 6, title: "Card 6", content: "This is card 6" },
   ];
-
   const graphData = [
-    { label: graph.caption},
-    { label: graph.displayName},
-    { label: graph.name},
-    { label: graph.graphResponse[0][0].Name},
-    { label: graph.graphResponse[0][0].Value},
+    { label: (detail.graph && detail.graph.caption) || "Not found" },
+    { label: (detail.graph && detail.graph.displayName) || "Not found" },
+    { label: (detail.graph && detail.graph.name) || "Not found" },
+    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Name) || "Not found" },
+    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Value) || "Not found" },
   ];
+  // const graphData = [
+  //   { label: detail.graph.caption},
+  //   { label: detail.graph.displayName},
+  //   { label: detail.graph.name},
+  //   { label: detail.graph.graphResponse[0][0].Name},
+  //   { label: detail.graph.graphResponse[0][0].Value},
+  // ];
 
   const tables = [
     {
