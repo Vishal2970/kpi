@@ -47,7 +47,7 @@ const Card = async (req, res) => {
 
 const cardDetails = async (req, res) => {
   const id = req.query.id;
-  console.log(id)
+  // console.log(id)
   
   try {
     const request = new sql.Request();
@@ -106,7 +106,11 @@ const cardDetails = async (req, res) => {
             });
 
           // You might want to add the view details to the response
+          // console.log(viewQuery);
+          
           const viewResponse = await request.query(viewQuery);
+          // console.log(viewResponse.recordset);
+          
           cardDetailResponse.viewDetails.push({
             name: viewName,
             viewResponse: viewResponse.recordset,

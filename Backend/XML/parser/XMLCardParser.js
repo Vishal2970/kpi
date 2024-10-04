@@ -152,7 +152,7 @@ const getCardDetails = async () => {
         if (kpi.Viewdetail) {
           kpi.Viewdetail.forEach((view) => {
             // console.log(view.widgetitem[0].parameter[0]);
-            console.log(view.widgetitem.length);
+            // console.log(view.widgetitem.length);
             for (let i = 0; i < view.widgetitem.length; i++) {
               const viewDetails = {
                 name: view.widgetitem[i].$.name,
@@ -186,7 +186,7 @@ const getCardDetails = async () => {
       console.log("No KPI data found in XML");
     }
 
-    console.log(cardDetails);
+    //console.log(cardDetails);
     return cardDetails;
   } catch (err) {
     console.error(err);

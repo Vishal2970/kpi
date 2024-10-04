@@ -38,7 +38,7 @@ export default function CardDetails() {
     // eslint-disable-next-line
   }, []);
 
-console.log(detail.graph.graphResponse);
+// console.log("here",detail);
 
   const cards = [
     { id: 1, title: "Card 1", content: "This is card 1" },
@@ -166,6 +166,7 @@ console.log(detail.graph.graphResponse);
       // console.log("Request URL:", `${URL}?id=${id}`);
       const allData = response.data.cardDetailResponse;
       
+      console.log("All data",allData);
       
 
       //graph set
