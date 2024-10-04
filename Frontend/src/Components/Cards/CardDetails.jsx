@@ -3,6 +3,8 @@ import axios from "axios";
 import { Grid, Paper } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Graph from "./Graph";
+// import hourglass from "../../Images/hourglass.gif";
+import hourglass from "../../Images/loading.gif";
 
 export default function CardDetails() {
   const params = useParams();
@@ -47,20 +49,12 @@ console.log(detail.graph.graphResponse);
     { id: 6, title: "Card 6", content: "This is card 6" },
   ];
   const graphData = [
-    { label: (detail.graph && detail.graph.caption) || "Not found" },
-    { label: (detail.graph && detail.graph.displayName) || "Not found" },
-    { label: (detail.graph && detail.graph.name) || "Not found" },
-    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Name) || "Not found" },
-    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Value) || "Not found" },
+    { label: (detail.graph && detail.graph.caption) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
+    { label: (detail.graph && detail.graph.displayName) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
+    { label: (detail.graph && detail.graph.name) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
+    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Name) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
+    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Value) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
   ];
-  // const graphData = [
-  //   { label: detail.graph.caption},
-  //   { label: detail.graph.displayName},
-  //   { label: detail.graph.name},
-  //   { label: detail.graph.graphResponse[0][0].Name},
-  //   { label: detail.graph.graphResponse[0][0].Value},
-  // ];
-
   const tables = [
     {
       id: 1,
