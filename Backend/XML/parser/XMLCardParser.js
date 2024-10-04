@@ -135,7 +135,7 @@ const getCardDetails = async () => {
               widget.widgetitem.forEach((widgetitem) => {
                 const widgetItem = {
                   name: widgetitem.$.name,
-                  caption:widgetitem.$.caption,
+                  caption: widgetitem.$.caption,
                   query: widgetitem.$.query,
                   parameter: widgetitem.parameter,
                 };
@@ -152,13 +152,15 @@ const getCardDetails = async () => {
         if (kpi.Viewdetail) {
           kpi.Viewdetail.forEach((view) => {
             // console.log(view.widgetitem[0].parameter[0]);
-
-            const viewDetails = {
-              name: view.widgetitem[0].$.name,
-              query: view.widgetitem[0].$.query,
-              parameter: view.widgetitem[0].parameter[0],
-            };
-            cardData.Viewdetail.push(viewDetails);
+            console.log(view.widgetitem.length);
+            for (let i = 0; i < view.widgetitem.length; i++) {
+              const viewDetails = {
+                name: view.widgetitem[i].$.name,
+                query: view.widgetitem[i].$.query,
+                parameter: view.widgetitem[i].parameter[0],
+              };
+              cardData.Viewdetail.push(viewDetails);
+            }
           });
         }
 
@@ -169,12 +171,12 @@ const getCardDetails = async () => {
           const displayName = graphDetail.$.displayname;
           const widgetItem = graphDetail.widgetitem;
           const parameter = widgetItem[0].parameter;
-          const graph={
+          const graph = {
             name: name,
-            displayName:displayName,
-            widgetItem:widgetItem,
-            parameter:parameter
-          }
+            displayName: displayName,
+            widgetItem: widgetItem,
+            parameter: parameter,
+          };
           cardData.graphData.push(graph);
         }
 
@@ -184,7 +186,7 @@ const getCardDetails = async () => {
       console.log("No KPI data found in XML");
     }
 
-    // console.log(cardDetails);
+    console.log(cardDetails);
     return cardDetails;
   } catch (err) {
     console.error(err);
