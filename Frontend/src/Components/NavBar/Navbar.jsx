@@ -34,7 +34,7 @@ const NavBar = () => {
   const [openCalendar, setOpenCalendar] = useState(false);
   const [tempDate, setTempDate] = useState(selectedFilter.date ? parse(selectedFilter.date, "yyyy-MM-dd", new Date()) : new Date());
   const { auth, setAuth } = useAuthContext();
-  const isAuthenticated = Boolean(auth.token);
+  const isAuthenticated = Boolean(auth?.token);
   const havingShopNumber = Boolean(auth.coshopno);
   const [openShopPopup, setOpenShopPopup] = useState(false);
   const [strShopSelected, setStrShopSelected] = useState([]);
@@ -48,6 +48,8 @@ const NavBar = () => {
     setAuth({
       token: null,
       coshopno: [],
+      userId: null,
+      macAddress: null,
     });
     handleClose();
   };

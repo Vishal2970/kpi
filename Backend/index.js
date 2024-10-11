@@ -26,6 +26,8 @@ app.use("/api",authRoutes)
 app.use("/api", tablesRoutes);
 
 
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

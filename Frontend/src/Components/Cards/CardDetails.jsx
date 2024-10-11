@@ -49,11 +49,11 @@ export default function CardDetails() {
     { id: 6, title: "Card 6", content: "This is card 6" },
   ];
   const graphData = [
-    { label: (detail.graph && detail.graph.caption) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
-    { label: (detail.graph && detail.graph.displayName) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
-    { label: (detail.graph && detail.graph.name) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
-    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Name) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
-    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Value) || <img src={hourglass} alt="Hourglass icon" style={{ width: '2em', height: '2em' }} /> },
+    { label: (detail.graph && detail.graph.caption) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
+    { label: (detail.graph && detail.graph.displayName) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
+    { label: (detail.graph && detail.graph.name) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
+    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Name) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
+    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Value) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
   ];
   const tables = [
     {
