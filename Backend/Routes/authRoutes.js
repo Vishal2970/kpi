@@ -14,7 +14,7 @@ router.route("/userAuth").get(userAuth, (req, res) => {
 router.route("/macAddressVerification").get(userAuth,async (req, res) => {
   try {
     const { userId } = req.query;
-    console.log(req);
+    // console.log(req);
     
     const pool = await sql.connect();
     const request = pool

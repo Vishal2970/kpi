@@ -3,7 +3,7 @@ const getQueryFromXML = require("../XML/parser/XMLTableParser");
 
 // Function to modify query based on conditions
 const conditionModification = (query, condition) => {
-  const arrOfCondition = condition.toLowerCase().split(" and ");
+  const arrOfCondition = condition?.toLowerCase().split(" and ");
   let conditionModified = " where ";
   let params = [];
 
