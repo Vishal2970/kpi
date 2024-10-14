@@ -17,7 +17,11 @@ const PrivateRoute = () => {
 
     if (auth?.userId) {
       try {
-        const macRes = await axios.get(`${macURI}?userId=${auth?.userId}`);
+        const macRes = await axios.get(`${macURI}?userId=${auth?.userId}`, {
+          headers: {
+            Authorization: auth?.token,
+          },
+        });
         macAddress = macRes.data.macAddress;
       } catch (error) {
         console.error("Error fetching MAC address:", error);

@@ -11,7 +11,7 @@ router.route("/userAuth").get(userAuth, (req, res) => {
   res.status(200).send({ ok: true });
 });
 
-router.route("/macAddressVerification").get(async (req, res) => {
+router.route("/macAddressVerification").get(userAuth,async (req, res) => {
   try {
     const { userId } = req.query;
     console.log(req);

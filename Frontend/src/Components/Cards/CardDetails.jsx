@@ -5,11 +5,13 @@ import { useParams } from "react-router-dom";
 import Graph from "./Graph";
 // import hourglass from "../../Images/hourglass.gif";
 import hourglass from "../../Images/loading.gif";
+import { useAuthContext } from "../../Context/authContext";
 
 export default function CardDetails() {
   const params = useParams();
   const id = params.id;
   const widgetName = params.widgetName;
+  const { auth } = useAuthContext();
   const [detail, setDetail] = useState({
     graph: {
       caption: "",
@@ -38,7 +40,7 @@ export default function CardDetails() {
     // eslint-disable-next-line
   }, []);
 
-// console.log("here",detail);
+  // console.log("here",detail);
 
   const cards = [
     { id: 1, title: "Card 1", content: "This is card 1" },
@@ -49,11 +51,57 @@ export default function CardDetails() {
     { id: 6, title: "Card 6", content: "This is card 6" },
   ];
   const graphData = [
-    { label: (detail.graph && detail.graph.caption) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
-    { label: (detail.graph && detail.graph.displayName) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
-    { label: (detail.graph && detail.graph.name) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
-    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Name) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
-    { label: (detail.graph && detail.graph.graphResponse && detail.graph.graphResponse[0] && detail.graph.graphResponse[0][0].Value) || <img src={hourglass} alt="Hourglass icon" style={{ inlineSize: '2em', blockSize: '2em' }} /> },
+    {
+      label: (detail.graph && detail.graph.caption) || (
+        <img
+          src={hourglass}
+          alt="Hourglass icon"
+          style={{ inlineSize: "2em", blockSize: "2em" }}
+        />
+      ),
+    },
+    {
+      label: (detail.graph && detail.graph.displayName) || (
+        <img
+          src={hourglass}
+          alt="Hourglass icon"
+          style={{ inlineSize: "2em", blockSize: "2em" }}
+        />
+      ),
+    },
+    {
+      label: (detail.graph && detail.graph.name) || (
+        <img
+          src={hourglass}
+          alt="Hourglass icon"
+          style={{ inlineSize: "2em", blockSize: "2em" }}
+        />
+      ),
+    },
+    {
+      label: (detail.graph &&
+        detail.graph.graphResponse &&
+        detail.graph.graphResponse[0] &&
+        detail.graph.graphResponse[0][0].Name) || (
+        <img
+          src={hourglass}
+          alt="Hourglass icon"
+          style={{ inlineSize: "2em", blockSize: "2em" }}
+        />
+      ),
+    },
+    {
+      label: (detail.graph &&
+        detail.graph.graphResponse &&
+        detail.graph.graphResponse[0] &&
+        detail.graph.graphResponse[0][0].Value) || (
+        <img
+          src={hourglass}
+          alt="Hourglass icon"
+          style={{ inlineSize: "2em", blockSize: "2em" }}
+        />
+      ),
+    },
   ];
   const tables = [
     {
@@ -158,16 +206,19 @@ export default function CardDetails() {
 
   const fetchCardDetails = async () => {
     console.log("Enterd for details");
-    
+
     try {
       console.log(`${URL}?id=${id}`);
-      
-      const response = await axios.get(`${URL}?id=${id}`);
+
+      const response = await axios.get(`${URL}?id=${id}`, {
+        headers: {
+          Authorization: auth?.token,
+        },
+      });
       // console.log("Request URL:", `${URL}?id=${id}`);
       const allData = response.data.cardDetailResponse;
-      
-      console.log("All data",allData);
-      
+
+      console.log("All data", allData);
 
       //graph set
       const graphData = allData.graphDetail[0];
@@ -214,64 +265,62 @@ export default function CardDetails() {
     }
   };
 
-
-
   return (
-    <Grid container spacing={2} sx={{ padding: '20px' }}>
-  {/* card */}
-  <Grid container spacing={2}>
-    <Grid item xs={6}>
+    <Grid container spacing={2} sx={{ padding: "20px" }}>
+      {/* card */}
       <Grid container spacing={2}>
-        {cards.map((card, index) => (
-          <Grid item key={index} xs={6}>
-            <Paper elevation={3} className="card">
-              <h2>{card.title}</h2>
-              <p>{card.content}</p>
+        <Grid item xs={6}>
+          <Grid container spacing={2}>
+            {cards.map((card, index) => (
+              <Grid item key={index} xs={6}>
+                <Paper elevation={3} className="card">
+                  <h2>{card.title}</h2>
+                  <p>{card.content}</p>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper elevation={3} className="graph-section">
+            <Graph data={graphData} />
+          </Paper>
+        </Grid>
+      </Grid>
+
+      {/* Graph */}
+
+      {/* Table */}
+      <Grid container spacing={2}>
+        {tables.map((table, index) => (
+          <Grid item key={index} xs={3}>
+            {" "}
+            {/* adjust the xs value to control the width of each table */}
+            <Paper elevation={3} className="table">
+              <h2>{widgetName}</h2>
+              <table>
+                <thead>
+                  <tr>
+                    {table.columns.map((column) => (
+                      <th key={column.id}>{column.label}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {table.rows.map((row) => (
+                    <tr key={row.id}>
+                      {table.columns.map((column) => (
+                        <td key={column.id}>{row[column.id]}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </Paper>
           </Grid>
         ))}
       </Grid>
     </Grid>
-    <Grid item xs={6}>
-      <Paper elevation={3} className="graph-section">
-        <Graph data={graphData} />
-      </Paper>
-    </Grid>
-  </Grid>
-
-  {/* Graph */}
-  
-  {/* Table */}
-  <Grid container spacing={2}>
-    {tables.map((table, index) => (
-      <Grid item key={index} xs={3}>
-        {" "}
-        {/* adjust the xs value to control the width of each table */}
-        <Paper elevation={3} className="table">
-          <h2>{widgetName}</h2>
-          <table>
-            <thead>
-              <tr>
-                {table.columns.map((column) => (
-                  <th key={column.id}>{column.label}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {table.rows.map((row) => (
-                <tr key={row.id}>
-                  {table.columns.map((column) => (
-                    <td key={column.id}>{row[column.id]}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Paper>
-      </Grid>
-    ))}
-  </Grid>
-</Grid>
   );
 }
 

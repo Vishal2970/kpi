@@ -3,6 +3,8 @@ import Table from "./Table";
 import { Grid, Container } from "@mui/material";
 import axios from "axios";
 import { FilterContext } from "../../Context/filterProvider";
+import { useAuthContext } from "../../Context/authContext";
+
 
 export default function TableDisplay() {
   const { selectedFilter } = useContext(FilterContext);
@@ -12,6 +14,7 @@ export default function TableDisplay() {
   const [filterCondition, setFilterCondition] = useState(null);
   const [contentDisplay, setContentDisplay] = useState(true);
   const [filterGraph, setFilterGraph] = useState([]); // Initialize filterGraph as an empty array
+  const { auth } = useAuthContext();
 
   const URL = "http://localhost:5000/api/check-table";
   const URL_Filter = "http://localhost:5000/api/check-filter";
@@ -22,8 +25,14 @@ export default function TableDisplay() {
     let widgetNames = [];
     try {
       // console.log(URL);
-      const response = await axios.get(URL);
+      const response = await axios.get(URL, {
+        headers: {
+          Authorization: auth?.token,
+        },
+      })
       const data = response.data;
+      console.log("Table Check -1 ",data);
+      
       if (data) {
         data.forEach((item) => {
           if (Array.isArray(item.response)) {
@@ -48,14 +57,22 @@ export default function TableDisplay() {
   const handleWidgetFilterUpdate = async (widgetName, filterCondition) => {
     try {
       const date = `codate=${selectedFilter.date}`;
-      const shop = selectedFilter.shop ? `coshopno='${selectedFilter.shop}'` : null;
+      const shop = selectedFilter.shop
+        ? `coshopno='${selectedFilter.shop}'`
+        : null;
       const params = {
         widgetName,
         sharedOrder: [filterCondition, date, shop],
       };
       // console.log(URL_Filter);
-      const response = await axios.get(URL_Filter, { params });
+      const response = await axios.get(URL_Filter, {
+        params: params,
+        headers: {
+          Authorization: auth?.token,
+        },
+      });
       const data = response.data;
+      console.log("Table Check filter",data);
       const index = widgetNames.indexOf(widgetName);
       if (index !== -1) {
         // console.log("Response");
@@ -81,8 +98,14 @@ export default function TableDisplay() {
         sharedCondition: `codate='${filterCondition.date}' and coshopno='${filterCondition.shop}'`,
       };
       // console.log(URL);
-      const response = await axios.get(URL, { params });
+      const response = await axios.get(URL, {
+        params: params,
+        headers: {
+          Authorization: auth?.token,
+        },
+      });
       const data = response.data;
+      console.log("Table Check -2",data);
       if (data) {
         data.forEach((item) => {
           if (Array.isArray(item.response)) {
