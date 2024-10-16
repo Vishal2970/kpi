@@ -29,116 +29,39 @@ export default function CardDetails() {
         name: "",
         caption: "",
         parameter: "",
-        widgetResponse: [],
+        widgetResponse: "",
       },
     },
   });
 
   useEffect(() => {
     fetchCardDetails();
-    // console.log(detail);
+    
+    //console.log("Details", detail.view);
     // eslint-disable-next-line
   }, []);
 
-  // console.log("here",detail);
-
-  const cards = [
-    { id: 1, title: "Card 1", content: "This is card 1" },
-    { id: 2, title: "Card 2", content: "This is card 2" },
-    { id: 3, title: "Card 3", content: "This is card 3" },
-    { id: 4, title: "Card 4", content: "This is card 4" },
-    { id: 5, title: "Card 5", content: "This is card 5" },
-    { id: 6, title: "Card 6", content: "This is card 6" },
-  ];
-  // const graphData = [
-  //   {
-  //     label: (detail.graph && detail.graph.caption) || (
-  //       <img
-  //         src={hourglass}
-  //         alt="Hourglass icon"
-  //         style={{ inlineSize: "2em", blockSize: "2em" }}
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     label: (detail.graph && detail.graph.displayName) || (
-  //       <img
-  //         src={hourglass}
-  //         alt="Hourglass icon"
-  //         style={{ inlineSize: "2em", blockSize: "2em" }}
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     label: (detail.graph && detail.graph.name) || (
-  //       <img
-  //         src={hourglass}
-  //         alt="Hourglass icon"
-  //         style={{ inlineSize: "2em", blockSize: "2em" }}
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     label: (detail.graph &&
-  //       detail.graph.graphResponse &&
-  //       detail.graph.graphResponse[0] &&
-  //       detail.graph.graphResponse[0][0].Name) || (
-  //       <img
-  //         src={hourglass}
-  //         alt="Hourglass icon"
-  //         style={{ inlineSize: "2em", blockSize: "2em" }}
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     label: (detail.graph &&
-  //       detail.graph.graphResponse &&
-  //       detail.graph.graphResponse[0] &&
-  //       detail.graph.graphResponse[0][0].Value) || (
-  //       <img
-  //         src={hourglass}
-  //         alt="Hourglass icon"
-  //         style={{ inlineSize: "2em", blockSize: "2em" }}
-  //       />
-  //     ),
-  //   },
-  // ];
+  const cards = [];
+  if (
+    detail.widget &&
+    detail.widget.items &&
+    Array.isArray(detail.widget.items)
+  ) {
+    detail.widget.items.forEach((it, index) => {
+      cards.push({ id: index, title: it.caption, content: it.widgetResponse });
+    });
+  }
 
   const graphData = [];
-
-    // Check if graphResponse exists and is an array
-    if (detail.graph && detail.graph.graphResponse && Array.isArray(detail.graph.graphResponse[0])) {
-      // Use forEach to iterate over the graphResponse array
-      detail.graph.graphResponse[0].forEach((item) => {
-        // Push the Name and Value into the graphData array
-        graphData.push(
-          {
-            label: item.Name || (
-              <img
-                src={hourglass}
-                alt="Hourglass icon"
-                style={{ inlineSize: "2em", blockSize: "2em" }}
-              />
-            ),
-          },
-          {
-            label: item.Value || (
-              <img
-                src={hourglass}
-                alt="Hourglass icon"
-                style={{ inlineSize: "2em", blockSize: "2em" }}
-              />
-            ),
-          }
-        );
-      });
-    }
-    
-    // Additionally, push the other details if they exist
-    if (detail.graph) {
-      graphData.unshift(
+  if (
+    detail.graph &&
+    detail.graph.graphResponse &&
+    Array.isArray(detail.graph.graphResponse[0])
+  ) {
+    detail.graph.graphResponse[0].forEach((item) => {
+      graphData.push(
         {
-          label: detail.graph.caption || (
+          label: item.Name || (
             <img
               src={hourglass}
               alt="Hourglass icon"
@@ -147,16 +70,7 @@ export default function CardDetails() {
           ),
         },
         {
-          label: detail.graph.displayName || (
-            <img
-              src={hourglass}
-              alt="Hourglass icon"
-              style={{ inlineSize: "2em", blockSize: "2em" }}
-            />
-          ),
-        },
-        {
-          label: detail.graph.name || (
+          label: item.Value || (
             <img
               src={hourglass}
               alt="Hourglass icon"
@@ -165,106 +79,162 @@ export default function CardDetails() {
           ),
         }
       );
-    }
+    });
+  }
 
-  const tables = [
-    {
-      id: 1,
-      columns: [
-        { id: "name", label: "Name" },
-        { id: "age", label: "Age" },
-      ],
-      rows: [
-        { id: 1, name: "John", age: 25 },
-        { id: 2, name: "Jane", age: 30 },
-        { id: 3, name: "Bob", age: 35 },
-      ],
-    },
-    {
-      id: 2,
-      columns: [
-        { id: "product", label: "Product" },
-        { id: "price", label: "Price" },
-      ],
-      rows: [
-        { id: 1, product: "Product 1", price: 10.99 },
-        { id: 2, product: "Product 2", price: 20.99 },
-        { id: 3, product: "Product 3", price: 30.99 },
-      ],
-    },
-    {
-      id: 3,
-      columns: [
-        { id: "product", label: "Product" },
-        { id: "price", label: "Price" },
-      ],
-      rows: [
-        { id: 1, product: "Product 1", price: 10.99 },
-        { id: 2, product: "Product 2", price: 20.99 },
-        { id: 3, product: "Product 3", price: 30.99 },
-      ],
-    },
-    {
-      id: 4,
-      columns: [
-        { id: "product", label: "Product" },
-        { id: "price", label: "Price" },
-      ],
-      rows: [
-        { id: 1, product: "Product 1", price: 10.99 },
-        { id: 2, product: "Product 2", price: 20.99 },
-        { id: 3, product: "Product 3", price: 30.99 },
-      ],
-    },
-    {
-      id: 1,
-      columns: [
-        { id: "name", label: "Name" },
-        { id: "age", label: "Age" },
-      ],
-      rows: [
-        { id: 1, name: "John", age: 25 },
-        { id: 2, name: "Jane", age: 30 },
-        { id: 3, name: "Bob", age: 35 },
-      ],
-    },
-    {
-      id: 2,
-      columns: [
-        { id: "product", label: "Product" },
-        { id: "price", label: "Price" },
-      ],
-      rows: [
-        { id: 1, product: "Product 1", price: 10.99 },
-        { id: 2, product: "Product 2", price: 20.99 },
-        { id: 3, product: "Product 3", price: 30.99 },
-      ],
-    },
-    {
-      id: 3,
-      columns: [
-        { id: "product", label: "Product" },
-        { id: "price", label: "Price" },
-      ],
-      rows: [
-        { id: 1, product: "Product 1", price: 10.99 },
-        { id: 2, product: "Product 2", price: 20.99 },
-        { id: 3, product: "Product 3", price: 30.99 },
-      ],
-    },
-    {
-      id: 4,
-      columns: [
-        { id: "product", label: "Product" },
-        { id: "price", label: "Price" },
-      ],
-      rows: [
-        { id: 1, product: "Product 1", price: 10.99 },
-        { id: 2, product: "Product 2", price: 20.99 },
-        { id: 3, product: "Product 3", price: 30.99 },
-      ],
-    },
-  ];
+  // Additionally, push the other details if they exist
+  if (detail.graph) {
+    graphData.unshift(
+      {
+        label: detail.graph.caption || (
+          <img
+            src={hourglass}
+            alt="Hourglass icon"
+            style={{ inlineSize: "2em", blockSize: "2em" }}
+          />
+        ),
+      },
+      {
+        label: detail.graph.displayName || (
+          <img
+            src={hourglass}
+            alt="Hourglass icon"
+            style={{ inlineSize: "2em", blockSize: "2em" }}
+          />
+        ),
+      },
+      {
+        label: detail.graph.name || (
+          <img
+            src={hourglass}
+            alt="Hourglass icon"
+            style={{ inlineSize: "2em", blockSize: "2em" }}
+          />
+        ),
+      }
+    );
+  }
+  const tables=[];
+  // console.log("items have to display ", detail.view.item);
+  if (detail.view && detail.view.item && Array.isArray(detail.view.item)) {
+    detail.view.item.forEach((element,index) => {
+      tables.push(
+        {
+          id: index,
+          name:element.name,
+          columns: [
+            { id: "name", label: "Name" },
+            { id: "age", label: "Age" },
+          ],
+          rows: [
+            { id: 1, name: "John", age: 25 },
+            { id: 2, name: "Jane", age: 30 },
+            { id: 3, name: "Bob", age: 35 },
+          ],
+        },
+      )
+    });
+  }
+
+  // const tables = [
+  //   {
+  //     id: 1,
+  //     name:"Vishal",
+  //     columns: [
+  //       { id: "name", label: "Name" },
+  //       { id: "age", label: "Age" },
+  //     ],
+  //     rows: [
+  //       { id: 1, name: "John", age: 25 },
+  //       { id: 2, name: "Jane", age: 30 },
+  //       { id: 3, name: "Bob", age: 35 },
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     columns: [
+  //       { id: "product", label: "Product" },
+  //       { id: "price", label: "Price" },
+  //     ],
+  //     rows: [
+  //       { id: 1, product: "Product 1", price: 10.99 },
+  //       { id: 2, product: "Product 2", price: 20.99 },
+  //       { id: 3, product: "Product 3", price: 30.99 },
+  //     ],
+  //   },
+  //   {
+  //     id: 3,
+  //     columns: [
+  //       { id: "product", label: "Product" },
+  //       { id: "price", label: "Price" },
+  //     ],
+  //     rows: [
+  //       { id: 1, product: "Product 1", price: 10.99 },
+  //       { id: 2, product: "Product 2", price: 20.99 },
+  //       { id: 3, product: "Product 3", price: 30.99 },
+  //     ],
+  //   },
+  //   {
+  //     id: 4,
+  //     columns: [
+  //       { id: "product", label: "Product" },
+  //       { id: "price", label: "Price" },
+  //     ],
+  //     rows: [
+  //       { id: 1, product: "Product 1", price: 10.99 },
+  //       { id: 2, product: "Product 2", price: 20.99 },
+  //       { id: 3, product: "Product 3", price: 30.99 },
+  //     ],
+  //   },
+  //   {
+  //     id: 1,
+  //     columns: [
+  //       { id: "name", label: "Name" },
+  //       { id: "age", label: "Age" },
+  //     ],
+  //     rows: [
+  //       { id: 1, name: "John", age: 25 },
+  //       { id: 2, name: "Jane", age: 30 },
+  //       { id: 3, name: "Bob", age: 35 },
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     columns: [
+  //       { id: "product", label: "Product" },
+  //       { id: "price", label: "Price" },
+  //     ],
+  //     rows: [
+  //       { id: 1, product: "Product 1", price: 10.99 },
+  //       { id: 2, product: "Product 2", price: 20.99 },
+  //       { id: 3, product: "Product 3", price: 30.99 },
+  //     ],
+  //   },
+  //   {
+  //     id: 3,
+  //     columns: [
+  //       { id: "product", label: "Product" },
+  //       { id: "price", label: "Price" },
+  //     ],
+  //     rows: [
+  //       { id: 1, product: "Product 1", price: 10.99 },
+  //       { id: 2, product: "Product 2", price: 20.99 },
+  //       { id: 3, product: "Product 3", price: 30.99 },
+  //     ],
+  //   },
+  //   {
+  //     id: 4,
+  //     columns: [
+  //       { id: "product", label: "Product" },
+  //       { id: "price", label: "Price" },
+  //     ],
+  //     rows: [
+  //       { id: 1, product: "Product 1", price: 10.99 },
+  //       { id: 2, product: "Product 2", price: 20.99 },
+  //       { id: 3, product: "Product 3", price: 30.99 },
+  //     ],
+  //   },
+  // ];
 
   const URL = "http://localhost:5000/api/check-cardDetails";
 
@@ -282,7 +252,7 @@ export default function CardDetails() {
       // console.log("Request URL:", `${URL}?id=${id}`);
       const allData = response.data.cardDetailResponse;
 
-      //console.log("All data", allData);
+      // console.log("All data", allData);
 
       //graph set
       const graphData = allData.graphDetail[0];
@@ -297,34 +267,55 @@ export default function CardDetails() {
       }));
 
       //view set
+      // const viewData = allData.viewDetails;
+      // viewData.forEach((element) => {
+      //   setDetail((prevState) => ({
+      //     ...prevState,
+      //     view: {
+      //       name: element.name,
+      //       parameter: element.parameter,
+      //       viewResponse: [element.viewResponse],
+      //     },
+      //   }));
+      // });
+
       const viewData = allData.viewDetails;
-      viewData.forEach((element) => {
-        setDetail((prevState) => ({
-          ...prevState,
-          view: {
-            name: element.name,
-            parameter: element.parameter,
-            viewResponse: [element.viewResponse],
-          },
-        }));
+      //console.log("viewData",viewData);
+
+      setDetail((prev) => {
+        const items = {
+          item: viewData.map((element) => {
+            return {
+              name: element.name,
+              parameter: element.parameter,
+              response: element.viewResponse[0],
+            };
+          }),
+        };
+        return {
+          ...prev,
+          view: items,
+        };
       });
 
       //widgetDetails set
       const widgetData = allData.widgetItem;
-      widgetData.forEach((element) => {
-        setDetail((prevState) => ({
-          ...prevState,
-          widget: {
-            items: {
+      setDetail((prevState) => {
+        const updatedWidget = {
+          items: widgetData.map((element) => {
+            return {
               name: element.name,
               caption: element.caption,
               widgetItemParameter: element.widgetItemParameter,
-              widgetResponse: [element.response],
-            },
-          },
-        }));
+              widgetResponse: element.response[0],
+            };
+          }),
+        };
+        return {
+          ...prevState,
+          widget: updatedWidget,
+        };
       });
-      //console.log("graphData",graphData);
     } catch (error) {
       console.log(error);
     }
@@ -357,33 +348,33 @@ export default function CardDetails() {
 
       {/* Table */}
       <Grid container spacing={2}>
-        {tables.map((table, index) => (
-          <Grid item key={index} xs={3}>
-            {" "}
-            {/* adjust the xs value to control the width of each table */}
-            <Paper elevation={3} className="table">
-              <h2>{widgetName}</h2>
-              <table>
-                <thead>
-                  <tr>
-                    {table.columns.map((column) => (
-                      <th key={column.id}>{column.label}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {table.rows.map((row) => (
-                    <tr key={row.id}>
+        {tables.map((table, index) =>
+            <Grid item key={index}  xs={3}>
+              {" "}
+              {/* adjust the xs value to control the width of each table */}
+              <Paper elevation={3} className="table">
+                <h2>{table.name}</h2>
+                <table>
+                  <thead>
+                    <tr>
                       {table.columns.map((column) => (
-                        <td key={column.id}>{row[column.id]}</td>
+                        <th key={column.id}>{column.label}</th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </Paper>
-          </Grid>
-        ))}
+                  </thead>
+                  <tbody>
+                    {table.rows.map((row) => (
+                      <tr key={row.id}>
+                        {table.columns.map((column) => (
+                          <td key={column.id}>{row[column.id]}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Paper>
+            </Grid>
+        )}
       </Grid>
     </Grid>
   );

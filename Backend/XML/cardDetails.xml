@@ -4,7 +4,7 @@
     <widget name="TotalsalesRevenue" displayname="TotalsalesRevenue" >
 
       <widgetitem name="label" type="label" isquery="yes" target="0" datatype="int" caption="TotalsalesRevenue"
-       query="select sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKpiTotalsalesRevenue WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
+       query="select sum(CoWeekDay)CoWeekDay from taAccshopdailysales WITH(NOLOCK) where cast(codate as date)=cast(getdate() as date)"
        queryTarget="" targetValue ="">
         <parameter>
           <Shopno>CoShopNo</Shopno>

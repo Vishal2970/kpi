@@ -87,7 +87,7 @@ const cardDetails = async (req, res) => {
             name: name,
             caption: caption,
             widgetItemParameter: widgetItemParameter.slice(0,widgetItemParameter.length - 1),
-            response: response.recordset, // Assuming recordset is the desired response
+            response: response.recordset.map(obj => Object.values(obj)[0]), // Assuming recordset is the desired response
           };
           cardDetailResponse.widgetItem.push(widgetItemResponse);
         }
