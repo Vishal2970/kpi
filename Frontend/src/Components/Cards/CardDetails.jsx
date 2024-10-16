@@ -50,59 +50,123 @@ export default function CardDetails() {
     { id: 5, title: "Card 5", content: "This is card 5" },
     { id: 6, title: "Card 6", content: "This is card 6" },
   ];
-  const graphData = [
-    {
-      label: (detail.graph && detail.graph.caption) || (
-        <img
-          src={hourglass}
-          alt="Hourglass icon"
-          style={{ inlineSize: "2em", blockSize: "2em" }}
-        />
-      ),
-    },
-    {
-      label: (detail.graph && detail.graph.displayName) || (
-        <img
-          src={hourglass}
-          alt="Hourglass icon"
-          style={{ inlineSize: "2em", blockSize: "2em" }}
-        />
-      ),
-    },
-    {
-      label: (detail.graph && detail.graph.name) || (
-        <img
-          src={hourglass}
-          alt="Hourglass icon"
-          style={{ inlineSize: "2em", blockSize: "2em" }}
-        />
-      ),
-    },
-    {
-      label: (detail.graph &&
-        detail.graph.graphResponse &&
-        detail.graph.graphResponse[0] &&
-        detail.graph.graphResponse[0][0].Name) || (
-        <img
-          src={hourglass}
-          alt="Hourglass icon"
-          style={{ inlineSize: "2em", blockSize: "2em" }}
-        />
-      ),
-    },
-    {
-      label: (detail.graph &&
-        detail.graph.graphResponse &&
-        detail.graph.graphResponse[0] &&
-        detail.graph.graphResponse[0][0].Value) || (
-        <img
-          src={hourglass}
-          alt="Hourglass icon"
-          style={{ inlineSize: "2em", blockSize: "2em" }}
-        />
-      ),
-    },
-  ];
+  // const graphData = [
+  //   {
+  //     label: (detail.graph && detail.graph.caption) || (
+  //       <img
+  //         src={hourglass}
+  //         alt="Hourglass icon"
+  //         style={{ inlineSize: "2em", blockSize: "2em" }}
+  //       />
+  //     ),
+  //   },
+  //   {
+  //     label: (detail.graph && detail.graph.displayName) || (
+  //       <img
+  //         src={hourglass}
+  //         alt="Hourglass icon"
+  //         style={{ inlineSize: "2em", blockSize: "2em" }}
+  //       />
+  //     ),
+  //   },
+  //   {
+  //     label: (detail.graph && detail.graph.name) || (
+  //       <img
+  //         src={hourglass}
+  //         alt="Hourglass icon"
+  //         style={{ inlineSize: "2em", blockSize: "2em" }}
+  //       />
+  //     ),
+  //   },
+  //   {
+  //     label: (detail.graph &&
+  //       detail.graph.graphResponse &&
+  //       detail.graph.graphResponse[0] &&
+  //       detail.graph.graphResponse[0][0].Name) || (
+  //       <img
+  //         src={hourglass}
+  //         alt="Hourglass icon"
+  //         style={{ inlineSize: "2em", blockSize: "2em" }}
+  //       />
+  //     ),
+  //   },
+  //   {
+  //     label: (detail.graph &&
+  //       detail.graph.graphResponse &&
+  //       detail.graph.graphResponse[0] &&
+  //       detail.graph.graphResponse[0][0].Value) || (
+  //       <img
+  //         src={hourglass}
+  //         alt="Hourglass icon"
+  //         style={{ inlineSize: "2em", blockSize: "2em" }}
+  //       />
+  //     ),
+  //   },
+  // ];
+
+  const graphData = [];
+
+    // Check if graphResponse exists and is an array
+    if (detail.graph && detail.graph.graphResponse && Array.isArray(detail.graph.graphResponse[0])) {
+      // Use forEach to iterate over the graphResponse array
+      detail.graph.graphResponse[0].forEach((item) => {
+        // Push the Name and Value into the graphData array
+        graphData.push(
+          {
+            label: item.Name || (
+              <img
+                src={hourglass}
+                alt="Hourglass icon"
+                style={{ inlineSize: "2em", blockSize: "2em" }}
+              />
+            ),
+          },
+          {
+            label: item.Value || (
+              <img
+                src={hourglass}
+                alt="Hourglass icon"
+                style={{ inlineSize: "2em", blockSize: "2em" }}
+              />
+            ),
+          }
+        );
+      });
+    }
+    
+    // Additionally, push the other details if they exist
+    if (detail.graph) {
+      graphData.unshift(
+        {
+          label: detail.graph.caption || (
+            <img
+              src={hourglass}
+              alt="Hourglass icon"
+              style={{ inlineSize: "2em", blockSize: "2em" }}
+            />
+          ),
+        },
+        {
+          label: detail.graph.displayName || (
+            <img
+              src={hourglass}
+              alt="Hourglass icon"
+              style={{ inlineSize: "2em", blockSize: "2em" }}
+            />
+          ),
+        },
+        {
+          label: detail.graph.name || (
+            <img
+              src={hourglass}
+              alt="Hourglass icon"
+              style={{ inlineSize: "2em", blockSize: "2em" }}
+            />
+          ),
+        }
+      );
+    }
+
   const tables = [
     {
       id: 1,
@@ -205,10 +269,10 @@ export default function CardDetails() {
   const URL = "http://localhost:5000/api/check-cardDetails";
 
   const fetchCardDetails = async () => {
-    console.log("Enterd for details");
+    // console.log("Enterd for details");
 
     try {
-      console.log(`${URL}?id=${id}`);
+      // console.log(`${URL}?id=${id}`);
 
       const response = await axios.get(`${URL}?id=${id}`, {
         headers: {
@@ -218,7 +282,7 @@ export default function CardDetails() {
       // console.log("Request URL:", `${URL}?id=${id}`);
       const allData = response.data.cardDetailResponse;
 
-      console.log("All data", allData);
+      //console.log("All data", allData);
 
       //graph set
       const graphData = allData.graphDetail[0];
@@ -260,6 +324,7 @@ export default function CardDetails() {
           },
         }));
       });
+      //console.log("graphData",graphData);
     } catch (error) {
       console.log(error);
     }

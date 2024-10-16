@@ -1,5 +1,5 @@
 const express = require("express");
-const { sql } = require("../config/db");
+const {sql} = require("../config/db");
 const userAuth = require("../Middleware/userAuth");
 const Login = require("../Controller/Authentication");
 

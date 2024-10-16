@@ -9,7 +9,7 @@ import { FilterContext } from "../../Context/filterProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { auth, setAuth } = useAuthContext();
+  const {setAuth} = useAuthContext();
   const { setSelectedFilter } = useContext(FilterContext);
   const [login, setLogin] = useState({
     CopkUserId: "",
@@ -24,7 +24,7 @@ export default function Login() {
         login
       );
       const data = response.data;
-      console.log(data);
+      // console.log(data);
 
       sessionStorage.setItem(
         "auth",
@@ -41,7 +41,7 @@ export default function Login() {
         userId: data?.CopkUserId || 1,
         macAddress: data.macAddress,
       });
-      console.log("auth", auth);
+      // console.log("auth", auth);
 
       const today = new Date();
       const todayString = today.toISOString().split("T")[0];

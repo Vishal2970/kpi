@@ -31,7 +31,7 @@ export default function TableDisplay() {
         },
       })
       const data = response.data;
-      console.log("Table Check -1 ",data);
+      // console.log("Table Check -1 ",data);
       
       if (data) {
         data.forEach((item) => {
@@ -72,7 +72,7 @@ export default function TableDisplay() {
         },
       });
       const data = response.data;
-      console.log("Table Check filter",data);
+      // console.log("Table Check filter",data);
       const index = widgetNames.indexOf(widgetName);
       if (index !== -1) {
         // console.log("Response");
@@ -105,7 +105,7 @@ export default function TableDisplay() {
         },
       });
       const data = response.data;
-      console.log("Table Check -2",data);
+      // console.log("Table Check -2",data);
       if (data) {
         data.forEach((item) => {
           if (Array.isArray(item.response)) {
