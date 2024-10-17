@@ -9,7 +9,7 @@ import { FilterContext } from "../../Context/filterProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const {setAuth} = useAuthContext();
+  const { setAuth } = useAuthContext();
   const { setSelectedFilter } = useContext(FilterContext);
   const [login, setLogin] = useState({
     CopkUserId: "",
@@ -102,7 +102,7 @@ export default function Login() {
           }}
         />
         <TextField
-          id="outlined-basic"
+          id="outlined-basic-username"
           label="User Name"
           name="CopkUserId"
           value={login.CopkUserId}
@@ -110,7 +110,7 @@ export default function Login() {
           variant="outlined"
         />
         <TextField
-          id="outlined-basic"
+          id="outlined-basic-password"
           label="Password"
           name="copassword"
           value={login.copassword}

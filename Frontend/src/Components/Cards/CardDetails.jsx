@@ -10,7 +10,6 @@ import { useAuthContext } from "../../Context/authContext";
 export default function CardDetails() {
   const params = useParams();
   const id = params.id;
-  const widgetName = params.widgetName;
   const { auth } = useAuthContext();
   const [detail, setDetail] = useState({
     graph: {
@@ -18,11 +17,6 @@ export default function CardDetails() {
       name: "",
       displayName: "",
       graphResponse: [],
-    },
-    view: {
-      name: "",
-      parameter: "",
-      viewResponse: [],
     },
     widget: {
       items: {
@@ -33,11 +27,17 @@ export default function CardDetails() {
       },
     },
   });
+  const [viewDetails, setViewDetails] = useState({
+    view: {
+      name: "",
+      parameter: "",
+      columnName: [],
+      viewResponse: [],
+    },
+  });
 
   useEffect(() => {
     fetchCardDetails();
-    
-    //console.log("Details", detail.view);
     // eslint-disable-next-line
   }, []);
 
@@ -48,7 +48,7 @@ export default function CardDetails() {
     Array.isArray(detail.widget.items)
   ) {
     detail.widget.items.forEach((it, index) => {
-      cards.push({ id: index, title: it.caption, content: it.widgetResponse });
+      cards.push({ id: index, title: it.caption, content: it.widgetResponse||"No Data Found" });
     });
   }
 
@@ -82,7 +82,6 @@ export default function CardDetails() {
     });
   }
 
-  // Additionally, push the other details if they exist
   if (detail.graph) {
     graphData.unshift(
       {
@@ -114,145 +113,44 @@ export default function CardDetails() {
       }
     );
   }
-  const tables=[];
-  // console.log("items have to display ", detail.view.item);
-  if (detail.view && detail.view.item && Array.isArray(detail.view.item)) {
-    detail.view.item.forEach((element,index) => {
-      tables.push(
-        {
-          id: index,
-          name:element.name,
-          columns: [
-            { id: "name", label: "Name" },
-            { id: "age", label: "Age" },
-          ],
-          rows: [
-            { id: 1, name: "John", age: 25 },
-            { id: 2, name: "Jane", age: 30 },
-            { id: 3, name: "Bob", age: 35 },
-          ],
-        },
-      )
+  const tables = [];
+  if (
+    viewDetails.view &&
+    viewDetails.view.item &&
+    Array.isArray(viewDetails.view.item)
+  ) {
+    viewDetails.view.item.forEach((element, index) => {
+      const rows = [];
+      const columnNames = element.columnName;
+      
+      element.response.forEach((responseValue, rowIndex) => {
+        console.log(element.response);
+        
+        rows.push({ id: rowIndex, name: "index", value: responseValue });
+      });
+      tables.push({
+        id: index,
+        name: element.name,
+        columns: columnNames.map((columnName, columnIndex) => ({
+          id: columnIndex,
+          label: columnName,
+        })),
+        rows,
+      });
     });
+  } else {
+    console.log("cardDetailResponse not found in detail object.");
   }
-
-  // const tables = [
-  //   {
-  //     id: 1,
-  //     name:"Vishal",
-  //     columns: [
-  //       { id: "name", label: "Name" },
-  //       { id: "age", label: "Age" },
-  //     ],
-  //     rows: [
-  //       { id: 1, name: "John", age: 25 },
-  //       { id: 2, name: "Jane", age: 30 },
-  //       { id: 3, name: "Bob", age: 35 },
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     columns: [
-  //       { id: "product", label: "Product" },
-  //       { id: "price", label: "Price" },
-  //     ],
-  //     rows: [
-  //       { id: 1, product: "Product 1", price: 10.99 },
-  //       { id: 2, product: "Product 2", price: 20.99 },
-  //       { id: 3, product: "Product 3", price: 30.99 },
-  //     ],
-  //   },
-  //   {
-  //     id: 3,
-  //     columns: [
-  //       { id: "product", label: "Product" },
-  //       { id: "price", label: "Price" },
-  //     ],
-  //     rows: [
-  //       { id: 1, product: "Product 1", price: 10.99 },
-  //       { id: 2, product: "Product 2", price: 20.99 },
-  //       { id: 3, product: "Product 3", price: 30.99 },
-  //     ],
-  //   },
-  //   {
-  //     id: 4,
-  //     columns: [
-  //       { id: "product", label: "Product" },
-  //       { id: "price", label: "Price" },
-  //     ],
-  //     rows: [
-  //       { id: 1, product: "Product 1", price: 10.99 },
-  //       { id: 2, product: "Product 2", price: 20.99 },
-  //       { id: 3, product: "Product 3", price: 30.99 },
-  //     ],
-  //   },
-  //   {
-  //     id: 1,
-  //     columns: [
-  //       { id: "name", label: "Name" },
-  //       { id: "age", label: "Age" },
-  //     ],
-  //     rows: [
-  //       { id: 1, name: "John", age: 25 },
-  //       { id: 2, name: "Jane", age: 30 },
-  //       { id: 3, name: "Bob", age: 35 },
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     columns: [
-  //       { id: "product", label: "Product" },
-  //       { id: "price", label: "Price" },
-  //     ],
-  //     rows: [
-  //       { id: 1, product: "Product 1", price: 10.99 },
-  //       { id: 2, product: "Product 2", price: 20.99 },
-  //       { id: 3, product: "Product 3", price: 30.99 },
-  //     ],
-  //   },
-  //   {
-  //     id: 3,
-  //     columns: [
-  //       { id: "product", label: "Product" },
-  //       { id: "price", label: "Price" },
-  //     ],
-  //     rows: [
-  //       { id: 1, product: "Product 1", price: 10.99 },
-  //       { id: 2, product: "Product 2", price: 20.99 },
-  //       { id: 3, product: "Product 3", price: 30.99 },
-  //     ],
-  //   },
-  //   {
-  //     id: 4,
-  //     columns: [
-  //       { id: "product", label: "Product" },
-  //       { id: "price", label: "Price" },
-  //     ],
-  //     rows: [
-  //       { id: 1, product: "Product 1", price: 10.99 },
-  //       { id: 2, product: "Product 2", price: 20.99 },
-  //       { id: 3, product: "Product 3", price: 30.99 },
-  //     ],
-  //   },
-  // ];
-
   const URL = "http://localhost:5000/api/check-cardDetails";
-
   const fetchCardDetails = async () => {
-    // console.log("Enterd for details");
-
     try {
-      // console.log(`${URL}?id=${id}`);
-
       const response = await axios.get(`${URL}?id=${id}`, {
         headers: {
           Authorization: auth?.token,
         },
       });
-      // console.log("Request URL:", `${URL}?id=${id}`);
+      console.log("Request URL:", `${URL}?id=${id}`);
       const allData = response.data.cardDetailResponse;
-
-      // console.log("All data", allData);
 
       //graph set
       const graphData = allData.graphDetail[0];
@@ -266,38 +164,24 @@ export default function CardDetails() {
         },
       }));
 
-      //view set
-      // const viewData = allData.viewDetails;
-      // viewData.forEach((element) => {
-      //   setDetail((prevState) => ({
-      //     ...prevState,
-      //     view: {
-      //       name: element.name,
-      //       parameter: element.parameter,
-      //       viewResponse: [element.viewResponse],
-      //     },
-      //   }));
-      // });
-
       const viewData = allData.viewDetails;
-      //console.log("viewData",viewData);
 
-      setDetail((prev) => {
-        const items = {
+      setViewDetails((previous) => {
+        const data = {
           item: viewData.map((element) => {
             return {
               name: element.name,
               parameter: element.parameter,
-              response: element.viewResponse[0],
+              columnName: element.viewResponse.colname? element.viewResponse.colname: null,
+              response: element.viewResponse.value ? element.viewResponse.value[0]: null,
             };
           }),
         };
         return {
-          ...prev,
-          view: items,
+          ...previous,
+          view: data,
         };
       });
-
       //widgetDetails set
       const widgetData = allData.widgetItem;
       setDetail((prevState) => {
@@ -320,6 +204,20 @@ export default function CardDetails() {
       console.log(error);
     }
   };
+  function getColumnPropertyName(columnId) {
+    switch (columnId) {
+      case 0:
+        return "id";
+      case 1:
+        return "name";
+      case 2:
+        return "value";
+      case 3:
+        return "someOtherProperty";
+      default:
+        return "";
+    }
+  }
 
   return (
     <Grid container spacing={2} sx={{ padding: "20px" }}>
@@ -348,84 +246,33 @@ export default function CardDetails() {
 
       {/* Table */}
       <Grid container spacing={2}>
-        {tables.map((table, index) =>
-            <Grid item key={index}  xs={3}>
-              {" "}
-              {/* adjust the xs value to control the width of each table */}
-              <Paper elevation={3} className="table">
-                <h2>{table.name}</h2>
-                <table>
-                  <thead>
-                    <tr>
-                      {table.columns.map((column) => (
-                        <th key={column.id}>{column.label}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {table.rows.map((row) => (
-                      <tr key={row.id}>
-                        {table.columns.map((column) => (
-                          <td key={column.id}>{row[column.id]}</td>
-                        ))}
-                      </tr>
+        {tables.map((table, index) => (
+          <Grid item key={index} xs={3}>
+            <Paper elevation={3} className="table">
+              <h2>{table.name}</h2>
+              <table>
+                <thead>
+                  <tr>
+                    {table.columns.map((column) => (
+                      <th key={column.id}>{column.label}</th>
                     ))}
-                  </tbody>
-                </table>
-              </Paper>
-            </Grid>
-        )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {table.rows.map((row) => (
+                    <tr key={row.id}>
+                      {table.columns.map((column) => {
+                        const propertyName = getColumnPropertyName(column.id);
+                        return <td key={column.id}>{row[propertyName]}</td>;
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Paper>
+          </Grid>
+        ))}
       </Grid>
     </Grid>
   );
 }
-
-// import { Grid, Paper } from '@material-ui/core';
-
-// const cards = [
-//   { id: 1, title: 'Card 1', content: 'This is card 1' },
-//   { id: 2, title: 'Card 2', content: 'This is card 2' },
-//   { id: 3, title: 'Card 3', content: 'This is card 3' },
-//   { id: 4, title: 'Card 4', content: 'This is card 4' },
-//   { id: 5, title: 'Card 5', content: 'This is card 5' },
-//   { id: 6, title: 'Card 6', content: 'This is card 6' },
-// ];
-
-// const graphData = [
-//   { label: 'Jan', value: 10 },
-//   { label: 'Feb', value: 20 },
-//   { label: 'Mar', value: 30 },
-//   { label: 'Apr', value: 40 },
-//   { label: 'May', value: 50 },
-// ];
-
-// const tables = [
-//   {
-//     id: 1,
-//     columns: [
-//       { id: 'name', label: 'Name' },
-//       { id: 'age', label: 'Age' },
-//     ],
-//     rows: [
-//       { id: 1, name: 'John', age: 25 },
-//       { id: 2, name: 'Jane', age: 30 },
-//       { id: 3, name: 'Bob', age: 35 },
-//     ],
-//   },
-//   {
-//     id: 2,
-//     columns: [
-//       { id: 'product', label: 'Product' },
-//       { id: 'price', label: 'Price' },
-//     ],
-//     rows: [
-//       { id: 1, product: 'Product 1', price: 10.99 },
-//       { id: 2, product: 'Product 2', price: 20.99 },
-//       { id: 3, product: 'Product 3', price: 30.99 },
-//     ],
-//   },
-// ];
-
-// return (
-
-// );

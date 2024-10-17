@@ -54,71 +54,64 @@
 
     <Viewdetail name="ViewDetail" displayname="View Details" >
       <widgetitem name="Top10Shopsaleswovat" type="label" isquery="yes" target="0" datatype="int" caption="GridData6"
-       query="select top 10 coshopname, sum(CoTotSaleswoVAT)CoSaleswoVAT3  from viKpiWidShopsaleswovat WITH(NOLOCK)
-       where cast(codate as date)=cast(getdate() as date) 
-       group by coshopname order by sum(CoTotSaleswoVAT) desc" highLow="true">
+       query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>
       </widgetitem>      
       
       <widgetitem name="Top10ShopGrossprofitamt" type="label" isquery="yes" target="0" caption="GridData7"
-      query="select top 10 coshopname, sum(CoGrossProfitAmt)CoGrossProfitAmt  from viWidShopGrossprofitamt WITH(NOLOCK)
-       where cast(codate as date)=cast(getdate() as date) 
-       group by coshopname order by sum(CoGrossProfitAmt) desc" highLow="true">
+      query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>
       </widgetitem>
 
       <widgetitem name="Top10Shopnoofcust" type="label" isquery="yes" target="0" caption="GridData8"
-       query="select top 10 coshopname, sum(CoNoOfCust)CoNoOfCust  from dbo.taAccShopdailysales WITH(NOLOCK)
-       where cast(codate as date)=cast(getdate() as date) 
-       group by coshopname having Sum(CoNoOfCust) &lt;&gt; 0 order by sum(CoNoOfCust) desc" highLow="true">
+       query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>
       </widgetitem>
       
       <widgetitem name="Top10quantityforregion" type="label" isquery="yes" target="0" caption="ViewGridData" 
-        query="	select top 10 CoShopName,CoRegionName,Sum(CoSaleswoVAT3) as CoSaleswoVAT3 from viWidRegionsaleswovat WITH(NOLOCK) 
-	              where cast(codate as date)=cast(getdate() as date) Group by CoShopName,CoRegionName having Sum(CoSaleswoVAT3) &lt;&gt; 0  order by CoSaleswoVAT3 desc" highLow="true">
+        query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>
       </widgetitem>
 
       <widgetitem name="Top10quantityfordepartment" type="label" isquery="yes" target="0" caption="StoreGridData" 
-      query="	select top 10 CoShopName,CoDeptName,Sum(CoSaleswoVAT3)CoSaleswoVAT3 from viWidDeptSaleswovat WITH(NOLOCK)
-      where cast(codate as date)=cast(getdate() as date) 
-      Group by CoShopName,CoDeptName having Sum(CoSaleswoVAT3) &lt;&gt; 0  order by CoSaleswoVAT3 desc" highLow="true">
+      query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>
       </widgetitem>
 
       <widgetitem name="Top10quantityforItemgroup" type="label" isquery="yes" target="0" caption="ProductGridData" 
-       query="select top 10 CoShopName,CoItemGroupName,Sum(CoSaleswoVAT3)CoSaleswoVAT3 from viWidtemgroupSaleswovat WITH(NOLOCK)
-	      where cast(codate as date)=cast(getdate() as date)
-	      Group by CoShopName,CoItemGroupName having Sum(CoSaleswoVAT3) &lt;&gt; 0 order by CoSaleswoVAT3 desc" highLow="true">
+       query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>
       </widgetitem>
 
       <widgetitem name="Top10quantityforItem" type="label" isquery="yes" target="0" caption="SaleCategoryGridData" 
-       query="select top 10 CoShopName,CoItemName,Sum(CoSaleswoVAT-CoDiscAmt)CoSaleswoVAT3 from dbo.taAccitemdailysales WITH(NOLOCK)
-      where cast(codate as date)=cast(getdate() as date) 
-      Group by CoShopName,CoItemName having Sum(CoSaleswoVAT-CoDiscAmt) &lt;&gt; 0 order by Sum(CoSaleswoVAT-CoDiscAmt) desc" highLow="true">
+       query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>
       </widgetitem>
 
       <widgetitem name="Top10Returnqty" type="label" isquery="yes" target="0" caption="GridData5"
-      query="select top 10 coshopname, coitemname, sum(abs(coqtysold))coqtyreturn  from ViKPIReturnItemQty WITH(NOLOCK)
-       where cast(codate as date)=cast(getdate() as date) 
-       group by coshopname, coitemname having sum(abs(coqtysold)) &gt; 0 order by sum(abs(coqtysold)) desc" highLow="true">
+      query="select top 10 coshopname,CoUserName,sum(CoTotSaleswoVAT)CoSaleswoVAT3 from viKPIHighestSaleswovat WITH (NOLOCK) 
+       where cast(codate as date)=cast(getdate() as date) group by coshopname,CoUserName having Sum(CoTotSaleswoVAT) &gt; 0 order by sum(CoTotSaleswoVAT) desc" highLow="true">
         <parameter>
           <Shopno>CoShopNo</Shopno>
         </parameter>

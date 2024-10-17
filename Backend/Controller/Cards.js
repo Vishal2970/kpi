@@ -1,5 +1,5 @@
 const { sql } = require("../config/db");
-const { getQueryFromXML,getCardDetails,} = require("../XML/parser/XMLCardParser");
+const {getQueryFromXML,getCardDetails,} = require("../XML/parser/XMLCardParser");
 const fs = require("fs");
 
 const Card = async (req, res) => {
@@ -48,7 +48,7 @@ const Card = async (req, res) => {
 const cardDetails = async (req, res) => {
   const id = req.query.id;
   // console.log(id)
-  
+
   try {
     const request = new sql.Request();
     const cardDetail = await getCardDetails();
@@ -79,15 +79,15 @@ const cardDetails = async (req, res) => {
               }
             });
           }
-
-          // Execute the query and get the response
           const response = await request.query(query);
-
           const widgetItemResponse = {
             name: name,
             caption: caption,
-            widgetItemParameter: widgetItemParameter.slice(0,widgetItemParameter.length - 1),
-            response: response.recordset.map(obj => Object.values(obj)[0]), // Assuming recordset is the desired response
+            widgetItemParameter: widgetItemParameter.slice(
+              0,
+              widgetItemParameter.length - 1
+            ),
+            response: response.recordset.map((obj) => Object.values(obj)[0]), 
           };
           cardDetailResponse.widgetItem.push(widgetItemResponse);
         }
@@ -97,27 +97,36 @@ const cardDetails = async (req, res) => {
         for (const viewDetail of viewDetails) {
           const viewQuery = viewDetail.query;
           const viewName = viewDetail.name;
-          let viewParameters='';
+          let viewParameters = "";
           const viewParameter = viewDetail.parameter;
           viewParameter &&
             Object.keys(viewParameter).forEach((propertyName) => {
               const viewParamts = viewParameter[propertyName][0];
-              viewParameters+=viewParamts+',';
+              viewParameters += viewParamts + ",";
             });
 
-          // You might want to add the view details to the response
-          // console.log(viewQuery);
-          
+          const resp = {
+            colname: [],
+            value: [],
+          };
           const viewResponse = await request.query(viewQuery);
-          // console.log(viewResponse.recordset);
-          
+
+          const keys = Object.keys(viewResponse.recordset[0]);
+
+          keys.forEach((key) => {
+            resp.colname.push(key);
+          });
+
+          viewResponse.recordset.forEach((i, index) => {
+            const values = Object.values(i);
+            resp.value.push(values);
+          });
           cardDetailResponse.viewDetails.push({
             name: viewName,
-            viewResponse: viewResponse.recordset,
-            parameter: viewParameters.slice(0,viewParameters.length - 1),
+            viewResponse: resp,
+            parameter: viewParameters.slice(0, viewParameters.length - 1),
           });
         }
-
         // Graph
         const graph = card.graphData;
 
@@ -129,10 +138,6 @@ const cardDetails = async (req, res) => {
             const graphQuery = dt.$.query;
             const name = dt.$.name;
             const caption = dt.$.caption;
-            // console.log(name);
-            // console.log(query);
-            // console.log(caption);
-
             const graphResponse = await request.query(graphQuery);
             cardDetailResponse.graphDetail.push({
               name: graphName,
@@ -144,7 +149,7 @@ const cardDetails = async (req, res) => {
         }
       }
     }
-    return res.status(200).send({cardDetailResponse });
+    return res.status(200).send({ cardDetailResponse });
   } catch (err) {
     res.status(500).send({
       error: err.message,
