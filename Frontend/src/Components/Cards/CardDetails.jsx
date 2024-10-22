@@ -157,9 +157,9 @@ export default function CardDetails() {
       setDetail((prevState) => ({
         ...prevState,
         graph: {
-          caption: graphData.caption,
-          name: graphData.name,
-          displayName: graphData.displayName,
+          caption: graphData.caption||"NO DATA FOUND",
+          name: graphData.name||"NO DATA FOUND",
+          displayName: graphData.displayName||"NO DATA FOUND",
           graphResponse: [graphData.graphResponse],
         },
       }));
@@ -170,8 +170,8 @@ export default function CardDetails() {
         const data = {
           item: viewData.map((element) => {
             return {
-              name: element.name,
-              parameter: element.parameter,
+              name: element.name||"NO DATA FOUND",
+              parameter: element.parameter||"NO DATA FOUND",
               columnName: element.viewResponse.colname? element.viewResponse.colname: null,
               response: element.viewResponse.value ? element.viewResponse.value[0]: null,
             };
@@ -188,9 +188,9 @@ export default function CardDetails() {
         const updatedWidget = {
           items: widgetData.map((element) => {
             return {
-              name: element.name,
-              caption: element.caption,
-              widgetItemParameter: element.widgetItemParameter,
+              name: element.name||"NO DATA FOUND",
+              caption: element.caption||"NO DATA FOUND",
+              widgetItemParameter: element.widgetItemParameter||"NO DATA FOUND",
               widgetResponse: element.response[0],
             };
           }),

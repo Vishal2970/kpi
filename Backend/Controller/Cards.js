@@ -111,9 +111,13 @@ const cardDetails = async (req, res) => {
           };
           const viewResponse = await request.query(viewQuery);
 
-          const keys = Object.keys(viewResponse.recordset[0]);
-
-          keys.forEach((key) => {
+          if (viewResponse.rowsAffected[0] === 0) {
+            continue; 
+          } else {
+            const keys = Object.keys(viewResponse.recordset[0]); // Get keys if it's not null
+          }
+          //const keys = Object.keys(viewResponse.recordset[0]);
+          keys?.forEach((key) => {
             resp.colname.push(key);
           });
 
@@ -151,6 +155,7 @@ const cardDetails = async (req, res) => {
     }
     return res.status(200).send({ cardDetailResponse });
   } catch (err) {
+    console.log(err);
     res.status(500).send({
       error: err.message,
     });
