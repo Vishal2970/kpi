@@ -18,43 +18,6 @@ macaddress.one((err, mac) => {
   macAddress = mac;
 });
 
-// async function deletefromtable(CopkUserId) {
-//   const pool = await sql.connect();
-//   try {
-//     const request = pool
-//       .request()
-//       .input("flag", sql.Int, 2)
-//       .input("UserID", sql.Int, CopkUserId);
-
-//     const result = await request.execute(check_Login);
-//     // console.log(result);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-// async function insertintable(CopkUserId, mac) {
-//   const pool = await sql.connect();
-//   try {
-//     // console.log("inserting");
-//     const name = "Vishal test";
-//     // console.log(CopkUserId);
-//     // console.log(name);
-//     // console.log(mac);
-
-//     const request = pool
-//       .request()
-//       .input("flag", sql.Int, 4)
-//       .input("UserID", sql.Int, CopkUserId)
-//       .input("UserName", sql.NVarChar, name) // Changed to NVarChar for string type
-//       .input("CurrentMacAddress", sql.NVarChar, mac); // Changed to NVarChar for string type
-
-//     const result = await request.execute(check_Login);
-//     // console.log(result);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
 const getAllShop = async () => {
   try {
     const response = await sql.query("select CopkShopNo from tashop");
